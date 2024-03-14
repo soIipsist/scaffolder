@@ -99,7 +99,7 @@ def download_file(url:str, destination:str=None, content_length=None, chunk_size
     except Exception as e:
         print(e)
 
-def find_and_replace_in_files(directory, search_word, replace_word):
+def find_and_replace_in_directory(directory, search_word, replace_word):
     for root, dirs, files in os.walk(directory):
         for file in files:
             file_path = os.path.join(root, file)

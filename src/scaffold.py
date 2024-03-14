@@ -4,7 +4,7 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 from src.repository import get_project_name, get_repository_visibility, create_git_repository
 from src.licenses import create_license
-from templates.python_template.utils.file_operations import find_and_replace_in_files
+from templates.python_template.utils.file_operations import find_and_replace_in_directory
 from templates.python_template.utils.parser import *
 from src.constants import *
 
@@ -58,7 +58,7 @@ def create_template(template_directory: str, project_directory: str):
     template_name = os.path.split(template_directory)[-1]
 
     # find and replace all instances of template_name
-    find_and_replace_in_files(project_directory, template_name, project_name)
+    find_and_replace_in_directory(project_directory, template_name, project_name)
 
 
 if __name__ == '__main__':
