@@ -15,17 +15,11 @@ def update(
     update_destination_directory: str = update_destination_directory,
     language: str = "python",
     function_patterns: list = None,
-):
+):  
 
     if not update_files:
-        raise ValueError("update_files parameter is required.")
+        update_files = [file for file in os.listdir(update_source_directory)]
     
-    if not update_source_directory:
-        raise ValueError("update_source_directory is required.")
-
-    if not update_destination_directory:
-        raise ValueError("update_destination_directory is required.")
-
     print(
         f'Updating changed files from "{update_source_directory}" to "{update_destination_directory}"...'
     )

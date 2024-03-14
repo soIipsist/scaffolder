@@ -12,3 +12,6 @@ def hello_world():
 
 def hello():
     print('hi')
+
+def redd(string):
+    print('red', string)

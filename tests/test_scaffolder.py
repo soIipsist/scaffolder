@@ -34,14 +34,25 @@ class TestScaffolder(TestBase):
         self.update_destination_directory = update_destination_directory
         self.update_files = update_files
 
+        self.function_patterns = 'python'
         self.test_files_dir = self.get_test_files_dir()
         self.test_files_dir_2 = self.get_test_files_2_dir()
 
+        
+
     def get_test_files_dir(self):
-        return os.path.join(os.getcwd(), 'test_files')
+        target_dir = {
+            'python': 'python_test_files',
+            'java': 'java_test_files'
+        }
+        return os.path.join(os.getcwd(), target_dir.get(self.function_patterns))
     
     def get_test_files_2_dir(self):
-        return os.path.join(os.getcwd(), 'test_files2')
+        target_dir = {
+            'python': 'python_test_files2',
+            'java': 'java_test_files2'
+        }
+        return os.path.join(os.getcwd(), target_dir.get(self.function_patterns))
 
     def test_get_licenses(self):
         paths = get_licenses(licenses)
@@ -81,8 +92,24 @@ class TestScaffolder(TestBase):
         self.repository_visibility = 1
         scaffold(self.template_directory, self.project_directory, self.license, self.author, self.git_username, self.create_repository, self.repository_visibility)
 
-    def test_update(self):
-        update(self.update_files, self.update_source_directory, self.update_destination_directory)
+    def test_update_python(self):
+        self.update_files = []
+        self.update_source_directory = self.get_test_files_dir()
+        self.update_destination_directory = self.get_test_files_2_dir()
+
+        print(self.update_source_directory)
+
+        # try with no update files given
+        source_files, funcs, updated_content = update(self.update_files, self.update_source_directory, self.update_destination_directory)
+        
+    def test_update_java(self):
+        self.update_files = []
+        self.update_source_directory = self.get_test_files_dir()
+        self.update_destination_directory = self.get_test_files_2_dir()
+
+        # try with no update files given
+        source_files, funcs, updated_content = update(self.update_files, self.update_source_directory, self.update_destination_directory)
+
 
     def test_find_and_replace_in_directory(self):
         # create a file called red.txt with some text
@@ -101,4 +128,4 @@ class TestScaffolder(TestBase):
         self.assertListEqual(list(settings.keys()), self.parameters)
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_find_and_replace_in_directory)
+    run_test_methods(TestScaffolder.test_update_python)

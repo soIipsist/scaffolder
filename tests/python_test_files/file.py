@@ -10,3 +10,7 @@ def goodbye():
 
 def blue(string):
     print('blue ', string)
+
+
+def redd(string):
+    print('red', string)

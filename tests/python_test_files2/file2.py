@@ -17,3 +17,6 @@ def hello():
 def goodbye():
     print
     print()
+
+def heeee():
+    print
