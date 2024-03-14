@@ -1,0 +1,2 @@
+def blue():
+    print('blue')

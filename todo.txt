@@ -1,0 +1,29 @@
+- python-template
+ - tests
+    + sqlite
+    + sqlite item
+    - questionary item
+    + parser
+    + utils
+     + date
+     + time
+     + dictionary
+     + path
+
+- fastapi-template
+  - user routes
+    - login
+    - register
+    - update
+    - delete
+
+- scaffolder
+ - rewrite and add scripts
+   + scaffold 
+   + update
+   + licenses
+   + settings
+   - scaffolder.sh
+
+  - tests
+   - test all commands
