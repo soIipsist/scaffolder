@@ -1,6 +1,6 @@
 import os
 import subprocess
-
+import shutil
 
 def get_repository_visibility(repository_visibility: str):
     types = {0: "private", 1: "public", 2: "internal"}
@@ -25,6 +25,9 @@ def create_git_repository(
     if not create_repository:
         return
 
+    # check if git repo already exists
+
+
     git_origin = "https://github.com/{0}/{1}.git".format(git_username, project_name)
     print(f"Creating git repository: {git_origin}")
 
@@ -44,4 +47,18 @@ def create_git_repository(
     ]
 
     for args in commands:
-        subprocess.run(args, cwd=project_directory)
+        
+        try:
+            subprocess.run(args, cwd=project_directory, check=True)
+        except Exception as e:
+            print(e)
+
+    # remove and clone again
+    shutil.rmtree(project_directory, ignore_errors=True)
+
+    target_dir = os.path.dirname(project_directory)
+    subprocess.run(['git', 'clone', git_origin], cwd=target_dir)
+
+
+# def update_git_repository():
+#     pass
