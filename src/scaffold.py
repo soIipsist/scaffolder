@@ -2,7 +2,7 @@ import os
 import subprocess
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from src.repository import get_project_name, get_repository_visibility, create_git_repository
+from src.repository import get_repository_visibility, create_git_repository, git_repo_exists, update_git_repository
 from src.licenses import create_license
 from templates.python_template.utils.file_operations import find_and_replace_in_directory
 from templates.python_template.utils.parser import *
@@ -17,7 +17,15 @@ def scaffold(
     create_repository: bool = create_repository,
     repository_visibility: str = 1,
 ):
+    
+    if not os.path.exists(project_directory):
+        subprocess.run(["mkdir", project_directory], errors=None)
+        create_license(license, project_directory, author)
+        create_template(template_directory, project_directory)
 
+    if not create_repository:
+        return
+    
     repository_visibility = get_repository_visibility(repository_visibility)
     git_username = (
         git_username
@@ -28,21 +36,22 @@ def scaffold(
             text=True,
         ).stdout.strip()
     )
-
+    
     # initialize project directory
-    subprocess.run(["mkdir", project_directory])
-    create_license(license, project_directory, author)
-    create_template(template_directory, project_directory)
+    if not(git_repo_exists(project_directory)):
 
-    # create git repository
-    create_git_repository(
-        project_directory, create_repository, repository_visibility, git_username
-    )
+        # create git repository
+        create_git_repository(
+            project_directory, repository_visibility, git_username
+        )
+    else:
+        print('Project already exists. Updating...')
+        update_git_repository(project_directory)
 
 
 def create_template(template_directory: str, project_directory: str):
 
-    project_name = get_project_name(project_directory)
+    project_name = os.path.basename(project_directory) 
 
     # copy template directory to project directory
     print(
