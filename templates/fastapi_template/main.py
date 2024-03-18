@@ -8,8 +8,10 @@ import importlib
 import database
 from schemas.user import UserIn as UserSchema
 app = FastAPI()
-
-database.Base.metadata.create_all(database.engine)
+import models.user
+import models.post
+models.user.Base.metadata.create_all(database.engine)
+models.post.Base.metadata.create_all(database.engine)
 
 origins = ["*"]
 app.add_middleware(

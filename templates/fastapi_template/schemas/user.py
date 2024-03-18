@@ -6,6 +6,7 @@ class UserIn(BaseModel):
     name:str
     surname:str
     username:str
+    password: str
 
 class UserOut(BaseModel):
     name:str
