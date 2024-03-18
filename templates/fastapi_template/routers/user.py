@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from requests import Session
-from models.user import User as UserModel
-from schemas.user import User as UserSchema
+from models.user import User
+from schemas.user import UserIn, UserOut
 import os
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
@@ -14,11 +14,15 @@ async def get_user(user_id:str):
     return {"message": user_id}
 
 
-@router.post('/')
-async def create_user(user:UserSchema, db: Session = Depends(get_db)):
-    user_model = UserModel(**user.model_dump())
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserOut)
+def create_user(user: UserIn, db: Session = Depends(get_db)):
 
-    db.add(user_model)
+    # hash the password
+    # hashed_password = utils.hash(user.password)
+    # user.password = 'password'
+
+    new_user = User(**user.dict())
+    db.add(new_user)
     db.commit()
-    db.refresh(user_model)  # Refresh the model to get the latest data (e.g., auto-generated IDs)
-    return user_model.dict()
+    db.refresh(new_user)
+    return new_user
