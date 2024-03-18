@@ -36,23 +36,24 @@ class TestScaffolder(TestBase):
 
         self.function_patterns = 'python'
         self.test_files_dir = self.get_test_files_dir()
-        self.test_files_dir_2 = self.get_test_files_2_dir()
+        self.test_files_dir_2 = self.get_test_files_dir('dir2')
 
-        
 
-    def get_test_files_dir(self):
+    def get_test_files_dir(self, dirname:str = 'dir1', function_patterns='python'):
         target_dir = {
             'python': 'python_test_files',
             'java': 'java_test_files'
         }
-        return os.path.join(os.getcwd(), target_dir.get(self.function_patterns))
+        return os.path.join(os.getcwd(), target_dir.get(function_patterns), dirname)
     
-    def get_test_files_2_dir(self):
-        target_dir = {
-            'python': 'python_test_files2',
-            'java': 'java_test_files2'
-        }
-        return os.path.join(os.getcwd(), target_dir.get(self.function_patterns))
+    def test_get_files_dir(self):
+        dir1 = self.get_test_files_dir()
+        print(dir1)
+        self.assertTrue(os.path.exists(dir1))
+
+        dir2 = self.get_test_files_dir('dir2')
+        print(dir2)
+        self.assertTrue(os.path.exists(dir2))
 
     def test_get_licenses(self):
         paths = get_licenses(licenses)
@@ -92,10 +93,16 @@ class TestScaffolder(TestBase):
         self.repository_visibility = 1
         scaffold(self.template_directory, self.project_directory, self.license, self.author, self.git_username, self.create_repository, self.repository_visibility)
 
+    def test_scaffold_update(self):
+        # test with repo that already exists
+        self.assertTrue(git_repo_exists(self.project_directory))
+        scaffold(self.template_directory, self.project_directory, self.license, self.author, self.git_username, self.create_repository, self.repository_visibility)
+
+
     def test_update_python(self):
         self.update_files = []
         self.update_source_directory = self.get_test_files_dir()
-        self.update_destination_directory = self.get_test_files_2_dir()
+        self.update_destination_directory = self.get_test_files_dir('dir2')
 
         print(self.update_source_directory)
 
@@ -105,7 +112,7 @@ class TestScaffolder(TestBase):
     def test_update_java(self):
         self.update_files = []
         self.update_source_directory = self.get_test_files_dir()
-        self.update_destination_directory = self.get_test_files_2_dir()
+        self.update_destination_directory = self.get_test_files_dir('dir2')
 
         # try with no update files given
         source_files, funcs, updated_content = update(self.update_files, self.update_source_directory, self.update_destination_directory)
@@ -128,4 +135,4 @@ class TestScaffolder(TestBase):
         self.assertListEqual(list(settings.keys()), self.parameters)
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_update_python)
+    run_test_methods(TestScaffolder.test_get_files_dir)

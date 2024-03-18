@@ -76,3 +76,6 @@ def update_git_repository(
                 subprocess.run(command, cwd=project_directory)
             except Exception as e:
                 print(e)
+        
+    
+    print("Update completed.")
