@@ -34,17 +34,16 @@ class TestScaffolder(TestBase):
         self.update_destination_directory = update_destination_directory
         self.update_files = update_files
 
-        self.function_patterns = 'python'
         self.test_files_dir = self.get_test_files_dir()
         self.test_files_dir_2 = self.get_test_files_dir('dir2')
 
 
-    def get_test_files_dir(self, dirname:str = 'dir1', function_patterns='python'):
+    def get_test_files_dir(self, dirname:str = 'dir1', language='python'):
         target_dir = {
             'python': 'python_test_files',
             'java': 'java_test_files'
         }
-        return os.path.join(os.getcwd(), target_dir.get(function_patterns), dirname)
+        return os.path.join(os.getcwd(), target_dir.get(language), dirname)
     
     def test_get_files_dir(self):
         dir1 = self.get_test_files_dir()
@@ -111,11 +110,11 @@ class TestScaffolder(TestBase):
         
     def test_update_java(self):
         self.update_files = []
-        self.update_source_directory = self.get_test_files_dir()
-        self.update_destination_directory = self.get_test_files_dir('dir2')
+        self.update_source_directory = self.get_test_files_dir(language='java')
+        self.update_destination_directory = self.get_test_files_dir('dir2', 'java')
 
         # try with no update files given
-        source_files, funcs, updated_content = update(self.update_files, self.update_source_directory, self.update_destination_directory)
+        source_files, funcs, updated_content = update(self.update_files, self.update_source_directory, self.update_destination_directory, language='java')
 
 
     def test_find_and_replace_in_directory(self):
@@ -135,4 +134,4 @@ class TestScaffolder(TestBase):
         self.assertListEqual(list(settings.keys()), self.parameters)
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_get_files_dir)
+    run_test_methods(TestScaffolder.test_update_python)

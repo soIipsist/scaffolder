@@ -58,3 +58,7 @@ public class MainActivity extends BaseActivity {
     
 
 }
+
+public void goodbyeWorld(){
+        Toast.makeText(getActivity(), "goodbye world", Toast.LENGTH_LONG).show();
+    }

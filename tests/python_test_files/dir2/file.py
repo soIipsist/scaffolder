@@ -14,3 +14,6 @@ def blue(string):
 
 def redd(string):
     print('red', string)
+
+def green(str):
+    print('green', str)
