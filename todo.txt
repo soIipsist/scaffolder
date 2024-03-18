@@ -17,13 +17,15 @@
     - update
     - delete
 
-- scaffolder
- - rewrite and add scripts
++ scaffolder
+ + rewrite and add scripts
    + scaffold 
    + update
    + licenses
    + settings
-   - scaffolder.sh
+   + scaffolder.sh
 
-  - tests
-   - test all commands
+  + tests
+   + test all commands
+
+  - update docs

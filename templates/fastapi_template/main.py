@@ -3,9 +3,11 @@ import uvicorn
 import os
 import importlib
 
+import database
+from schemas.user import User as UserSchema
+
+
 app = FastAPI()
-
-
 routes_directory = os.path.join(os.path.dirname(__file__), "routers")
 
 for filename in os.listdir(routes_directory):
@@ -14,11 +16,14 @@ for filename in os.listdir(routes_directory):
         module = importlib.import_module(module_name)
         app.include_router(module.router)
 
+@app.get('/')
+async def main():
+    return {'message': 'hello'}
 
-@app.get("/login")
-async def login():
-    return {"message": "hello"}
+@app.post("/login")
+async def login(user:UserSchema):
+    return {"message": user.name}
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host='127.0.0.1', port='8080')
+    uvicorn.run(app)
