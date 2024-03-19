@@ -11,11 +11,12 @@
      + path
 
 - fastapi-template
-  - user routes
-    - login
-    - register
-    - update
-    - delete
+  + user routes
+    + login
+    + register
+    + update
+    + delete
+    - login/logout/auth
 
 + scaffolder
  + rewrite and add scripts
@@ -28,4 +29,7 @@
   + tests
    + test all commands
 
+  - templates 
+   - list templates
+   - choose template instead of dir
   - update docs

@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from requests import Session
 from fastapi_template.models.user import UserModel
@@ -10,10 +11,19 @@ from fastapi_template.utils import hash_password
 
 router = APIRouter(prefix='/users')
 
-@router.get('/{user_id}', response_model=UserOut)
-async def get_user(user_id:str, db: Session = Depends(get_db)):
-    user = db.query(UserModel).filter(UserModel.id == user_id).first()
+def get_user_query(user_id:str, db:Session = Depends(get_db)):
+    return db.query(UserModel).filter(UserModel.id == user_id)
+    
 
+@router.get('/', response_model=List[UserOut])
+async def get_users(db:Session = Depends(get_db)):
+    users = db.query(UserModel)
+    return users
+
+@router.get('/{user_id}', response_model=UserOut)
+def get_user(user_id:str, db: Session = Depends(get_db)):
+    user = get_user_query(user_id, db).first()
+    
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id: {user_id} does not exist")
 
@@ -32,3 +42,31 @@ def create_user(user: UserIn, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     return new_user
+
+
+@router.put("/{user_id}", status_code=status.HTTP_200_OK)
+def update_user(user_id:str, updated_user:UserIn, db: Session = Depends(get_db)):
+    user_query = get_user_query(user_id, db)
+    user = user_query.first()
+    if user:
+        user_query.update(updated_user.model_dump(), synchronize_session=False)
+        db.commit()
+        return user_id
+    
+    raise HTTPException(status_code=404)
+
+
+@router.delete('/{user_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user_id:str, db: Session = Depends(get_db)):
+    user_query = get_user_query(user_id, db)
+
+    user = user_query.first()
+
+    print(user, user_id)
+
+    if user:
+        user_query.delete(synchronize_session=False)
+        db.commit()
+        return user_id
+    
+    raise HTTPException(status_code=404)
