@@ -1,5 +1,5 @@
 from typing import Optional
-from database import Base
+from fastapi_template.database import Base
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Boolean, text
 
 class UserModel(Base):

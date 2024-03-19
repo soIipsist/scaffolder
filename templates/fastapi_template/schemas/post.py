@@ -3,9 +3,9 @@ from datetime import datetime
 from typing import Optional
 
 class PostSchema(BaseModel):
-    id:Optional[int]
     title:str
     content:str
+    owner_id: int
 
     class Config:
         orm_mode = True

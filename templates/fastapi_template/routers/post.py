@@ -1,24 +1,42 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
+from psycopg2 import IntegrityError
 from requests import Session
 from models.post import PostModel
 from schemas.post import PostSchema
 import os
+from psycopg2.errors import ForeignKeyViolation
+
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 from database import *
 
-router = APIRouter(prefix='/posts')
+router = APIRouter(prefix="/posts")
 
-@router.get('/{post_id}')
-async def get_post(post_id:str):
-    return {"message": post_id}
+
+@router.get("/{post_id}", response_model=PostSchema)
+async def get_post(post_id: str, db:Session = Depends(get_db)):
+    post = db.query(PostModel).filter(PostModel.id == post_id).first()
+
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id: {post_id} does not exist")
+    return post
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=PostSchema)
 def create_post(post: PostSchema, db: Session = Depends(get_db)):
 
-    new_post = PostModel(**post.model_dump())
-    db.add(new_post)
-    db.commit()
-    db.refresh(new_post)
+    try:
+        new_post = PostModel(**post.model_dump())
+        db.add(new_post)
+        db.commit()
+        db.refresh(new_post)
+    except IntegrityError as e:
+        if isinstance(e.orig, ForeignKeyViolation):
+            raise HTTPException(
+                status_code=400, detail="Foreign key constraint violated"
+            )
+        else:
+            print('wtf man')
+            raise HTTPException(status_code=500, detail="Internal Server Error")
+
     return new_post

@@ -1,17 +1,23 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
-
 import uvicorn
 import os
-import importlib
-import database
-from schemas.user import UserIn as UserSchema
+parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0, parent_directory)
+
+import fastapi_template.database as database
+from fastapi_template.schemas.user import UserIn as UserSchema
+from fastapi_template.models.user import Base
+
+from fastapi_template.routers.user import router as user_router
+from fastapi_template.routers.post import router as post_router
+
+
+
 app = FastAPI()
-import models.user
-import models.post
-models.user.Base.metadata.create_all(database.engine)
-models.post.Base.metadata.create_all(database.engine)
+Base.metadata.create_all(database.engine)
+# models.post.Base.metadata.create_all(database.engine)
 
 origins = ["*"]
 app.add_middleware(
@@ -21,13 +27,11 @@ app.add_middleware(
     allow_methods = ["*"],
     allow_headers = ["*"],
 )
-routes_directory = os.path.join(os.path.dirname(__file__), "routers")
 
-for filename in os.listdir(routes_directory):
-    if filename.endswith(".py") and filename != "__init__.py":
-        module_name = f"routers.{filename[:-3]}"  # Remove '.py' extension
-        module = importlib.import_module(module_name)
-        app.include_router(module.router)
+app.include_router(user_router)
+app.include_router(post_router)
+
+        
 
 @app.get('/')
 def main():
