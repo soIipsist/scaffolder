@@ -1,6 +1,6 @@
-import json
 import os
-import time
+
+from pydantic import BaseModel
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.sys.path.insert(0, parent_directory)
@@ -9,10 +9,21 @@ from fastapi_template.utils import *
 from fastapi.testclient import TestClient
 
 from fastapi_template.main import app
+from fastapi_template.schemas.user import UserIn
+from fastapi_template.schemas.post import PostSchema
+from fastapi_template.database import run_postgres_script
+
+sample_user = UserIn(name='blue', surname='red', username='red', password='red')
+sample_post = PostSchema(title='post', content='content', owner_id=1)
 
 class TestFastApi(TestBase):
     def setUp(self) -> None:
         super().setUp()
+        # reset db
+
+        # query_path = os.path.join(parent_directory, 'fastapi_template','queries', 'delete_tables.sql')
+        # run_postgres_script(query_path)
+
         self.client = TestClient(app)
     
     def test_hash_password(self):
@@ -22,12 +33,25 @@ class TestFastApi(TestBase):
         self.assertIsNotNone(hashed_password)
         self.assertTrue(verify_password(password, hashed_password))
         print(password, hashed_password)
-    
-    def test_routes(self):
-        response = self.client.get('/')
 
-        print(response.text)
+    def create_route(self, route_name:str, obj:BaseModel):
+        response = self.client.post(route_name, json={**obj.model_dump()})
+        return response
+    
+    def test_create_user(self):
+        response = self.create_route('/users', sample_user)
+        self.assertIsNotNone(response)
+        print(response.status_code)
+
+        print(response.json())
+
+    def test_create_post(self):
+        response = self.create_route('/posts', sample_post)
+        self.assertIsNotNone(response)
+        print(response.status_code)
+        print(response.json())
 
 if __name__ == "__main__":
-    methods = [TestFastApi.test_routes]
-    run_test_methods(methods)
+    methods = [TestFastApi.test_create_user, TestFastApi.test_create_post]
+    methods2 = [TestFastApi.test_create_user]
+    run_test_methods(methods2)

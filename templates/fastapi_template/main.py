@@ -8,16 +8,14 @@ os.sys.path.insert(0, parent_directory)
 
 import fastapi_template.database as database
 from fastapi_template.schemas.user import UserIn as UserSchema
-from fastapi_template.models.user import Base
+from fastapi_template.models.user import Base as user_base
 
 from fastapi_template.routers.user import router as user_router
 from fastapi_template.routers.post import router as post_router
 
-
-
 app = FastAPI()
-Base.metadata.create_all(database.engine)
-# models.post.Base.metadata.create_all(database.engine)
+user_base.metadata.create_all(database.engine)
+# post_base.Base.metadata.create_all(database.engine)
 
 origins = ["*"]
 app.add_middleware(

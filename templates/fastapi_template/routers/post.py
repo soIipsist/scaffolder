@@ -5,6 +5,7 @@ from models.post import PostModel
 from schemas.post import PostSchema
 import os
 from psycopg2.errors import ForeignKeyViolation
+from sqlalchemy.exc import IntegrityError as SQLAlchemyIntegrityError
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
@@ -22,7 +23,7 @@ async def get_post(post_id: str, db:Session = Depends(get_db)):
     return post
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=PostSchema)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_post(post: PostSchema, db: Session = Depends(get_db)):
 
     try:
@@ -30,13 +31,18 @@ def create_post(post: PostSchema, db: Session = Depends(get_db)):
         db.add(new_post)
         db.commit()
         db.refresh(new_post)
-    except IntegrityError as e:
-        if isinstance(e.orig, ForeignKeyViolation):
+        return new_post
+
+    except Exception as e:
+        print(type(e))
+        if isinstance(e, ForeignKeyViolation):
             raise HTTPException(
                 status_code=400, detail="Foreign key constraint violated"
             )
+        elif isinstance(e, SQLAlchemyIntegrityError) or isinstance(e, IntegrityError):
+            raise HTTPException(
+                status_code=400, detail="Integrity error."
+            )
         else:
-            print('wtf man')
             raise HTTPException(status_code=500, detail="Internal Server Error")
 
-    return new_post
