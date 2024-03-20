@@ -9,6 +9,10 @@ scaffolder_data_path = f"{parent_directory}/src/scaffolder.json"
 scaffolder_metadata = read_json_file(scaffolder_data_path)
 scaffolder_metadata:dict
 
+template_data_path = f"{parent_directory}/src/templates.json"
+template_metadata = read_json_file(template_data_path)
+template_metadata:dict
+
 # scaffolder metadata
 template_directory = scaffolder_metadata.get('template_directory')
 project_directory = scaffolder_metadata.get('project_directory')

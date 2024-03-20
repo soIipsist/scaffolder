@@ -56,14 +56,11 @@ class TestFastApi(TestBase):
     def test_list_all(self):
         response = self.client.get('/users')
         print(response.json())
-
         self.assertTrue(isinstance(response.json(), list))
     
     def test_update_user(self):
-        
         sample_user.name = 'hello'
         response = self.client.put(f'/users/{sample_updated_user.id}', json={**sample_updated_user.model_dump()})
-
         print(response.status_code)
 
     def test_delete_user(self):

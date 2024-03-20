@@ -62,8 +62,6 @@ def delete_user(user_id:str, db: Session = Depends(get_db)):
 
     user = user_query.first()
 
-    print(user, user_id)
-
     if user:
         user_query.delete(synchronize_session=False)
         db.commit()

@@ -10,6 +10,7 @@ from src.scaffold import *
 from src.update import *
 from src.settings import *
 from src.licenses import *
+from src.templates import *
 from src.constants import *
 
 from templates.python_template.utils.file_operations import overwrite_file
@@ -133,5 +134,10 @@ class TestScaffolder(TestBase):
         self.assertIsNotNone(settings)
         self.assertListEqual(list(settings.keys()), self.parameters)
 
+    
+    def test_list_templates(self):
+        templates = list_templates()
+        print(templates)
+
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_update_python)
+    run_test_methods(TestScaffolder.test_list_templates)

@@ -29,7 +29,8 @@
   + tests
    + test all commands
 
-  - templates 
+  - templates command
    - list templates
    - choose template instead of dir
+   
   - update docs

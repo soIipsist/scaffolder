@@ -52,7 +52,7 @@ main() {
     base_command=$(echo "$OPTION" | awk '{print $1}')
     arguments="${OPTION#$base_command}"
 
-    commands=("scaffold" "licenses" "update" "settings")
+    commands=("scaffold" "templates" "licenses" "update" "settings")
 
     if [[ " ${commands[@]} " =~ " ${base_command} " ]]; then
         python "$base_command.py" $arguments
