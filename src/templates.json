@@ -1,7 +1,12 @@
 [
     {
-        "directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/template_example",
-        "name": "template_example",
+        "directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/python_template",
+        "name": "python_template",
+        "language": "python"
+    },
+    {
+        "directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/fastapi_template",
+        "name": "fastapi_template",
         "language": "python"
     }
 ]

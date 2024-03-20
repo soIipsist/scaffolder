@@ -56,12 +56,13 @@ class TestScaffolder(TestBase):
         self.assertTrue(os.path.exists(dir2))
 
     def test_get_licenses(self):
-        paths = get_licenses(licenses)
+        paths = get_license_paths(licenses)
         self.assertTrue(len(paths) > 0)
 
+        print(paths)
         new_licenses = ['red']
-        with self.assertRaises(FileNotFoundError):
-            paths = get_licenses(new_licenses)
+        paths = get_license_paths(new_licenses)
+        self.assertTrue(len(paths) == 0)
 
     def test_view_license(self):
         # test singular
@@ -75,6 +76,10 @@ class TestScaffolder(TestBase):
         # test invalid license
         paths = view_license(['no'])
         self.assertTrue(len(paths) == 0)
+
+    def test_view_all_licenses(self):
+        paths = view_license()
+        self.assertIsNotNone(paths)
 
     def test_create_license(self):
         license = 'mit'
@@ -150,4 +155,4 @@ class TestScaffolder(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_delete_template)
+    run_test_methods(TestScaffolder.test_add_template)

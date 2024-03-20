@@ -8,10 +8,18 @@ from src.constants import *
 import subprocess
 import shutil
 
-def add_template(template_directory:str, template_name:str = None, language:str = 'python', copy_template:bool = True):
+
+def get_template_indices(template:str):
+    template_indices = [i for i, t in enumerate(template_metadata) if template == t['name'] or template == t['directory']]    
+    return template_indices
+
+def add_template(template_directory:str = None, template_name:str = None, language:str = 'python', copy_template:bool = True):
     if not isinstance(template_metadata, list):
         raise ValueError("Template metadata not parsed correctly.")
     
+    # if template_directory.startswith('/templates'):
+    #     template_directory = os.path.join(parent_directory, template_directory)
+
     if not template_name:
         template_name = os.path.basename(template_directory)
 
@@ -32,16 +40,16 @@ def add_template(template_directory:str, template_name:str = None, language:str 
         overwrite_json_file(template_data_path,template_metadata)        
     
 def delete_template(template:str):
-    indices_to_remove = [i for i, t in enumerate(template_metadata) if template == t['name'] or template == t['directory']]
+    template_indices = [i for i, t in enumerate(template_metadata) if template == t['name'] or template == t['directory']]
     
     # remove directory entirely
-    if len(indices_to_remove) > 0:
-        shutil.rmtree(template_metadata[indices_to_remove[0]].get('directory'), ignore_errors=True)
+    if len(template_indices) > 0:
+        shutil.rmtree(template_metadata[template_indices[0]].get('directory'), ignore_errors=True)
 
-    for index in reversed(indices_to_remove):
+    for index in reversed(template_indices):
         del template_metadata[index]
     
-    return indices_to_remove
+    return template_indices
 
 def list_templates(templates:list = []):
 
@@ -57,7 +65,7 @@ def list_templates(templates:list = []):
             template_name = template.get('name', os.path.basename(template_directory))
             template_language = template.get('language')
 
-            print(f"{template_name}: \nDirectory: {template_directory}\nLanguage: {template_language}")
+            print(f"Template name: {template_name} \nDirectory: {template_directory}\nLanguage: {template_language}\n")
 
     return templates
 
