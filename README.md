@@ -1,6 +1,6 @@
 # Scaffolder
 
-Command Line Interface (CLI) scaffolding tool designed to create projects using personalized templates. These templates are organized as directories within the designated `templates` folder. To configure project metadata before its creation, users can define specifications in the `src/scaffolder.json` file.
+Command Line Interface (CLI) scaffolding tool designed to automatically generate projects using personalized templates. To configure project metadata before its creation, users can define specifications in the `src/scaffolder.json` file.
 
 ## Installation
 
@@ -42,20 +42,32 @@ pip install git+https://github.com/soIipsis/scaffolder@main
 
 ### Commands
 
+#### templates
+
+A `template` can be any directory, as long as it resides within the `templates` folder or specified in the `templates.json` file. During the scaffolding process, all template files will be transferred to the newly created project directory. You can manage templates by adding or deleting them using the `add` and `delete` subcommands respectively.
+
+```bash
+scaffolder > templates add [-h] [-t TEMPLATE]
+```
+
+```bash
+scaffolder > templates delete [-h] [-t TEMPLATE]
+```
+
 #### scaffold
 
-Creates a new project by utilizing a specified `template_directory` as a baseline. The resulting project will be scaffolded in a `project_directory` of your choice, as specified in the `scaffolder.json` settings file.
+Creates a new project using a specified `template` name or directory as a baseline. The resulting project will be scaffolded in a `project_directory` of your choice, as specified in the `scaffolder.json` settings file. The generated directory will always adopt the base name of the project_directory.
 
-Users have the flexibility to customize parameters either by directly modifying the file or by providing new values through the CLI. If `create_repository` is set to true, an initialized GitHub repository will be created automatically, with all the main files included in the original `template_directory`.
+Users have the flexibility to customize parameters either by directly modifying the file or by providing new values through the CLI. If `create_repository` is set to true, an initialized GitHub repository will be created automatically, with all the main files included in the original `template` directory.
 
 **_Note: All words containing the project's name will be renamed in the default template, including files._**
 
 ```bash
-scaffolder >  scaffold [-h] [-t TEMPLATE_DIRECTORY] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u GIT_USERNAME] [-r CREATE_REPOSITORY] [-v REPOSITORY_VISIBILITY]
+scaffolder >  scaffold [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u GIT_USERNAME] [-r CREATE_REPOSITORY] [-v REPOSITORY_VISIBILITY]
 
 options:
   -h, --help                                                               show this help message and exit
-  -t TEMPLATE_DIRECTORY, --template_directory TEMPLATE_DIRECTORY           template directory to copy files from
+  -t TEMPLATE, --template TEMPLATE                                         template name or directory to copy files from
   -p PROJECT_DIRECTORY, --project_directory PROJECT_DIRECTORY              destination directory of your scaffolded project
   -l LICENSE, --license LICENSE                                            creates license file (mit, afl-3.0, apache-v2.0 etc.)
   -a AUTHOR, --author AUTHOR                                               set name of the author (replaces every instance within the license file)
@@ -116,13 +128,13 @@ options:
 
 ```bash
 
-scaffolder > settings update [-h] [-t TEMPLATE_DIRECTORY] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u GIT_USERNAME] [-r CREATE_REPOSITORY]
+scaffolder > settings update [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u GIT_USERNAME] [-r CREATE_REPOSITORY]
                                  [-v REPOSITORY_VISIBILITY] 
 
 options:
   -h, --help            show this help message and exit
-  -t TEMPLATE_DIRECTORY, --template_directory TEMPLATE_DIRECTORY
-                        template directory to copy files from
+  -t TEMPLATE, --template TEMPLATE
+                        template name or directory to copy files from
   -p PROJECT_DIRECTORY, --project_directory PROJECT_DIRECTORY
                         destination directory of your scaffolded project
   -l LICENSE, --license LICENSE
@@ -135,7 +147,8 @@ options:
                         if set to true, creates a git repository using the git cli tool
   -v REPOSITORY_VISIBILITY, --repository_visibility REPOSITORY_VISIBILITY
                         set git repository visibility (0: private, 1: public, 2: internal)
- 
+  -g GH_CHECK, --gh_check GH_CHECK 
+               if set to true, checks if gh is authenticated on startup
 ```
 
 ```bash

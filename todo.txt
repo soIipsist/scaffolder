@@ -28,9 +28,15 @@
 
   + tests
    + test all commands
+   - rerun tests
 
   + templates command
    + list templates
-   - choose template instead of dir
+   + choose template instead of dir
 
-  - update docs
+  + update docs
+  - languages.json
+    - combine languages with function_patterns file
+    - handle git template urls
+  
+  

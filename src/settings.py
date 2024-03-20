@@ -52,6 +52,7 @@ if __name__ == "__main__":
         Argument(name=('-d', '--update_destination_directory')),
         Argument(name=('-f', '--update_files'), nargs='?'),
         Argument(name=('-r', '--create_repository'), type=bool, default=False),
+        Argument(name=('-g', '--gh_check'), type=bool, default=False),
     ]
     parser_arguments =  [
         Argument(name='parameters', nargs='?', default=None)

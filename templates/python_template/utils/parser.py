@@ -58,16 +58,8 @@ class Argument:
         return arguments
     
     def get_argument_dictionary(self):
-
-        dictionary = {
-            "type": self.type,
-            "default": self.default,
-            "help": self.help,
-            "nargs": self.nargs,
-            "action": self.action,
-            "required": self.required,
-            "choices": self.choices
-        }
+        dictionary = self.__dict__.copy()
+        safe_pop(dictionary, 'name')
 
         name = self.name[0] if isinstance(self.name, tuple) else self.name
         

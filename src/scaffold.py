@@ -4,7 +4,7 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 from src.repository import get_repository_visibility, create_git_repository, git_repo_exists, update_git_repository
 from src.licenses import create_license
-from src.templates import get_template_indices, get_template_directory
+from src.templates import get_template_directory
 from templates.python_template.utils.file_operations import find_and_replace_in_directory
 from templates.python_template.utils.parser import *
 from src.constants import *
