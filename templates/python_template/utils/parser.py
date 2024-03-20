@@ -65,7 +65,8 @@ class Argument:
             "help": self.help,
             "nargs": self.nargs,
             "action": self.action,
-            "required": self.required
+            "required": self.required,
+            "choices": self.choices
         }
 
         name = self.name[0] if isinstance(self.name, tuple) else self.name
@@ -172,7 +173,7 @@ class Parser:
         for arg in self.parser_arguments:
             arg: Argument
             arg_dict = arg.get_argument_dictionary()
-            # print(arg_dict)
+
             self.parser.add_argument(
                 *arg.name,
                 **arg_dict

@@ -4,7 +4,7 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 from src.repository import get_repository_visibility, create_git_repository, git_repo_exists, update_git_repository
 from src.licenses import create_license
-from src.templates import get_template_indices
+from src.templates import get_template_indices, get_template_directory
 from templates.python_template.utils.file_operations import find_and_replace_in_directory
 from templates.python_template.utils.parser import *
 from src.constants import *
@@ -18,17 +18,8 @@ def scaffold(
     create_repository: bool = create_repository,
     repository_visibility: str = 1,
 ):
-    if is_valid_dir(template, False):
-        template_directory = template
-    else:
-        indices = get_template_indices(template)
-        if len(indices) == 0:
-            raise ValueError(f'Template {template} does not exist. To add a new template, use the `templates add` command.')
-        
-        template_directory = template_metadata[get_template_indices(template)[0]].get('directory')
-
-    if not os.path.exists(template_directory):
-        raise ValueError(f'template directory {template_directory} does not exist.')    
+    
+    template_directory = get_template_directory(template)
 
     if not os.path.exists(project_directory):
         subprocess.run(["mkdir", project_directory], errors=None)

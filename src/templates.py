@@ -13,15 +13,31 @@ def get_template_indices(template:str):
     template_indices = [i for i, t in enumerate(template_metadata) if template == t['name'] or template == t['directory']]    
     return template_indices
 
-def add_template(template_directory:str = None, template_name:str = None, language:str = 'python', copy_template:bool = True):
+def get_template_directory(template:str):
+
+
+    if is_valid_dir(template, False):
+        template_directory = template
+    else:
+        indices = get_template_indices(template)
+        if len(indices) == 0:
+            raise ValueError(f'Template {template} does not exist. To add a new template, use the `templates add` command.')
+        
+        template_directory = template_metadata[get_template_indices(template)[0]].get('directory')
+        template_directory = template_directory.replace('__PARENTDIR__', parent_directory)
+
+
+    if not os.path.exists(template_directory):
+        raise ValueError(f'template directory {template_directory} does not exist.')    
+
+    return template_directory
+
+def add_template(template_directory:str, template_name:str = None, language:str = 'python', copy_template:bool = True):
     if not isinstance(template_metadata, list):
         raise ValueError("Template metadata not parsed correctly.")
     
-    # if template_directory.startswith('/templates'):
-    #     template_directory = os.path.join(parent_directory, template_directory)
-
-    if not template_name:
-        template_name = os.path.basename(template_directory)
+    template_name = os.path.basename(template_directory) if not template_name else template_name
+    template_directory = get_template_directory(template_directory)
 
     if copy_template:
 
@@ -64,6 +80,9 @@ def list_templates(templates:list = []):
             template_directory = template.get('directory')
             template_name = template.get('name', os.path.basename(template_directory))
             template_language = template.get('language')
+
+            template_directory = template_directory.replace('__PARENTDIR__', parent_directory)
+
 
             print(f"Template name: {template_name} \nDirectory: {template_directory}\nLanguage: {template_language}\n")
 

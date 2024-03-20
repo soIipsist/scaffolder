@@ -153,6 +153,19 @@ class TestScaffolder(TestBase):
         indices = delete_template('template_example')
         self.assertTrue(len(indices) > 0)
 
+    def test_get_template_directory(self):
+        template_dir = get_template_directory('python_template')
+        print(template_dir)
+
+        with self.assertRaises(ValueError):
+            template_dir = get_template_directory('re')
+            print(template_dir)
+        
+        template_dir = get_template_directory('fastapi_template')
+        print(template_dir)
+
+        template_dir = get_template_directory('template_example')
+        print(template_dir)
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_add_template)
+    run_test_methods(TestScaffolder.test_delete_template)
