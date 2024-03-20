@@ -140,10 +140,9 @@ class TestScaffolder(TestBase):
         print(templates)
     
     def test_add_template(self):
-        template_directory = '/Users/p/Desktop/soIipsis/scaffolder/templates/fastapi_template'
+        template_directory = '/Users/p/Desktop/template_example'
         template_name = None
         add_template(template_directory, template_name)
-        # add_template(template_directory, template_name)
     
     def test_delete_template(self):
         indices = delete_template('python_template')
@@ -153,7 +152,5 @@ class TestScaffolder(TestBase):
         self.assertTrue(len(indices) == 0)
 
 
-
-
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_delete_template)
+    run_test_methods(TestScaffolder.test_add_template)

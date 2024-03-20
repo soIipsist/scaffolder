@@ -9,7 +9,6 @@ from src.constants import *
 import subprocess
 
 
-
 def add_template(template_directory:str, template_name:str, language:str = 'python', copy_template:bool = True):
     if not isinstance(template_metadata, list):
         raise ValueError("Template metadata not parsed correctly.")
@@ -18,17 +17,20 @@ def add_template(template_directory:str, template_name:str, language:str = 'pyth
         template_name = os.path.basename(template_directory)
 
     if copy_template:
-        templates_dir = os.path.join(parent_directory, 'templates')
+
+        templates_dir = os.path.join(parent_directory, 'templates', template_name)
+        if not os.path.exists(templates_dir):
+            os.makedirs(templates_dir)
+        
         command = f"cp -r {template_directory}/* {templates_dir}/"
-        # subprocess.run(command, shell=True)
-        template_directory = os.path.join(templates_dir, os.path.basename(template_directory))
-        # print(template_directory)
+        subprocess.run(command, shell=True)
+        template_directory = templates_dir
 
     template_dict = {"directory": template_directory, "name": template_name, "language": language}
     
-    template_metadata.append(template_dict)
-    print(template_metadata)
-    # overwrite_json_file(template_data_path,template_metadata)        
+    if template_dict not in template_metadata:
+        template_metadata.append(template_dict)
+        overwrite_json_file(template_data_path,template_metadata)        
     
 def delete_template(template:str):
     indices_to_remove = [i for i, t in enumerate(template_metadata) if template == t['name'] or template == t['directory']]

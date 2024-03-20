@@ -1,8 +1,7 @@
 [
     {
-        "name": "python_template",
-        "directory": "",
+        "directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/template_example",
+        "name": "template_example",
         "language": "python"
     }
-
 ]
