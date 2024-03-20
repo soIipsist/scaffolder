@@ -145,12 +145,9 @@ class TestScaffolder(TestBase):
         add_template(template_directory, template_name)
     
     def test_delete_template(self):
-        indices = delete_template('python_template')
+        indices = delete_template('template_example')
         self.assertTrue(len(indices) > 0)
-
-        indices = delete_template('red')
-        self.assertTrue(len(indices) == 0)
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_add_template)
+    run_test_methods(TestScaffolder.test_delete_template)

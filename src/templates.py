@@ -1,4 +1,3 @@
-import argparse
 from pprint import pp
 import os
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -7,9 +6,9 @@ from templates.python_template.utils.file_operations import overwrite_json_file
 from templates.python_template.utils.parser import *
 from src.constants import *
 import subprocess
+import shutil
 
-
-def add_template(template_directory:str, template_name:str, language:str = 'python', copy_template:bool = True):
+def add_template(template_directory:str, template_name:str = None, language:str = 'python', copy_template:bool = True):
     if not isinstance(template_metadata, list):
         raise ValueError("Template metadata not parsed correctly.")
     
@@ -34,6 +33,11 @@ def add_template(template_directory:str, template_name:str, language:str = 'pyth
     
 def delete_template(template:str):
     indices_to_remove = [i for i, t in enumerate(template_metadata) if template == t['name'] or template == t['directory']]
+    
+    # remove directory entirely
+    if len(indices_to_remove) > 0:
+        shutil.rmtree(template_metadata[indices_to_remove[0]].get('directory'), ignore_errors=True)
+
     for index in reversed(indices_to_remove):
         del template_metadata[index]
     
