@@ -24,8 +24,7 @@ def get_license_paths(licenses: list = []):
 def create_license(
     license: str, target_directory: str, author: str, year: str = datetime.now().year
 ):
-
-    license_path = get_license_paths(license)[0]
+    license_path = get_license_paths([license])[0]
 
     if license_path:
         command = f"cp {license_path} {target_directory}"
@@ -67,7 +66,7 @@ def view_license(licenses: list = [], show_content:int=0):
 
 if __name__ == "__main__":
     parser_arguments = [Argument(name=("-l", "--licenses"), nargs="+"),
-                        Argument(name=("-c", "--show_content"), type=int, choices=[0, 1])]
+                        BoolArgument(name=("-c", "--show_content"))]
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()

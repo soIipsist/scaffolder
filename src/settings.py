@@ -32,7 +32,9 @@ def update_settings(**args):
     settings = {}
 
     for key, val in args.items():
-        if val is not None:
+        meta_val = scaffolder_metadata.get(key)
+        # print(meta_val, val)
+        if val != meta_val and val is not None:
             settings.update({key: val})
     
     new_settings = {**scaffolder_metadata, **settings}
@@ -42,7 +44,7 @@ def update_settings(**args):
 if __name__ == "__main__":
     
     update_arguments = [
-        DirectoryArgument(name=('-t', '--template_directory')),
+        Argument(name=('-t', '--template')),
         DirectoryArgument(name=('-p', '--project_directory')),
         Argument(name=('-l', '--license')),
         Argument(name=('-a', '--author')),
@@ -50,9 +52,9 @@ if __name__ == "__main__":
         Argument(name=('-v', '--repository_visibility'), type=int),
         Argument(name=('-s', '--update_source_directory')),
         Argument(name=('-d', '--update_destination_directory')),
-        Argument(name=('-f', '--update_files'), nargs='?'),
-        Argument(name=('-r', '--create_repository'), type=bool, default=False),
-        Argument(name=('-g', '--gh_check'), type=bool, default=False),
+        Argument(name=('-f', '--update_files'), nargs='+'),
+        BoolArgument(name=('-r', '--create_repository')),
+        BoolArgument(name=('-g', '--gh_check')),
     ]
     parser_arguments =  [
         Argument(name='parameters', nargs='?', default=None)

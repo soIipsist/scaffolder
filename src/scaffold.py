@@ -18,7 +18,6 @@ def scaffold(
     create_repository: bool = create_repository,
     repository_visibility: str = 1,
 ):
-    
     template_directory = get_template_directory(template)
 
     if not os.path.exists(project_directory):

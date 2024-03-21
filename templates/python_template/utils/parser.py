@@ -5,6 +5,7 @@ from templates.python_template.utils.dictionary_operations import safe_pop
 
 from templates.python_template.utils.path_operations import is_valid_path, is_valid_dir
 from templates.python_template.utils.date_utils import get_current_date, parse_date
+from templates.python_template.utils.str_utils import str_to_bool
 
 
 class Argument:
@@ -102,6 +103,10 @@ class DirectoryArgument(Argument):
     ) -> None:
         super().__init__(name, type, help=help, default=default)
 
+class BoolArgument(Argument):
+    def __init__( self, name: str = "--is_checked", type=str_to_bool, default=False, help="", choices = [0, 1, "true", "false", True, False]
+    ) -> None:
+        super().__init__(name, type, help=help, default=default, choices=choices)
 
 class SubCommand:
     subcommand_arguments: list[Argument]
