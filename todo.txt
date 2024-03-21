@@ -28,7 +28,7 @@
 
   + tests
    + test all commands
-   - rerun tests
+   + rerun tests
 
   + templates command
    + list templates

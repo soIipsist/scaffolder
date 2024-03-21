@@ -1,1 +1,13 @@
-{"template_directory": "python_template", "project_directory": "/Users/p/Desktop/soIipsis/chess_bot", "update_source_directory": "", "update_destination_directory": "", "update_files": ["red.py"], "license": "mit", "author": "soIipsis", "git_username": "soIipsis", "create_repository": false, "gh_check": false, "repository_visibility": 0, "template": "python"}
+{
+    "template_directory": "python_template",
+    "project_directory": "/Users/p/Desktop/soIipsis/chess_bot",
+    "update_source_directory": "/Users/p/Desktop/soIipsis/chess_bot/utils",
+    "update_destination_directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/python_template/utils",
+    "update_files": [],
+    "license": "mit",
+    "author": "soIipsis",
+    "git_username": "soIipsis",
+    "create_repository": false,
+    "gh_check": false,
+    "repository_visibility": 1
+}

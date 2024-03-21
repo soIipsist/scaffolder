@@ -44,7 +44,7 @@ def update_settings(**args):
 if __name__ == "__main__":
     
     update_arguments = [
-        Argument(name=('-t', '--template')),
+        Argument(name=('-t', '--template_directory')),
         DirectoryArgument(name=('-p', '--project_directory')),
         Argument(name=('-l', '--license')),
         Argument(name=('-a', '--author')),

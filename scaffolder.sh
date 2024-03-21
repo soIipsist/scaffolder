@@ -83,9 +83,9 @@ HISTSIZE=100
 history -r script_history
 
 install_dependency "gh"
+install_dependency "jq"
 
-gh_check=$(grep 'gh_check' scaffolder.json | sed -r 's/^[^:]*:(.*),?$/\1/;s/,$//')
-
+gh_check=$(jq -r '.gh_check' scaffolder.json)
 
 if [ $gh_check == 'true' ]; then
     gh_authenticate
