@@ -2,13 +2,16 @@
 
 Command Line Interface (CLI) scaffolding tool designed to automatically generate projects using personalized templates. To configure project metadata before its creation, users can define specifications in the `src/scaffolder.json` file.
 
+## Prerequisites
+
+It is recommended to use Python version 3.11 or above. Running `scaffolder.sh` will automatically install all dependencies, unless explicitly declined during the installation process.
+
+The following dependecies will be installed:
+
+- jq - Used to parse JSON data
+- gh - Used for repository creation and git authentication
+
 ## Installation
-
-It is recommended to use Python version 3.11 or above.
-
-For repository creation, authentication with `gh` is essential. Running `scaffolder.sh` will automatically install all dependencies, unless explicitly declined during the installation process.
-
-### Manual installation (Git)
 
 1. Clone the git repository:
 
@@ -24,19 +27,13 @@ For repository creation, authentication with `gh` is essential. Running `scaffol
 
 3. Run `scaffolder.sh`
 
-4. If you're on **Linux**, Create an alias in your .bashrc :
+4. If you're on **Linux** or **Mac**, Create an alias in your .bashrc :
 
       ```bash
       chmod +x /path-to-release/scaffolder/scaffolder.sh
       alias scaffolder="bash /path-to-release/scaffolder/scaffolder.sh"
 
       ```
-
-### Pip (Linux, Windows)
-
-```bash
-pip install git+https://github.com/soIipsis/scaffolder@main
-```
 
 ## Usage
 
