@@ -9,6 +9,18 @@ from templates.python_template.utils.parser import *
 from src.constants import *
 
 
+def detect_language(file_path:str):
+    is_valid_path(file_path) 
+    extension = os.path.splitext(file_path)[1]
+
+    for key, vals in languages_metadata.items():
+        extensions = vals.get('extensions')
+        if extensions and extension in extensions:
+            key:str
+            return key.lower()
+
+    return extension
+
 def update(
     update_files: list = update_files,
     update_source_directory: str = update_source_directory,
@@ -26,13 +38,14 @@ def update(
 
     if language not in languages:
         raise ValueError(
-            "Language not supported. Look at 'function_patterns.json' to check for all supported languages."
+            "Language not supported. Look at 'languages.json' to check for all supported languages."
         )
 
     # always use function patterns array, if defined
 
     if not function_patterns:
-        function_patterns = function_patterns_metadata.get(language)
+        language = language.lower()
+        function_patterns = languages_metadata.get(language).get('function_patterns')
 
     # find specified files in source directory
 
@@ -57,7 +70,7 @@ def update(
             update_path = os.path.normpath(f"{update_destination_directory}/{source_file_name}")
 
         if not is_valid_path(update_path, False):  # file does not exist, copy it
-            # copy and paste file
+            # copy file
             print(
                 f"File '{source_file_name}' not found in '{update_destination_directory}'. \n Copying to '{update_path}'..."
             )

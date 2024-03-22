@@ -177,6 +177,23 @@ class TestScaffolder(TestBase):
 
     #     overwrite_json_file(languages_path, new_languages)
     #     # print(new_languages)
+        
+    def test_detect_language(self):
+        file_path = ''
+        with self.assertRaises(FileNotFoundError):
+            detect_language(file_path)
+        
+        file_path = f'{parent_directory}/tests/test_files/test.py'
+        java_path = f'{parent_directory}/tests/test_files/java.java'
+
+        self.assertTrue(detect_language(file_path) == 'python')
+        self.assertTrue(detect_language(java_path) == 'java')
+        print(detect_language(java_path))
+
+    def test_add_function_patterns(self):
+        language = 'python'
+
+
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_get_template_directory)
+    run_test_methods(TestScaffolder.test_add_function_patterns)

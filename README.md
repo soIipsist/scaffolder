@@ -79,7 +79,7 @@ options:
 
 #### update
 
-Updates files in an `update_destination_directory` with those from a `update_source_directory`. The extraction of updated functions is governed by `function_patterns`, specified in the `function_patterns.json` file. By default, Python pattern matching is employed.
+Updates files in an `update_destination_directory` with those from a `update_source_directory`. The extraction of updated functions is governed by `function_patterns`, specified in the `languages.json` file. By default, Python pattern matching is employed.
 
 ```bash
 scaffolder > update -h
