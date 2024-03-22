@@ -7,6 +7,7 @@ os.sys.path.insert(0, parent_directory)
 from templates.python_template.utils.file_operations import overwrite_json_file
 from templates.python_template.utils.parser import *
 from src.constants import *
+from inspect import getfullargspec
 
 
 class SettingsAction(argparse.Action):
@@ -36,7 +37,7 @@ def update_settings(**args):
 
     for key, val in args.items():
         meta_val = scaffolder_metadata.get(key)
-        # print(meta_val, val)
+
         if val != meta_val and val is not None:
             settings.update({key: val})
 
@@ -56,8 +57,8 @@ if __name__ == "__main__":
         Argument(name=("-s", "--update_source_directory")),
         Argument(name=("-d", "--update_destination_directory")),
         Argument(name=("-f", "--update_files"), nargs="+"),
-        BoolArgument(name=("-r", "--create_repository")),
-        BoolArgument(name=("-g", "--gh_check")),
+        BoolArgument(name=("-r", "--create_repository"), default=create_repository),
+        BoolArgument(name=("-g", "--gh_check"), default=gh_check),
     ]
     parser_arguments = [Argument(name="parameters", nargs="?", default=None)]
 

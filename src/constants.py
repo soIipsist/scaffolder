@@ -29,6 +29,6 @@ author = scaffolder_metadata.get("author")
 git_username = scaffolder_metadata.get("git_username")
 create_repository = scaffolder_metadata.get("create_repository")
 repository_visibility = scaffolder_metadata.get("repository_visibility")
-
+gh_check = scaffolder_metadata.get("gh_check")
 licenses_directory = f"{parent_directory}/src/licenses"
 pp = pprint.PrettyPrinter(indent="3")
