@@ -6,38 +6,43 @@ def get_nested_value(dictionary, keys):
             return None
     return dictionary
 
-def invert_dict(dictionary:dict) -> dict:
+
+def invert_dict(dictionary: dict) -> dict:
     temp_dict = {}
     for key, value in dictionary.items():
         if isinstance(value, dict) or isinstance(value, list):
             pass
-        else: 
+        else:
             temp_dict.update({value: key})
-    return  temp_dict
+    return temp_dict
 
 
-def find_dict_list_duplicates(list_of_dicts:list, key_to_check:str):
+def find_dict_list_duplicates(list_of_dicts: list, key_to_check: str):
     """
     Given a list of dictionaries, return duplicate items with the associated key.
     """
-    
+
     from collections import defaultdict
 
     value_occurrences = defaultdict(list)
 
- 
     for index, item in enumerate(list_of_dicts):
         value = item.get(key_to_check)
         if value:
             value_occurrences[value].append(index)
- 
-    duplicate_items = [item for indices in value_occurrences.values() if len(indices) > 1 for item in (list_of_dicts[i] for i in indices)]
+
+    duplicate_items = [
+        item
+        for indices in value_occurrences.values()
+        if len(indices) > 1
+        for item in (list_of_dicts[i] for i in indices)
+    ]
 
     return duplicate_items
 
 
-def safe_pop(dictionary:dict, keys:list):
-    """ 
+def safe_pop(dictionary: dict, keys: list):
+    """
     Safely remove the specified keys in a dictionary.
     """
     if not isinstance(keys, list):
@@ -46,5 +51,14 @@ def safe_pop(dictionary:dict, keys:list):
     for key in keys:
         if key in dictionary:
             dictionary.pop(key)
-    
 
+def get_item_case_insensitive(dictionary:dict, item:str):
+    """
+    Returns item regardless of case.
+    """
+
+    for key in dictionary.keys():
+        if key.lower() == item.lower():
+            return dictionary[key]
+
+    return None

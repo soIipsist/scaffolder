@@ -6,6 +6,7 @@ os.sys.path.insert(0, parent_directory)
 from src.functions import find_files, get_updated_file_content, get_updated_functions
 from templates.python_template.utils.path_operations import is_valid_path
 from templates.python_template.utils.parser import *
+from templates.python_template.utils.dictionary_operations import get_item_case_insensitive
 from src.constants import *
 
 
@@ -18,14 +19,33 @@ def detect_language(file_path:str):
         if extensions and extension in extensions:
             key:str
             return key.lower()
+    
+    return "python"
 
-    return extension
+def get_function_patterns(file_path:str, language:str = None, function_patterns:list = None):
+    if function_patterns:
+        return function_patterns
+
+    if not language:
+        language = detect_language(file_path)
+
+    default_patterns = [
+            "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"
+        ]
+    l = get_item_case_insensitive(languages_metadata, language)
+
+    if not l:
+        return default_patterns
+    else: 
+        l:dict
+        return l.get('function_patterns', default_patterns)
+    
 
 def update(
     update_files: list = update_files,
     update_source_directory: str = update_source_directory,
     update_destination_directory: str = update_destination_directory,
-    language: str = "python",
+    language: str = None,
     function_patterns: list = None,
 ):  
 
@@ -35,17 +55,6 @@ def update(
     print(
         f'Updating changed files from "{update_source_directory}" to "{update_destination_directory}"...'
     )
-
-    if language not in languages:
-        raise ValueError(
-            "Language not supported. Look at 'languages.json' to check for all supported languages."
-        )
-
-    # always use function patterns array, if defined
-
-    if not function_patterns:
-        language = language.lower()
-        function_patterns = languages_metadata.get(language).get('function_patterns')
 
     # find specified files in source directory
 
@@ -77,10 +86,9 @@ def update(
             subprocess.run(["cp", source_path, update_path])
         else:
             # get updated content and write it to file
+            function_patterns = get_function_patterns(source_path, language, function_patterns)
             funcs = get_updated_functions(source_path, update_path, function_patterns)
             content = get_updated_file_content(funcs, update_path)
-
-            # print(content)
 
             with open(update_path, "w", encoding="utf-8") as file:
                 file.write(content)
@@ -93,6 +101,7 @@ if __name__ == "__main__":
 
     parser_arguments = [
         Argument(name=('-f','--update_files'), nargs='+'),
+        Argument(name=('-l', '--language')),
         DirectoryArgument(name=('-s', '--update_source_directory')),
         DirectoryArgument(name=('-d', '--update_destination_directory')),
         Argument(name=('-p', '--function_patterns'), nargs='+')

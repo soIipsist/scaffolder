@@ -35,8 +35,8 @@
    + choose template instead of dir
 
   + update docs
-  - languages.json
-    - combine languages with function_patterns file
+  + languages.json
+    + combine languages with function_patterns file
   - handle git template urls
   - create repo without using gh
   

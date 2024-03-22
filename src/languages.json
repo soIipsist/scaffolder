@@ -1458,6 +1458,12 @@
         "extensions": [
             ".java",
             ".jav"
+        ],
+        "function_patterns": [
+            "public\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+            "public void\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+            "private\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+            "protected\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}"
         ]
     },
     "Java Properties": {
@@ -2515,6 +2521,9 @@
             ".tac",
             ".wsgi",
             ".xpy"
+        ], 
+        "function_patterns":[
+            "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"
         ]
     },
     "Python console": {
