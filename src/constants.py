@@ -13,6 +13,16 @@ template_data_path = f"{parent_directory}/src/templates.json"
 template_metadata = read_json_file(template_data_path)
 template_metadata:dict
 
+function_patterns_path = f"{parent_directory}/src/function_patterns.json"
+function_patterns_metadata = read_json_file(function_patterns_path)
+function_patterns_metadata:dict
+languages = function_patterns_metadata.keys()
+
+languages_path = f"{parent_directory}/src/languages.json"
+# languages_path2  =  f"{parent_directory}/src/languages2.json"
+languages_metadata = read_json_file(languages_path)
+languages_metadata:dict
+
 # scaffolder metadata
 template_directory = scaffolder_metadata.get('template_directory')
 project_directory = scaffolder_metadata.get('project_directory')
@@ -24,11 +34,6 @@ author = scaffolder_metadata.get('author')
 git_username = scaffolder_metadata.get('git_username')
 create_repository = scaffolder_metadata.get('create_repository')
 repository_visibility = scaffolder_metadata.get('repository_visibility')
-
-function_patterns_path = f"{parent_directory}/src/function_patterns.json"
-function_patterns_metadata = read_json_file(function_patterns_path)
-function_patterns_metadata:dict
-languages = function_patterns_metadata.keys()
 
 licenses_directory = f"{parent_directory}/src/licenses"
 pp = pprint.PrettyPrinter(indent="3")

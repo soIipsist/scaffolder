@@ -166,6 +166,17 @@ class TestScaffolder(TestBase):
 
         template_dir = get_template_directory('template_example')
         print(template_dir)
+    
+    # def test_create_languages(self):
+    #     languages = read_json_file(languages_path2)
+    #     languages:dict
+
+    #     new_languages = {}
+    #     for key, val in languages.items():
+    #         new_languages.update({key: {"extensions": val.get("extensions")}})
+
+    #     overwrite_json_file(languages_path, new_languages)
+    #     # print(new_languages)
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_delete_template)
+    run_test_methods(TestScaffolder.test_get_template_directory)

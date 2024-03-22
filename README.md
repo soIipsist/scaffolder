@@ -44,7 +44,7 @@ pip install git+https://github.com/soIipsis/scaffolder@main
 
 #### templates
 
-A `template` can be any directory, as long as it resides within the `templates` folder or specified in the `templates.json` file. During the scaffolding process, all template files will be transferred to the newly created project directory. You can manage templates by adding or deleting them using the `add` and `delete` subcommands respectively.
+A `template` can be any directory, as long as it resides within the `templates` folder, or specified in the `templates.json` file. During the scaffolding process, all template files will be transferred to the newly created project directory. You can manage templates by adding or deleting them using the `add` and `delete` subcommands respectively.
 
 ```bash
 scaffolder > templates add [-h] [-t TEMPLATE]
