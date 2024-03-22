@@ -117,12 +117,11 @@ class TestSQLiteItem(TestBase):
         player.export_item(path)
         self.assertTrue(os.path.exists(path))
 
-
     def test_import_item(self):
         path = os.getcwd() + "/import_test.txt"
         regex = [r"Player: (.+)\n", r"Total exp: (.+)"]
-        attr_names = ['name', 'total_exp']
-        
+        attr_names = ["name", "total_exp"]
+
         # dont insert
         player.import_item(path, regex, attr_names, False)
         print(player.name)
@@ -130,7 +129,6 @@ class TestSQLiteItem(TestBase):
 
         # insert
         player.import_item(path, regex, attr_names)
-        
 
 
 if __name__ == "__main__":

@@ -38,19 +38,22 @@ def create_license(
         new_content = re.sub(r"\{year\}", str(year), new_content)
         overwrite_file(new_path, new_content)
 
-        return new_path
+        # rename to LICENSE
+        dest = os.path.join(target_directory, "LICENSE")
+        os.rename(new_path, dest)
+        return dest
 
 
-def view_license(licenses: list = [], show_content:int=0):
-    
+def view_license(licenses: list = [], show_content: int = 0):
+
     show_content = bool(show_content)
 
     if not isinstance(licenses, list):
         licenses = [licenses]
 
     if licenses == "all" or not licenses:
-        license_paths = os.listdir(licenses_directory) 
-        license_paths = get_license_paths(license_paths)           
+        license_paths = os.listdir(licenses_directory)
+        license_paths = get_license_paths(license_paths)
     else:
         license_paths = get_license_paths(licenses)
 
@@ -65,8 +68,10 @@ def view_license(licenses: list = [], show_content:int=0):
 
 
 if __name__ == "__main__":
-    parser_arguments = [Argument(name=("-l", "--licenses"), nargs="+"),
-                        BoolArgument(name=("-c", "--show_content"))]
+    parser_arguments = [
+        Argument(name=("-l", "--licenses"), nargs="+"),
+        BoolArgument(name=("-c", "--show_content")),
+    ]
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()

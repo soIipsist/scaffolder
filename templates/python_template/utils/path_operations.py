@@ -15,7 +15,3 @@ def is_valid_path(path, raise_error=True):
             raise FileNotFoundError(path)
         return None
     return path
-
-
-
-

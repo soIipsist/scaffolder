@@ -11,8 +11,9 @@ from pprint import PrettyPrinter
 
 from utils.sqlite_connection import reset_db, delete_db, create_db
 
+
 class TestBase(unittest.TestCase):
-    
+
     def setUp(self) -> None:
         self.logging = True
         self.extension = "json"

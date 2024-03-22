@@ -57,17 +57,17 @@ class Argument:
             for arg in args
         ]
         return arguments
-    
+
     def get_argument_dictionary(self):
         dictionary = self.__dict__.copy()
-        safe_pop(dictionary, 'name')
+        safe_pop(dictionary, "name")
 
         name = self.name[0] if isinstance(self.name, tuple) else self.name
-        
-        if not(name.startswith('-')):
+
+        if not (name.startswith("-")):
             safe_pop(dictionary, "required")
 
-        if dictionary.get('action') and not(isinstance(self.action, argparse.Action)):
+        if dictionary.get("action") and not (isinstance(self.action, argparse.Action)):
             safe_pop(dictionary, ["type", "nargs", "default"])
 
         return dictionary
@@ -75,9 +75,11 @@ class Argument:
     def __str__(self) -> str:
         return str(vars(self))
 
+
 class StoreArgument(Argument):
-    def __init__(self, name: str = ("--parameters"), action='store_true') -> None:
+    def __init__(self, name: str = ("--parameters"), action="store_true") -> None:
         super().__init__(name, action=action)
+
 
 class DateArgument(Argument):
     def __init__(
@@ -103,10 +105,18 @@ class DirectoryArgument(Argument):
     ) -> None:
         super().__init__(name, type, help=help, default=default)
 
+
 class BoolArgument(Argument):
-    def __init__( self, name: str = "--is_checked", type=str_to_bool, default=False, help="", choices = [0, 1, "true", "false", True, False]
+    def __init__(
+        self,
+        name: str = "--is_checked",
+        type=str_to_bool,
+        default=False,
+        help="",
+        choices=[0, 1, "true", "false", True, False],
     ) -> None:
         super().__init__(name, type, help=help, default=default, choices=choices)
+
 
 class SubCommand:
     subcommand_arguments: list[Argument]
@@ -133,10 +143,7 @@ class SubCommand:
             arg: Argument
             arg_dict = arg.get_argument_dictionary()
             # print(arg_dict)
-            subcommand.add_argument(
-                *arg.name,
-                **arg_dict
-            )
+            subcommand.add_argument(*arg.name, **arg_dict)
 
         return subcommand
 
@@ -155,7 +162,9 @@ class Parser:
             self.add_parser_arguments(parser_arguments)
 
         if subcommands:
-            self.subparsers = self.parser.add_subparsers(title="Commands", dest="command")
+            self.subparsers = self.parser.add_subparsers(
+                title="Commands", dest="command"
+            )
             self.create_subcommands(subcommands)
 
     def add_parser_arguments(self, parser_arguments: list):
@@ -171,10 +180,7 @@ class Parser:
             arg: Argument
             arg_dict = arg.get_argument_dictionary()
 
-            self.parser.add_argument(
-                *arg.name,
-                **arg_dict
-            )
+            self.parser.add_argument(*arg.name, **arg_dict)
 
     def create_subcommands(self, subcommands: list):
 
@@ -185,7 +191,7 @@ class Parser:
 
         for subcommand in self.subcommands:
             subcommand: SubCommand
-            subcommand.create_subcommand(self.subparsers)     
+            subcommand.create_subcommand(self.subparsers)
 
     def get_command_function(self, cmd_dictionary: dict, dest: str = "command"):
         """
@@ -193,7 +199,7 @@ class Parser:
         """
 
         if not self.args:
-            raise ValueError('args not defined.')
+            raise ValueError("args not defined.")
 
         if not isinstance(cmd_dictionary, dict):
             raise ValueError("'commands' is not a dictionary.")
@@ -242,36 +248,42 @@ class Parser:
 
         return temp_dict
 
-
-    def get_object_command_dict(self, obj, command_names:list = []): 
+    def get_object_command_dict(self, obj, command_names: list = []):
         cmd_dict = {}
 
-        object_methods = [method_name for method_name in dir(obj) if callable(getattr(obj, method_name)) and not method_name.startswith('__')]
+        object_methods = [
+            method_name
+            for method_name in dir(obj)
+            if callable(getattr(obj, method_name)) and not method_name.startswith("__")
+        ]
 
         if not command_names:
             command_names = object_methods
-        
+
         for name, method in zip(command_names, object_methods):
-            cmd_dict.update({name:getattr(obj, method)})
+            cmd_dict.update({name: getattr(obj, method)})
 
         return cmd_dict
-    
-    def run_command(self, cmd_dict:dict, dest="command"):
+
+    def run_command(self, cmd_dict: dict, dest="command"):
         "Executes a command with parser arguments, requiring a dictionary that links the command name to the associated function to be executed."
 
         args = self.get_command_args()
-        cmd = self.get_command_function(cmd_dict, dest)  
+        cmd = self.get_command_function(cmd_dict, dest)
 
         # add args that have the same name as the function parameters
         from inspect import signature
+
         call_args = signature(cmd).parameters
         call_args = list(call_args.keys())
 
         arg_names = list(set(args.keys()).intersection(set(call_args)))
 
         # print(call_args, arg_names)
-        if len(call_args) > len(arg_names) and len(arg_names) !=0:
-            raise ValueError(f"Invalid parameters given. Function parameters: {call_args}")
-        
-        safe_pop(args, 'command')
+        if len(call_args) > len(arg_names) and len(arg_names) != 0:
+            raise ValueError(
+                f"Invalid parameters given. Function parameters: {call_args}"
+            )
+
+        safe_pop(args, "command")
         cmd(**args)

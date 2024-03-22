@@ -1,6 +1,8 @@
 import winreg
 
 """ Retrieves the names of subkeys under a given key in the Windows Registry """
+
+
 def get_subkey_names(key):
     keys = []
     key_length = winreg.QueryInfoKey(key)[0]
@@ -9,11 +11,13 @@ def get_subkey_names(key):
         keys.append(value)
     return keys
 
+
 """ Retrieves key and value dictionary of the given keys """
+
 
 def get_key_value_pair(keys):
     key_values = {}
-    
+
     for key in keys:
         values = []
         value_length = winreg.QueryInfoKey(key)[1]
@@ -24,12 +28,12 @@ def get_key_value_pair(keys):
                 key_values[key] = values
             except Exception as e:
                 print(e)
-    
+
     return key_values
 
-""" Retrieves opened subkeys given a key """
-       
+
 def get_opened_subkeys(key, subkeys, access=winreg.KEY_READ):
+    """Retrieves opened subkeys given a key"""
     keys = []
     for s in subkeys:
         try:
@@ -38,6 +42,7 @@ def get_opened_subkeys(key, subkeys, access=winreg.KEY_READ):
         except Exception as e:
             print(e)
     return keys
+
 
 # hkey = winreg.HKEY_CURRENT_USER
 # subkey_names = get_subkey_names(hkey)

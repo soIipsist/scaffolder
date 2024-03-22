@@ -2521,8 +2521,8 @@
             ".tac",
             ".wsgi",
             ".xpy"
-        ], 
-        "function_patterns":[
+        ],
+        "function_patterns": [
             "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"
         ]
     },

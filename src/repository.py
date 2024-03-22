@@ -2,12 +2,9 @@ import os
 import subprocess
 import shutil
 
+
 def get_repository_visibility(repository_visibility: str):
-    types = {0: "private", 1: "public", 2: "internal"}
-
-    if isinstance(repository_visibility, int):
-        return types.get(repository_visibility, "private")
-
+    types = {"0": "private", "1": "public", "2": "internal"}
     return types.get(repository_visibility, "private")
 
 
@@ -38,7 +35,7 @@ def create_git_repository(
     ]
 
     for args in commands:
-        
+
         try:
             subprocess.run(args, cwd=project_directory, check=True)
         except Exception as e:
@@ -48,27 +45,31 @@ def create_git_repository(
     clone_repository(project_directory, git_origin)
 
 
-def clone_repository(project_directory:str, git_origin:str):
+def clone_repository(project_directory: str, git_origin: str):
     # remove and clone again
     shutil.rmtree(project_directory, ignore_errors=True)
     target_dir = os.path.dirname(project_directory)
-    subprocess.run(['git', 'clone', git_origin], cwd=target_dir)    
+    subprocess.run(["git", "clone", git_origin], cwd=target_dir)
 
-def git_repo_exists(project_directory:str):
-    return os.path.exists(os.path.join(project_directory, '.git'))    
 
-def update_git_repository(
-    project_directory: str
-):  
-    
-    commands  = [
-        ['git', 'add', '.'],
-        ['git', 'commit', '-m', 'commit'],
+def git_repo_exists(project_directory: str):
+    return os.path.exists(os.path.join(project_directory, ".git"))
+
+
+def update_git_repository(project_directory: str):
+
+    commands = [
+        ["git", "add", "."],
+        ["git", "commit", "-m", "commit"],
         ["git", "push", "-u", "origin", "main"],
     ]
     # check if there were any changes
-    output = subprocess.run(['git', 'diff', '--name-status'], capture_output=True, text=True, cwd=project_directory)
-            
+    output = subprocess.run(
+        ["git", "diff", "--name-status"],
+        capture_output=True,
+        text=True,
+        cwd=project_directory,
+    )
 
     if output.stdout:
         for command in commands:
@@ -76,6 +77,5 @@ def update_git_repository(
                 subprocess.run(command, cwd=project_directory)
             except Exception as e:
                 print(e)
-        
-    
+
     print("Update completed.")

@@ -3,6 +3,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
+
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
@@ -20,23 +21,23 @@ user_base.metadata.create_all(database.engine)
 origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = origins,
-    allow_credentials = True,
-    allow_methods = ["*"],
-    allow_headers = ["*"],
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(user_router)
 app.include_router(post_router)
 
-        
 
-@app.get('/')
+@app.get("/")
 def main():
     return RedirectResponse(url="http://127.0.0.1:8000/docs")
 
+
 @app.post("/login")
-async def login(user:UserSchema):
+async def login(user: UserSchema):
     return {"message": user.name}
 
 

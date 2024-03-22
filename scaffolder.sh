@@ -27,7 +27,7 @@ install_dependency() {
 
 }
 
-gh_authenticate(){
+gh_authenticate() {
     echo -e "${BLUE}Retrieving gh auth status...${BLUE}"
     if ! gh auth status >/dev/null 2>&1; then
         read -p "You need to login to gh. Would you like to login (y/n)? " login
@@ -90,7 +90,6 @@ gh_check=$(jq -r '.gh_check' scaffolder.json)
 if [ $gh_check == 'true' ]; then
     gh_authenticate
 fi
-
 
 while :; do
     main

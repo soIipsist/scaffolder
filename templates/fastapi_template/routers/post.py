@@ -15,11 +15,14 @@ router = APIRouter(prefix="/posts")
 
 
 @router.get("/{post_id}", response_model=PostSchema)
-async def get_post(post_id: str, db:Session = Depends(get_db)):
+async def get_post(post_id: str, db: Session = Depends(get_db)):
     post = db.query(PostModel).filter(PostModel.id == post_id).first()
 
     if not post:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id: {post_id} does not exist")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Post with id: {post_id} does not exist",
+        )
     return post
 
 
@@ -40,9 +43,6 @@ def create_post(post: PostSchema, db: Session = Depends(get_db)):
                 status_code=400, detail="Foreign key constraint violated"
             )
         elif isinstance(e, SQLAlchemyIntegrityError) or isinstance(e, IntegrityError):
-            raise HTTPException(
-                status_code=400, detail="Integrity error."
-            )
+            raise HTTPException(status_code=400, detail="Integrity error.")
         else:
             raise HTTPException(status_code=500, detail="Internal Server Error")
-

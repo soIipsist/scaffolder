@@ -52,7 +52,8 @@ def safe_pop(dictionary: dict, keys: list):
         if key in dictionary:
             dictionary.pop(key)
 
-def get_item_case_insensitive(dictionary:dict, item:str):
+
+def get_item_case_insensitive(dictionary: dict, item: str):
     """
     Returns item regardless of case.
     """
