@@ -52,6 +52,16 @@ class TestScaffolder(TestBase):
         print(dir2)
         self.assertTrue(os.path.exists(dir2))
 
+    def test_get_repository_visibility(self):
+        self.assertTrue(get_repository_visibility("1") == "private")
+        self.assertTrue(get_repository_visibility("public") == "public")
+        self.assertTrue(get_repository_visibility(0) == "private")
+        self.assertTrue(get_repository_visibility(1) == "public")
+        self.assertTrue(get_repository_visibility(2) == "internal")
+        self.assertTrue(get_repository_visibility("private") == "private")
+        self.assertTrue(get_repository_visibility("internal") == "internal")
+        self.assertTrue(get_repository_visibility("nothing") == "private")
+
     def test_get_licenses(self):
         paths = get_license_paths(licenses)
         self.assertTrue(len(paths) > 0)
@@ -245,4 +255,4 @@ class TestScaffolder(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_get_function_patterns)
+    run_test_methods(TestScaffolder.test_get_repository_visibility)

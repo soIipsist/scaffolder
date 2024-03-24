@@ -7,7 +7,6 @@ os.sys.path.insert(0, parent_directory)
 from templates.python_template.utils.file_operations import overwrite_json_file
 from templates.python_template.utils.parser import *
 from src.constants import *
-from inspect import getfullargspec
 
 
 class SettingsAction(argparse.Action):
@@ -53,7 +52,7 @@ if __name__ == "__main__":
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-u", "--git_username")),
-        Argument(name=("-v", "--repository_visibility"), type=int),
+        Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
         Argument(name=("-s", "--update_source_directory")),
         Argument(name=("-d", "--update_destination_directory")),
         Argument(name=("-f", "--update_files"), nargs="+"),

@@ -17,6 +17,7 @@ from templates.python_template.utils.file_operations import (
 from templates.python_template.utils.parser import *
 from src.constants import *
 
+
 def scaffold(
     template: str = template_directory,
     project_directory: str = project_directory,
@@ -49,8 +50,6 @@ def scaffold(
 
     # initialize project directory
     if not (git_repo_exists(project_directory)):
-
-        # create git repository
         create_git_repository(project_directory, repository_visibility, git_username)
     else:
         print("Project already exists. Updating...")
@@ -87,7 +86,7 @@ if __name__ == "__main__":
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-u", "--git_username")),
-        Argument(name=("-v", "--repository_visibility")),
+        Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
     ]
     parser = Parser(parser_arguments)
 

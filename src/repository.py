@@ -2,9 +2,16 @@ import os
 import subprocess
 import shutil
 
+from templates.python_template.utils.dictionary_operations import invert_dict
 
-def get_repository_visibility(repository_visibility: str):
-    types = {"0": "private", "1": "public", "2": "internal"}
+
+def get_repository_visibility(repository_visibility: int):
+    types = {0: "private", 1: "public", 2: "internal"}
+
+    if isinstance(repository_visibility, str):
+        types = invert_dict(types)
+        return repository_visibility if repository_visibility in types else "private"
+
     return types.get(repository_visibility, "private")
 
 
