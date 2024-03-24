@@ -33,6 +33,7 @@ class TestScaffolder(TestBase):
         self.parameters = ["template_directory", "license"]
 
         self.update_source_directory = update_source_directory
+        self.project_name = "red"
         self.update_destination_directory = update_destination_directory
         self.update_files = update_files
 
@@ -89,9 +90,12 @@ class TestScaffolder(TestBase):
         self.assertIsNotNone(paths)
 
     def test_create_license(self):
-        license = "mit"
+        license = "afl-3.0"
         path = create_license(
-            license=license, target_directory=target_directory, author=author
+            license=license,
+            project_directory=project_directory,
+            author=author,
+            year=year,
         )
         self.assertIsNotNone(path)
         self.assertTrue(os.path.exists(path))
@@ -102,6 +106,7 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.project_directory,
+            self.project_name,
             self.license,
             self.author,
             self.git_username,
@@ -116,6 +121,7 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.project_directory,
+            self.project_name,
             self.license,
             self.author,
             self.git_username,
@@ -129,6 +135,7 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.project_directory,
+            self.project_name,
             self.license,
             self.author,
             self.git_username,
@@ -255,4 +262,4 @@ class TestScaffolder(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_get_repository_visibility)
+    run_test_methods(TestScaffolder.test_create_license)

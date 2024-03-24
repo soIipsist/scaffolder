@@ -86,3 +86,14 @@ def update_git_repository(project_directory: str):
                 print(e)
 
     print("Update completed.")
+
+
+def rename_repo(project_directory: str, repository_name: str, host: str):
+    if not (git_repo_exists(project_directory)):
+        return
+    original_name = os.path.basename(project_directory)
+
+    command = f"gh repo rename {repository_name} -R {host}/{original_name} --yes"
+    subprocess.run(command, shell=True)
+
+    print(f"Renamed repository from {original_name} to {repository_name}.")

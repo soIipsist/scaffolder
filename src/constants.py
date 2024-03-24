@@ -1,3 +1,4 @@
+import datetime
 import os
 import pprint
 
@@ -21,11 +22,13 @@ languages_metadata: dict
 # scaffolder metadata
 template_directory = scaffolder_metadata.get("template_directory")
 project_directory = scaffolder_metadata.get("project_directory")
+project_name = scaffolder_metadata.get("project_name")
 update_source_directory = scaffolder_metadata.get("update_source_directory")
 update_destination_directory = scaffolder_metadata.get("update_destination_directory")
 update_files = scaffolder_metadata.get("update_files")
 license = scaffolder_metadata.get("license")
 author = scaffolder_metadata.get("author")
+year = scaffolder_metadata.get("year", datetime.datetime.now().year)
 git_username = scaffolder_metadata.get("git_username")
 create_repository = scaffolder_metadata.get("create_repository")
 repository_visibility = scaffolder_metadata.get("repository_visibility")

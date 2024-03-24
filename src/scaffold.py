@@ -8,6 +8,7 @@ from src.repository import (
     create_git_repository,
     git_repo_exists,
     update_git_repository,
+    rename_repo,
 )
 from src.licenses import create_license
 from src.templates import get_template_directory
@@ -21,8 +22,10 @@ from src.constants import *
 def scaffold(
     template: str = template_directory,
     project_directory: str = project_directory,
+    project_name: str = project_name,
     license: str = license,
     author: str = author,
+    year: str = year,
     git_username: str = git_username,
     create_repository: bool = create_repository,
     repository_visibility: str = repository_visibility,
@@ -31,8 +34,19 @@ def scaffold(
 
     if not os.path.exists(project_directory):
         subprocess.run(["mkdir", project_directory], errors=None)
-        create_license(license, project_directory, author)
+        create_license(license, project_directory, author, year)
         create_template(template_directory, project_directory)
+    else:
+        # path already exists, so update based on metadata
+        create_license(license, project_directory, author, year)
+
+        if project_name:
+            original_name = os.path.basename(project_directory)
+
+            rename_repo(project_directory, project_name, git_username)
+            find_and_replace_in_directory(
+                project_directory, original_name, project_name
+            )
 
     if not create_repository:
         return
@@ -82,10 +96,12 @@ if __name__ == "__main__":
     parser_arguments = [
         Argument(name=("-t", "--template")),
         DirectoryArgument(name=("-p", "--project_directory")),
+        Argument(name=("-n", "--project_name")),
         BoolArgument(name=("-c", "--create_repository")),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
-        Argument(name=("-u", "--git_username")),
+        Argument(name=("-y", "--year")),
+        Argument(name=("-g", "--git_username")),
         Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
     ]
     parser = Parser(parser_arguments)
