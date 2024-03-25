@@ -15,6 +15,17 @@ def get_repository_visibility(repository_visibility: int):
     return types.get(repository_visibility, "private")
 
 
+def set_repository_visibility(
+    project_directory: str, repository_visibility: str, author: str
+):
+
+    repository_name = os.path.basename(project_directory)
+    command = (
+        f"gh repo edit {author}/{repository_name} --visibility {repository_visibility}"
+    )
+    subprocess.run(command, shell=True)
+
+
 def create_git_repository(
     project_directory: str,
     repository_visibility: str,
@@ -63,7 +74,9 @@ def git_repo_exists(project_directory: str):
     return os.path.exists(os.path.join(project_directory, ".git"))
 
 
-def update_git_repository(project_directory: str):
+def update_git_repository(
+    project_directory: str, repository_visibility: int, git_username: str
+):
 
     commands = [
         ["git", "add", "."],
@@ -85,6 +98,7 @@ def update_git_repository(project_directory: str):
             except Exception as e:
                 print(e)
 
+    set_repository_visibility(project_directory, repository_visibility, git_username)
     print("Update completed.")
 
 
