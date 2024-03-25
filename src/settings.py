@@ -52,6 +52,7 @@ if __name__ == "__main__":
         Argument(name=("-n", "--project_name")),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
+        Argument(name=("-y", "--year")),
         Argument(name=("-u", "--git_username")),
         Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
         Argument(name=("-s", "--update_source_directory")),

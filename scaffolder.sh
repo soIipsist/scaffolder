@@ -44,7 +44,8 @@ gh_authenticate() {
 }
 
 main() {
-    read -rep "$(echo -e "${BLUE}scaffolder > ${BLUE}")" OPTION
+    printf "${BLUE}scaffolder > ${BLUE}"
+    read -e -p "" OPTION
 
     OPTIONS=($OPTION)
     history -s "$OPTION"
