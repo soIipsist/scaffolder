@@ -66,7 +66,7 @@ options:
   -h, --help                                                               show this help message and exit
   -t TEMPLATE, --template TEMPLATE                                         template name or directory to copy files from
   -p PROJECT_DIRECTORY, --project_directory PROJECT_DIRECTORY              destination directory of your scaffolded project
-  -n PROJECT_NAME --project_name PROJECT_NAME      renames all instances of 'project_name in your project
+  -n PROJECT_NAME --project_name PROJECT_NAME      renames all instances of 'project_name' in your project
   -l LICENSE, --license LICENSE                                            creates license file (mit, afl-3.0, apache-v2.0 etc.)
   -a AUTHOR, --author AUTHOR                                               set name of the author (replaces every instance within the license file)
   -g GIT_USERNAME, --git_username GIT_USERNAME                             set git username (git config username is used by default)
