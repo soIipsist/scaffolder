@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 scaffolder.code-workspace
 .DS_Store
+src/*.swp
+src/*.save

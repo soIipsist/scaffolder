@@ -7,6 +7,7 @@ os.sys.path.insert(0, parent_directory)
 from templates.python_template.utils.file_operations import overwrite_json_file
 from templates.python_template.utils.parser import *
 from src.constants import *
+import subprocess
 
 
 class SettingsAction(argparse.Action):
@@ -44,6 +45,16 @@ def update_settings(**args):
     overwrite_json_file(scaffolder_data_path, new_settings)
 
 
+def edit_settings(default_editor: str = "vscode"):
+    print(f"Default editor set to {default_editor}.")
+
+    if default_editor == "vscode":
+        default_editor = "code"
+    base_cmd = f"{default_editor} {parent_directory}/src/scaffolder.json"
+
+    subprocess.Popen(base_cmd, shell=True)
+
+
 if __name__ == "__main__":
 
     update_arguments = [
@@ -67,13 +78,21 @@ if __name__ == "__main__":
         Argument(name=("-p", "--parameters"), nargs="+"),
     ]
 
+    edit_arguments = [Argument(name=("-e", "--default_editor"), default="vscode")]
+
     subcommands = [
         SubCommand("update", update_arguments),
         SubCommand("view", view_arguments),
+        SubCommand("edit", edit_arguments),
     ]
 
     parser = Parser(parser_arguments, subcommands)
 
-    cmd_dict = {None: list_settings, "update": update_settings, "view": list_settings}
+    cmd_dict = {
+        None: list_settings,
+        "update": update_settings,
+        "view": list_settings,
+        "edit": edit_settings,
+    }
 
     parser.run_command(cmd_dict)
