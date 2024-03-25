@@ -49,6 +49,7 @@ if __name__ == "__main__":
     update_arguments = [
         Argument(name=("-t", "--template_directory")),
         Argument(name=("-p", "--project_directory")),
+        Argument(name=("-n", "--project_name")),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-u", "--git_username")),

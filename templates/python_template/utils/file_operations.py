@@ -108,10 +108,14 @@ def download_file(
         print(e)
 
 
-def find_and_replace_in_directory(directory, search_word, replace_word):
+def find_and_replace_in_directory(
+    directory, search_word, replace_word, removed_dirs: list = []
+):
     for root, dirs, files in os.walk(directory):
-        if ".git" in dirs:
-            dirs.remove(".git")
+
+        for d in removed_dirs:
+            if d in dirs:
+                dirs.remove(d)
 
         for file in files:
             file_path = os.path.join(root, file)

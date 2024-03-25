@@ -9,7 +9,6 @@ from src.repository import (
     git_repo_exists,
     update_git_repository,
     rename_repo,
-    set_repository_visibility,
 )
 from src.licenses import create_license
 from src.templates import get_template_directory
@@ -45,7 +44,7 @@ def scaffold(
             original_name = os.path.basename(project_directory)
             rename_repo(project_directory, project_name, git_username)
             find_and_replace_in_directory(
-                project_directory, original_name, project_name
+                project_directory, original_name, project_name, [".git"]
             )
 
     if not create_repository:
@@ -88,7 +87,9 @@ def create_template(template_directory: str, project_directory: str):
     template_name = os.path.split(template_directory)[-1]
 
     # find and replace all instances of template_name
-    find_and_replace_in_directory(project_directory, template_name, project_name)
+    find_and_replace_in_directory(
+        project_directory, template_name, project_name, removed_dirs=[".git"]
+    )
 
 
 if __name__ == "__main__":

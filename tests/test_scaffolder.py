@@ -178,7 +178,7 @@ class TestScaffolder(TestBase):
 
         content = read_file(file_path)
         self.assertTrue(file_content == content)
-        find_and_replace_in_directory(self.test_files_dir, "red", "blue")
+        find_and_replace_in_directory(self.test_files_dir, "red", "blue", [".git"])
 
     def test_settings(self):
         settings = list_settings(self.parameters)

@@ -55,7 +55,7 @@ main() {
     commands=("scaffold" "templates" "licenses" "update" "settings")
 
     if [[ " ${commands[@]} " =~ " ${base_command} " ]]; then
-        python "$base_command.py" $arguments
+        python3 "$base_command.py" $arguments
     else
         case $base_command in
         clear)
@@ -77,7 +77,9 @@ main() {
 loop=1
 OPTIONS=""
 
-cd src
+cwd=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+
+cd "$cwd/src"
 HISTSIZE=100
 
 history -r script_history
