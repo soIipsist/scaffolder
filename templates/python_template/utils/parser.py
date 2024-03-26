@@ -198,8 +198,8 @@ class Parser:
         Given a dictionary of command-function pairs, return the appropriate function.
         """
 
-        if not self.args:
-            raise ValueError("args not defined.")
+        # if not self.args:
+        #     raise ValueError("args not defined.")
 
         if not isinstance(cmd_dictionary, dict):
             raise ValueError("'commands' is not a dictionary.")
