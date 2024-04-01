@@ -234,7 +234,7 @@ def map_sqlite_results_to_objects(
     objects = []
     if len(column_names) > 0:
         for result in sqlite_results:
-            o = object_type()
+            o = object_type(*result)
 
             for name, result in zip(column_names, result):
                 # check if result is array
