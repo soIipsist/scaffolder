@@ -73,6 +73,23 @@ def get_filter_condition(keys: list):
     return filter_condition
 
 
+def filter_items(
+    conn: sqlite3.Connection, table_name: str, attrs: list, object: object
+):
+
+    filter_condition = get_filter_condition(attrs)
+
+    values = [getattr(object, attr) for attr in attrs if attr]
+
+    for val in values:
+        if isinstance(val, str):
+            filter_condition = filter_condition.replace("?", f"'{val}'", 1)
+        else:
+            filter_condition = filter_condition.replace("?", f"{val}", 1)
+
+    return select_items(conn, table_name, filter_condition, type(object))
+
+
 def get_column_names(cursor: sqlite3.Cursor, table_name: str):
     """
     Returns the columns of a table.
@@ -195,7 +212,6 @@ def select_items(
         filter_condition = get_filter_condition(filter_condition_keys)
 
         query += f" WHERE {filter_condition}"
-        print(query)
         results = execute_query(conn, query, params)
     else:
         results = execute_query(conn, query)

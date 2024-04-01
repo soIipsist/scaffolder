@@ -7,6 +7,7 @@ from utils.sqlite import (
     get_filter_condition,
     create_connection,
     sanitize_filter_condition,
+    filter_items,
 )
 import re
 from constants import db_path
@@ -72,6 +73,12 @@ class SQLiteItem:
             column_names=self.column_names,
         )
         return items[0] if len(items) > 0 else None
+
+    def filter(self, attrs: list = []):
+        if attrs:
+            return filter_items(conn, self.table_name, attrs, self)
+        else:
+            return self.select_all()
 
     def select_all(self):
         return select_items(conn, self.table_name, None, type(self), self.column_names)

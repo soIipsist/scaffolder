@@ -64,6 +64,9 @@ class Player(SQLiteItem):
     def __str__(self) -> str:
         return self.get_player_description()
 
+    def __repr__(self) -> str:
+        return self.get_player_description()
+
 
 conn = create_connection("database.db")
 
@@ -71,7 +74,7 @@ log = Log(date_created=get_current_date(), hour_interval=3)
 log2 = Log(date_created=get_current_date(), hour_interval=4)
 log3 = Log(date_created=get_current_date(), hour_interval=5)
 
-player = Player(name="red", total_exp=100)
+player = Player(name="pppp", total_exp=100)
 player2 = Player(name="green", total_exp=300)
 player3 = Player(name="blue", total_exp=20)
 
@@ -130,6 +133,15 @@ class TestSQLiteItem(TestBase):
         # insert
         player.import_item(path, regex, attr_names)
 
+    def test_filter_items(self):
+        items = player.filter(["name", "total_exp"])
+        print(items)
+
+        player.total_exp = 9000
+        items = player.filter(["name", "total_exp"])
+        print(items)
+        self.assertTrue(len(items) == 0)
+
 
 if __name__ == "__main__":
-    run_test_methods(TestSQLiteItem.test_import_item)
+    run_test_methods(TestSQLiteItem.test_filter_items)
