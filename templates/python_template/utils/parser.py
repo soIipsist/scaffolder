@@ -6,6 +6,7 @@ from templates.python_template.utils.dictionary_operations import safe_pop
 from templates.python_template.utils.path_operations import is_valid_path, is_valid_dir
 from templates.python_template.utils.date_utils import get_current_date, parse_date
 from templates.python_template.utils.str_utils import str_to_bool
+from inspect import signature
 
 
 class Argument:
@@ -264,6 +265,19 @@ class Parser:
             cmd_dict.update({name: getattr(obj, method)})
 
         return cmd_dict
+
+    def get_object_args(self, obj_class: type):
+        command_args = self.get_command_args()
+        init_signature = signature(obj_class.__init__)
+        object_arg_names = [
+            param.name for param in init_signature.parameters.values() if param.name
+        ]
+        object_args = command_args.copy()
+
+        for name in object_arg_names:
+            safe_pop(command_args, name)
+
+        return object_args
 
     def run_command(self, cmd_dict: dict, dest="command"):
         "Executes a command with parser arguments, requiring a dictionary that links the command name to the associated function to be executed."

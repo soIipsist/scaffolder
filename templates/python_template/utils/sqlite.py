@@ -119,7 +119,7 @@ def insert_items(
             if column_names is None
             else column_names
         )
-        print(table_name)
+        # print(table_name)
         placeholders = ", ".join(["?"] * len(column_names))
         columns = ", ".join(column_names)
 

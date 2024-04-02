@@ -1,15 +1,1 @@
-{
-    "template_directory": "python_template",
-    "project_directory": "/Users/p/Desktop/soIipsis/red",
-    "project_name": "template",
-    "update_source_directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/python_template/tests",
-    "update_destination_directory": "/Users/p/Desktop/soIipsis/superscraper/tests",
-    "update_files": [],
-    "license": "mit",
-    "author": "soIipsis",
-    "year": "2220",
-    "git_username": "soIipsis",
-    "create_repository": true,
-    "gh_check": false,
-    "repository_visibility": 1
-}
+{"template_directory": "python_template", "project_directory": "/Users/p/Desktop/soIipsis/red", "project_name": "template", "update_source_directory": "/Users/p/Desktop/soIipsis/superscraper/utils", "update_destination_directory": "/Users/p/Desktop/soIipsis/scaffolder/templates/python_template/utils/", "update_files": ["sqlite.py", "parser.py"], "license": "mit", "author": "soIipsis", "year": "2220", "git_username": "soIipsis", "create_repository": true, "gh_check": false, "repository_visibility": 1}
