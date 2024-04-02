@@ -272,10 +272,10 @@ class Parser:
         object_arg_names = [
             param.name for param in init_signature.parameters.values() if param.name
         ]
-        object_args = command_args.copy()
-
-        for name in object_arg_names:
-            safe_pop(command_args, name)
+        object_args = {}
+        for name in object_arg_names:  # remove all items that are not in object
+            if name in command_args:
+                object_args.update({name: command_args.get(name)})
 
         return object_args
 
