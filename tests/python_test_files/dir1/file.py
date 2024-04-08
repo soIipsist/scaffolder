@@ -15,3 +15,15 @@ def hello():
 
 def redd(string):
     print('red', string)
+
+def define(string = None):
+    if not string:
+        raise ValueError("string was not defined")
+
+    print('hello')
+
+def define2(string = None):
+    if not string:
+        raise ValueError("string was not defined")
+    
+    print('hello')

@@ -41,4 +41,5 @@
   - handle git template urls
   - create repo without using gh
   - add all licenses 
-  - add function patterns for all languages 
+  - add function patterns for all languages
+  - get updated functions bug fix
