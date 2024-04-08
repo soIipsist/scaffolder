@@ -1,3 +1,6 @@
+import re
+
+
 def str_to_bool(string: str):
     return string in ["1", "true", True]
 
@@ -10,3 +13,7 @@ def camel_to_snake(input_string):
     import re
 
     return re.sub(r"(?<!^)(?=[A-Z])", "_", input_string).lower()
+
+
+def remove_quotes(input_string: str):
+    return re.sub(r"^'(.*)'$", r"\1", input_string)

@@ -8,6 +8,8 @@ from templates.python_template.utils.date_utils import get_current_date, parse_d
 from templates.python_template.utils.str_utils import str_to_bool
 from inspect import signature
 
+from templates.python_template.utils.url_utils import is_url
+
 
 class Argument:
     name = None
@@ -106,7 +108,12 @@ class DirectoryArgument(Argument):
     ) -> None:
         super().__init__(name, type, help=help, default=default)
 
-
+class URLArgument(Argument):
+    def __init__(
+        self, name: str = ("-u", "--url"), type=is_url, default=None, help=""
+    ) -> None:
+        super().__init__(name, type, default=default, help=help)
+        
 class BoolArgument(Argument):
     def __init__(
         self,
@@ -266,18 +273,24 @@ class Parser:
 
         return cmd_dict
 
-    def get_object_args(self, obj_class: type):
-        command_args = self.get_command_args()
-        init_signature = signature(obj_class.__init__)
-        object_arg_names = [
-            param.name for param in init_signature.parameters.values() if param.name
-        ]
-        object_args = {}
-        for name in object_arg_names:  # remove all items that are not in object
-            if name in command_args:
-                object_args.update({name: command_args.get(name)})
+    def get_callable_args(self, func):
+        """ Returns a dictionary of parser arguments within a given function. """
+        
+        func_signature = signature(func)
+        param_values = {
+            param.name: param for param in func_signature.parameters.values()
+        }
+        args = {}
 
-        return object_args
+        cmd_args = self.get_command_args()
+
+        for key, param in param_values.items():
+            # check if required
+            if key in cmd_args:
+                args.update({key: cmd_args.get(key)})
+            elif param.default == param.empty and param.name != "self":
+                args.update({key: None})
+        return args
 
     def run_command(self, cmd_dict: dict, dest="command"):
         "Executes a command with parser arguments, requiring a dictionary that links the command name to the associated function to be executed."
