@@ -108,12 +108,14 @@ class DirectoryArgument(Argument):
     ) -> None:
         super().__init__(name, type, help=help, default=default)
 
+
 class URLArgument(Argument):
     def __init__(
         self, name: str = ("-u", "--url"), type=is_url, default=None, help=""
     ) -> None:
         super().__init__(name, type, default=default, help=help)
-        
+
+
 class BoolArgument(Argument):
     def __init__(
         self,
@@ -274,8 +276,8 @@ class Parser:
         return cmd_dict
 
     def get_callable_args(self, func):
-        """ Returns a dictionary of parser arguments within a given function. """
-        
+        """Returns a dictionary of parser arguments within a given function."""
+
         func_signature = signature(func)
         param_values = {
             param.name: param for param in func_signature.parameters.values()

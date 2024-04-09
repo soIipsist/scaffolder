@@ -24,24 +24,56 @@ author = "soIipsis"
 class TestUpdate(TestBase):
     def setUp(self) -> None:
         super().setUp()
-        self.function_patterns  = languages_metadata.get("Python").get("function_patterns")
-        print(self.function_patterns)
-        
+        self.function_patterns = languages_metadata.get("Python").get(
+            "function_patterns"
+        )
+
     def get_test_files_dir(self, dirname: str = "dir1", language="python"):
         target_dir = {"python": "python_test_files", "java": "java_test_files"}
         return os.path.join(os.getcwd(), target_dir.get(language), dirname)
 
-  
     def test_get_functions(self):
         file1 = os.path.join(self.get_test_files_dir(), "file.py")
+        print(self.function_patterns)
         funcs = find_functions_in_file(file1, patterns=self.function_patterns)
-        print(funcs)
-        
-    def test_get_updated_functions(self):   
+        # print(funcs)
+        # print(len(funcs))
+
+        print(funcs[6])
+
+    def test_get_updated_functions(self):
         pass
 
-   
- 
+    def test_create_function_patterns(self):
+        languages = read_json_file(languages_path)
+        languages: dict
+
+        new_languages = languages.copy()
+        function_patterns = {
+            "Python": [
+                "\\s*def\\s+((?!def)[\\w_]+)\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"
+            ],
+            "Java": [
+                "public\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+                "public void\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+                "private\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+                "protected\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
+            ],
+        }
+        for key, val in new_languages.items():
+            key: dict
+            if isinstance(val, dict):
+                patterns = (
+                    function_patterns.get(key) if key in function_patterns else []
+                )
+
+                if len(patterns) > 0:
+                    print(key)
+
+                val.update({"function_patterns": patterns})
+                print(val)
+
+        # overwrite_json_file(languages_path, new_languages)
 
 
 if __name__ == "__main__":
