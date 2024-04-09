@@ -3,77 +3,91 @@
         "extensions": [
             ".bsl",
             ".os"
-        ]
+        ],
+        "function_patterns": []
     },
     "4D": {
         "extensions": [
             ".4dm"
-        ]
+        ],
+        "function_patterns": []
     },
     "ABAP": {
         "extensions": [
             ".abap"
-        ]
+        ],
+        "function_patterns": []
     },
     "ABAP CDS": {
         "extensions": [
             ".asddls"
-        ]
+        ],
+        "function_patterns": []
     },
     "ABNF": {
         "extensions": [
             ".abnf"
-        ]
+        ],
+        "function_patterns": []
     },
     "AGS Script": {
         "extensions": [
             ".asc",
             ".ash"
-        ]
+        ],
+        "function_patterns": []
     },
     "AIDL": {
         "extensions": [
             ".aidl"
-        ]
+        ],
+        "function_patterns": []
     },
     "AL": {
         "extensions": [
             ".al"
-        ]
+        ],
+        "function_patterns": []
     },
     "AMPL": {
         "extensions": [
             ".ampl",
             ".mod"
-        ]
+        ],
+        "function_patterns": []
     },
     "ANTLR": {
         "extensions": [
             ".g4"
-        ]
+        ],
+        "function_patterns": []
     },
     "API Blueprint": {
         "extensions": [
             ".apib"
-        ]
+        ],
+        "function_patterns": []
     },
     "APL": {
         "extensions": [
             ".apl",
             ".dyalog"
-        ]
+        ],
+        "function_patterns": []
     },
     "ASL": {
         "extensions": [
             ".asl",
             ".dsl"
-        ]
+        ],
+        "function_patterns": []
     },
     "ASN.1": {
         "extensions": [
             ".asn",
             ".asn1"
-        ]
+        ],
+        "function_patterns": []
     },
     "ASP.NET": {
         "extensions": [
@@ -83,44 +97,52 @@
             ".asmx",
             ".aspx",
             ".axd"
-        ]
+        ],
+        "function_patterns": []
     },
     "ATS": {
         "extensions": [
             ".dats",
             ".hats",
             ".sats"
-        ]
+        ],
+        "function_patterns": []
     },
     "ActionScript": {
         "extensions": [
             ".as"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ada": {
         "extensions": [
             ".adb",
             ".ada",
             ".ads"
-        ]
+        ],
+        "function_patterns": []
     },
     "Adobe Font Metrics": {
         "extensions": [
             ".afm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Agda": {
         "extensions": [
             ".agda"
-        ]
+        ],
+        "function_patterns": []
     },
     "Alloy": {
         "extensions": [
             ".als"
-        ]
+        ],
+        "function_patterns": []
     },
     "Alpine Abuild": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Altium Designer": {
         "extensions": [
@@ -128,55 +150,65 @@
             ".PcbDoc",
             ".PrjPCB",
             ".SchDoc"
-        ]
+        ],
+        "function_patterns": []
     },
     "AngelScript": {
         "extensions": [
             ".as",
             ".angelscript"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ant Build System": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "ApacheConf": {
         "extensions": [
             ".apacheconf",
             ".vhost"
-        ]
+        ],
+        "function_patterns": []
     },
     "Apex": {
         "extensions": [
             ".cls"
-        ]
+        ],
+        "function_patterns": []
     },
     "Apollo Guidance Computer": {
         "extensions": [
             ".agc"
-        ]
+        ],
+        "function_patterns": []
     },
     "AppleScript": {
         "extensions": [
             ".applescript",
             ".scpt"
-        ]
+        ],
+        "function_patterns": []
     },
     "Arc": {
         "extensions": [
             ".arc"
-        ]
+        ],
+        "function_patterns": []
     },
     "AsciiDoc": {
         "extensions": [
             ".asciidoc",
             ".adoc",
             ".asc"
-        ]
+        ],
+        "function_patterns": []
     },
     "AspectJ": {
         "extensions": [
             ".aj"
-        ]
+        ],
+        "function_patterns": []
     },
     "Assembly": {
         "extensions": [
@@ -185,38 +217,45 @@
             ".i",
             ".inc",
             ".nasm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Astro": {
         "extensions": [
             ".astro"
-        ]
+        ],
+        "function_patterns": []
     },
     "Asymptote": {
         "extensions": [
             ".asy"
-        ]
+        ],
+        "function_patterns": []
     },
     "Augeas": {
         "extensions": [
             ".aug"
-        ]
+        ],
+        "function_patterns": []
     },
     "AutoHotkey": {
         "extensions": [
             ".ahk",
             ".ahkl"
-        ]
+        ],
+        "function_patterns": []
     },
     "AutoIt": {
         "extensions": [
             ".au3"
-        ]
+        ],
+        "function_patterns": []
     },
     "Avro IDL": {
         "extensions": [
             ".avdl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Awk": {
         "extensions": [
@@ -225,100 +264,119 @@
             ".gawk",
             ".mawk",
             ".nawk"
-        ]
+        ],
+        "function_patterns": []
     },
     "BASIC": {
         "extensions": [
             ".bas"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ballerina": {
         "extensions": [
             ".bal"
-        ]
+        ],
+        "function_patterns": []
     },
     "Batchfile": {
         "extensions": [
             ".bat",
             ".cmd"
-        ]
+        ],
+        "function_patterns": []
     },
     "Beef": {
         "extensions": [
             ".bf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Befunge": {
         "extensions": [
             ".befunge"
-        ]
+        ],
+        "function_patterns": []
     },
     "BibTeX": {
         "extensions": [
             ".bib",
             ".bibtex"
-        ]
+        ],
+        "function_patterns": []
     },
     "Bicep": {
         "extensions": [
             ".bicep"
-        ]
+        ],
+        "function_patterns": []
     },
     "Bison": {
         "extensions": [
             ".bison"
-        ]
+        ],
+        "function_patterns": []
     },
     "BitBake": {
         "extensions": [
             ".bb"
-        ]
+        ],
+        "function_patterns": []
     },
     "Blade": {
         "extensions": [
             ".blade",
             ".blade.php"
-        ]
+        ],
+        "function_patterns": []
     },
     "BlitzBasic": {
         "extensions": [
             ".bb",
             ".decls"
-        ]
+        ],
+        "function_patterns": []
     },
     "BlitzMax": {
         "extensions": [
             ".bmx"
-        ]
+        ],
+        "function_patterns": []
     },
     "Bluespec": {
         "extensions": [
             ".bsv"
-        ]
+        ],
+        "function_patterns": []
     },
     "Boo": {
         "extensions": [
             ".boo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Boogie": {
         "extensions": [
             ".bpl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Brainfuck": {
         "extensions": [
             ".b",
             ".bf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Brightscript": {
         "extensions": [
             ".brs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Browserslist": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "C": {
         "extensions": [
@@ -326,7 +384,8 @@
             ".cats",
             ".h",
             ".idc"
-        ]
+        ],
+        "function_patterns": []
     },
     "C#": {
         "extensions": [
@@ -334,7 +393,8 @@
             ".cake",
             ".csx",
             ".linq"
-        ]
+        ],
+        "function_patterns": []
     },
     "C++": {
         "extensions": [
@@ -355,33 +415,39 @@
             ".re",
             ".tcc",
             ".tpp"
-        ]
+        ],
+        "function_patterns": []
     },
     "C-ObjDump": {
         "extensions": [
             ".c-objdump"
-        ]
+        ],
+        "function_patterns": []
     },
     "C2hs Haskell": {
         "extensions": [
             ".chs"
-        ]
+        ],
+        "function_patterns": []
     },
     "CIL": {
         "extensions": [
             ".cil"
-        ]
+        ],
+        "function_patterns": []
     },
     "CLIPS": {
         "extensions": [
             ".clp"
-        ]
+        ],
+        "function_patterns": []
     },
     "CMake": {
         "extensions": [
             ".cmake",
             ".cmake.in"
-        ]
+        ],
+        "function_patterns": []
     },
     "COBOL": {
         "extensions": [
@@ -390,101 +456,121 @@
             ".ccp",
             ".cobol",
             ".cpy"
-        ]
+        ],
+        "function_patterns": []
     },
     "CODEOWNERS": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "COLLADA": {
         "extensions": [
             ".dae"
-        ]
+        ],
+        "function_patterns": []
     },
     "CSON": {
         "extensions": [
             ".cson"
-        ]
+        ],
+        "function_patterns": []
     },
     "CSS": {
         "extensions": [
             ".css"
-        ]
+        ],
+        "function_patterns": []
     },
     "CSV": {
         "extensions": [
             ".csv"
-        ]
+        ],
+        "function_patterns": []
     },
     "CUE": {
         "extensions": [
             ".cue"
-        ]
+        ],
+        "function_patterns": []
     },
     "CWeb": {
         "extensions": [
             ".w"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cabal Config": {
         "extensions": [
             ".cabal"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cap'n Proto": {
         "extensions": [
             ".capnp"
-        ]
+        ],
+        "function_patterns": []
     },
     "CartoCSS": {
         "extensions": [
             ".mss"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ceylon": {
         "extensions": [
             ".ceylon"
-        ]
+        ],
+        "function_patterns": []
     },
     "Chapel": {
         "extensions": [
             ".chpl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Charity": {
         "extensions": [
             ".ch"
-        ]
+        ],
+        "function_patterns": []
     },
     "ChucK": {
         "extensions": [
             ".ck"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cirru": {
         "extensions": [
             ".cirru"
-        ]
+        ],
+        "function_patterns": []
     },
     "Clarion": {
         "extensions": [
             ".clw"
-        ]
+        ],
+        "function_patterns": []
     },
     "Classic ASP": {
         "extensions": [
             ".asp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Clean": {
         "extensions": [
             ".icl",
             ".dcl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Click": {
         "extensions": [
             ".click"
-        ]
+        ],
+        "function_patterns": []
     },
     "Clojure": {
         "extensions": [
@@ -497,27 +583,32 @@
             ".cljscm",
             ".cljx",
             ".hic"
-        ]
+        ],
+        "function_patterns": []
     },
     "Closure Templates": {
         "extensions": [
             ".soy"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cloud Firestore Security Rules": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "CoNLL-U": {
         "extensions": [
             ".conllu",
             ".conll"
-        ]
+        ],
+        "function_patterns": []
     },
     "CodeQL": {
         "extensions": [
             ".ql",
             ".qll"
-        ]
+        ],
+        "function_patterns": []
     },
     "CoffeeScript": {
         "extensions": [
@@ -526,18 +617,21 @@
             ".cake",
             ".cjsx",
             ".iced"
-        ]
+        ],
+        "function_patterns": []
     },
     "ColdFusion": {
         "extensions": [
             ".cfm",
             ".cfml"
-        ]
+        ],
+        "function_patterns": []
     },
     "ColdFusion CFC": {
         "extensions": [
             ".cfc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Common Lisp": {
         "extensions": [
@@ -549,29 +643,34 @@
             ".ny",
             ".podsl",
             ".sexp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Common Workflow Language": {
         "extensions": [
             ".cwl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Component Pascal": {
         "extensions": [
             ".cp",
             ".cps"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cool": {
         "extensions": [
             ".cl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Coq": {
         "extensions": [
             ".coq",
             ".v"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cpp-ObjDump": {
         "extensions": [
@@ -580,135 +679,160 @@
             ".c++objdump",
             ".cpp-objdump",
             ".cxx-objdump"
-        ]
+        ],
+        "function_patterns": []
     },
     "Creole": {
         "extensions": [
             ".creole"
-        ]
+        ],
+        "function_patterns": []
     },
     "Crystal": {
         "extensions": [
             ".cr"
-        ]
+        ],
+        "function_patterns": []
     },
     "Csound": {
         "extensions": [
             ".orc",
             ".udo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Csound Document": {
         "extensions": [
             ".csd"
-        ]
+        ],
+        "function_patterns": []
     },
     "Csound Score": {
         "extensions": [
             ".sco"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cuda": {
         "extensions": [
             ".cu",
             ".cuh"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cue Sheet": {
         "extensions": [
             ".cue"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cycript": {
         "extensions": [
             ".cy"
-        ]
+        ],
+        "function_patterns": []
     },
     "Cython": {
         "extensions": [
             ".pyx",
             ".pxd",
             ".pxi"
-        ]
+        ],
+        "function_patterns": []
     },
     "D": {
         "extensions": [
             ".d",
             ".di"
-        ]
+        ],
+        "function_patterns": []
     },
     "D-ObjDump": {
         "extensions": [
             ".d-objdump"
-        ]
+        ],
+        "function_patterns": []
     },
     "DIGITAL Command Language": {
         "extensions": [
             ".com"
-        ]
+        ],
+        "function_patterns": []
     },
     "DM": {
         "extensions": [
             ".dm"
-        ]
+        ],
+        "function_patterns": []
     },
     "DNS Zone": {
         "extensions": [
             ".zone",
             ".arpa"
-        ]
+        ],
+        "function_patterns": []
     },
     "DTrace": {
         "extensions": [
             ".d"
-        ]
+        ],
+        "function_patterns": []
     },
     "Dafny": {
         "extensions": [
             ".dfy"
-        ]
+        ],
+        "function_patterns": []
     },
     "Darcs Patch": {
         "extensions": [
             ".darcspatch",
             ".dpatch"
-        ]
+        ],
+        "function_patterns": []
     },
     "Dart": {
         "extensions": [
             ".dart"
-        ]
+        ],
+        "function_patterns": []
     },
     "DataWeave": {
         "extensions": [
             ".dwl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Dhall": {
         "extensions": [
             ".dhall"
-        ]
+        ],
+        "function_patterns": []
     },
     "Diff": {
         "extensions": [
             ".diff",
             ".patch"
-        ]
+        ],
+        "function_patterns": []
     },
     "DirectX 3D File": {
         "extensions": [
             ".x"
-        ]
+        ],
+        "function_patterns": []
     },
     "Dockerfile": {
         "extensions": [
             ".dockerfile"
-        ]
+        ],
+        "function_patterns": []
     },
     "Dogescript": {
         "extensions": [
             ".djs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Dylan": {
         "extensions": [
@@ -716,99 +840,117 @@
             ".dyl",
             ".intr",
             ".lid"
-        ]
+        ],
+        "function_patterns": []
     },
     "E": {
         "extensions": [
             ".E"
-        ]
+        ],
+        "function_patterns": []
     },
     "E-mail": {
         "extensions": [
             ".eml",
             ".mbox"
-        ]
+        ],
+        "function_patterns": []
     },
     "EBNF": {
         "extensions": [
             ".ebnf"
-        ]
+        ],
+        "function_patterns": []
     },
     "ECL": {
         "extensions": [
             ".ecl",
             ".eclxml"
-        ]
+        ],
+        "function_patterns": []
     },
     "ECLiPSe": {
         "extensions": [
             ".ecl"
-        ]
+        ],
+        "function_patterns": []
     },
     "EJS": {
         "extensions": [
             ".ejs",
             ".ect",
             ".jst"
-        ]
+        ],
+        "function_patterns": []
     },
     "EQ": {
         "extensions": [
             ".eq"
-        ]
+        ],
+        "function_patterns": []
     },
     "Eagle": {
         "extensions": [
             ".sch",
             ".brd"
-        ]
+        ],
+        "function_patterns": []
     },
     "Easybuild": {
         "extensions": [
             ".eb"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ecere Projects": {
         "extensions": [
             ".epj"
-        ]
+        ],
+        "function_patterns": []
     },
     "EditorConfig": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Edje Data Collection": {
         "extensions": [
             ".edc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Eiffel": {
         "extensions": [
             ".e"
-        ]
+        ],
+        "function_patterns": []
     },
     "Elixir": {
         "extensions": [
             ".ex",
             ".exs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Elm": {
         "extensions": [
             ".elm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Emacs Lisp": {
         "extensions": [
             ".el",
             ".emacs",
             ".emacs.desktop"
-        ]
+        ],
+        "function_patterns": []
     },
     "EmberScript": {
         "extensions": [
             ".em",
             ".emberscript"
-        ]
+        ],
+        "function_patterns": []
     },
     "Erlang": {
         "extensions": [
@@ -819,77 +961,91 @@
             ".hrl",
             ".xrl",
             ".yrl"
-        ]
+        ],
+        "function_patterns": []
     },
     "F#": {
         "extensions": [
             ".fs",
             ".fsi",
             ".fsx"
-        ]
+        ],
+        "function_patterns": []
     },
     "F*": {
         "extensions": [
             ".fst"
-        ]
+        ],
+        "function_patterns": []
     },
     "FIGlet Font": {
         "extensions": [
             ".flf"
-        ]
+        ],
+        "function_patterns": []
     },
     "FLUX": {
         "extensions": [
             ".fx",
             ".flux"
-        ]
+        ],
+        "function_patterns": []
     },
     "Factor": {
         "extensions": [
             ".factor"
-        ]
+        ],
+        "function_patterns": []
     },
     "Fancy": {
         "extensions": [
             ".fy",
             ".fancypack"
-        ]
+        ],
+        "function_patterns": []
     },
     "Fantom": {
         "extensions": [
             ".fan"
-        ]
+        ],
+        "function_patterns": []
     },
     "Faust": {
         "extensions": [
             ".dsp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Fennel": {
         "extensions": [
             ".fnl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Filebench WML": {
         "extensions": [
             ".f"
-        ]
+        ],
+        "function_patterns": []
     },
     "Filterscript": {
         "extensions": [
             ".fs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Fluent": {
         "extensions": [
             ".ftl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Formatted": {
         "extensions": [
             ".for",
             ".eam.fs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Forth": {
         "extensions": [
@@ -901,7 +1057,8 @@
             ".fr",
             ".frt",
             ".fs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Fortran": {
         "extensions": [
@@ -909,7 +1066,8 @@
             ".f77",
             ".for",
             ".fpp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Fortran Free Form": {
         "extensions": [
@@ -917,28 +1075,33 @@
             ".f03",
             ".f08",
             ".f95"
-        ]
+        ],
+        "function_patterns": []
     },
     "FreeBasic": {
         "extensions": [
             ".bi",
             ".bas"
-        ]
+        ],
+        "function_patterns": []
     },
     "FreeMarker": {
         "extensions": [
             ".ftl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Frege": {
         "extensions": [
             ".fr"
-        ]
+        ],
+        "function_patterns": []
     },
     "Futhark": {
         "extensions": [
             ".fut"
-        ]
+        ],
+        "function_patterns": []
     },
     "G-code": {
         "extensions": [
@@ -946,17 +1109,20 @@
             ".cnc",
             ".gco",
             ".gcode"
-        ]
+        ],
+        "function_patterns": []
     },
     "GAML": {
         "extensions": [
             ".gaml"
-        ]
+        ],
+        "function_patterns": []
     },
     "GAMS": {
         "extensions": [
             ".gms"
-        ]
+        ],
+        "function_patterns": []
     },
     "GAP": {
         "extensions": [
@@ -965,28 +1131,33 @@
             ".gd",
             ".gi",
             ".tst"
-        ]
+        ],
+        "function_patterns": []
     },
     "GCC Machine Description": {
         "extensions": [
             ".md"
-        ]
+        ],
+        "function_patterns": []
     },
     "GDB": {
         "extensions": [
             ".gdb",
             ".gdbinit"
-        ]
+        ],
+        "function_patterns": []
     },
     "GDScript": {
         "extensions": [
             ".gd"
-        ]
+        ],
+        "function_patterns": []
     },
     "GEDCOM": {
         "extensions": [
             ".ged"
-        ]
+        ],
+        "function_patterns": []
     },
     "GLSL": {
         "extensions": [
@@ -1010,41 +1181,49 @@
             ".vrx",
             ".vsh",
             ".vshader"
-        ]
+        ],
+        "function_patterns": []
     },
     "GN": {
         "extensions": [
             ".gn",
             ".gni"
-        ]
+        ],
+        "function_patterns": []
     },
     "Game Maker Language": {
         "extensions": [
             ".gml"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gemfile.lock": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Genie": {
         "extensions": [
             ".gs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Genshi": {
         "extensions": [
             ".kid"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gentoo Ebuild": {
         "extensions": [
             ".ebuild"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gentoo Eclass": {
         "extensions": [
             ".eclass"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gerber Image": {
         "extensions": [
@@ -1064,37 +1243,44 @@
             ".gts",
             ".ncl",
             ".sol"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gettext Catalog": {
         "extensions": [
             ".po",
             ".pot"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gherkin": {
         "extensions": [
             ".feature",
             ".story"
-        ]
+        ],
+        "function_patterns": []
     },
     "Git Attributes": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Git Config": {
         "extensions": [
             ".gitconfig"
-        ]
+        ],
+        "function_patterns": []
     },
     "Glyph": {
         "extensions": [
             ".glf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Glyph Bitmap Distribution Format": {
         "extensions": [
             ".bdf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gnuplot": {
         "extensions": [
@@ -1104,23 +1290,28 @@
             ".p",
             ".plot",
             ".plt"
-        ]
+        ],
+        "function_patterns": []
     },
     "Go": {
         "extensions": [
             ".go"
-        ]
+        ],
+        "function_patterns": []
     },
     "Go Checksums": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Go Module": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Golo": {
         "extensions": [
             ".golo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gosu": {
         "extensions": [
@@ -1128,40 +1319,47 @@
             ".gst",
             ".gsx",
             ".vark"
-        ]
+        ],
+        "function_patterns": []
     },
     "Grace": {
         "extensions": [
             ".grace"
-        ]
+        ],
+        "function_patterns": []
     },
     "Gradle": {
         "extensions": [
             ".gradle"
-        ]
+        ],
+        "function_patterns": []
     },
     "Grammatical Framework": {
         "extensions": [
             ".gf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Graph Modeling Language": {
         "extensions": [
             ".gml"
-        ]
+        ],
+        "function_patterns": []
     },
     "GraphQL": {
         "extensions": [
             ".graphql",
             ".gql",
             ".graphqls"
-        ]
+        ],
+        "function_patterns": []
     },
     "Graphviz (DOT)": {
         "extensions": [
             ".dot",
             ".gv"
-        ]
+        ],
+        "function_patterns": []
     },
     "Groovy": {
         "extensions": [
@@ -1169,17 +1367,20 @@
             ".grt",
             ".gtpl",
             ".gvy"
-        ]
+        ],
+        "function_patterns": []
     },
     "Groovy Server Pages": {
         "extensions": [
             ".gsp"
-        ]
+        ],
+        "function_patterns": []
     },
     "HAProxy": {
         "extensions": [
             ".cfg"
-        ]
+        ],
+        "function_patterns": []
     },
     "HCL": {
         "extensions": [
@@ -1188,7 +1389,8 @@
             ".tf",
             ".tfvars",
             ".workflow"
-        ]
+        ],
+        "function_patterns": []
     },
     "HLSL": {
         "extensions": [
@@ -1197,7 +1399,8 @@
             ".fx",
             ".fxh",
             ".hlsli"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTML": {
         "extensions": [
@@ -1208,46 +1411,54 @@
             ".inc",
             ".xht",
             ".xhtml"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTML+ECR": {
         "extensions": [
             ".ecr"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTML+EEX": {
         "extensions": [
             ".eex",
             ".html.leex"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTML+ERB": {
         "extensions": [
             ".erb",
             ".erb.deface",
             ".rhtml"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTML+PHP": {
         "extensions": [
             ".phtml"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTML+Razor": {
         "extensions": [
             ".cshtml",
             ".razor"
-        ]
+        ],
+        "function_patterns": []
     },
     "HTTP": {
         "extensions": [
             ".http"
-        ]
+        ],
+        "function_patterns": []
     },
     "HXML": {
         "extensions": [
             ".hxml"
-        ]
+        ],
+        "function_patterns": []
     },
     "Hack": {
         "extensions": [
@@ -1255,69 +1466,81 @@
             ".hh",
             ".hhi",
             ".php"
-        ]
+        ],
+        "function_patterns": []
     },
     "Haml": {
         "extensions": [
             ".haml",
             ".haml.deface"
-        ]
+        ],
+        "function_patterns": []
     },
     "Handlebars": {
         "extensions": [
             ".handlebars",
             ".hbs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Harbour": {
         "extensions": [
             ".hb"
-        ]
+        ],
+        "function_patterns": []
     },
     "Haskell": {
         "extensions": [
             ".hs",
             ".hs-boot",
             ".hsc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Haxe": {
         "extensions": [
             ".hx",
             ".hxsl"
-        ]
+        ],
+        "function_patterns": []
     },
     "HiveQL": {
         "extensions": [
             ".q",
             ".hql"
-        ]
+        ],
+        "function_patterns": []
     },
     "HolyC": {
         "extensions": [
             ".hc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Hy": {
         "extensions": [
             ".hy"
-        ]
+        ],
+        "function_patterns": []
     },
     "HyPhy": {
         "extensions": [
             ".bf"
-        ]
+        ],
+        "function_patterns": []
     },
     "IDL": {
         "extensions": [
             ".pro",
             ".dlm"
-        ]
+        ],
+        "function_patterns": []
     },
     "IGOR Pro": {
         "extensions": [
             ".ipf"
-        ]
+        ],
+        "function_patterns": []
     },
     "INI": {
         "extensions": [
@@ -1328,73 +1551,87 @@
             ".prefs",
             ".pro",
             ".properties"
-        ]
+        ],
+        "function_patterns": []
     },
     "IRC log": {
         "extensions": [
             ".irclog",
             ".weechatlog"
-        ]
+        ],
+        "function_patterns": []
     },
     "Idris": {
         "extensions": [
             ".idr",
             ".lidr"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ignore List": {
         "extensions": [
             ".gitignore"
-        ]
+        ],
+        "function_patterns": []
     },
     "ImageJ Macro": {
         "extensions": [
             ".ijm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Inform 7": {
         "extensions": [
             ".ni",
             ".i7x"
-        ]
+        ],
+        "function_patterns": []
     },
     "Inno Setup": {
         "extensions": [
             ".iss",
             ".isl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Io": {
         "extensions": [
             ".io"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ioke": {
         "extensions": [
             ".ik"
-        ]
+        ],
+        "function_patterns": []
     },
     "Isabelle": {
         "extensions": [
             ".thy"
-        ]
+        ],
+        "function_patterns": []
     },
     "Isabelle ROOT": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "J": {
         "extensions": [
             ".ijs"
-        ]
+        ],
+        "function_patterns": []
     },
     "JAR Manifest": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "JFlex": {
         "extensions": [
             ".flex",
             ".jflex"
-        ]
+        ],
+        "function_patterns": []
     },
     "JSON": {
         "extensions": [
@@ -1414,7 +1651,8 @@
             ".webmanifest",
             ".yy",
             ".yyp"
-        ]
+        ],
+        "function_patterns": []
     },
     "JSON with Comments": {
         "extensions": [
@@ -1432,27 +1670,32 @@
             ".sublime-workspace",
             ".sublime_metrics",
             ".sublime_session"
-        ]
+        ],
+        "function_patterns": []
     },
     "JSON5": {
         "extensions": [
             ".json5"
-        ]
+        ],
+        "function_patterns": []
     },
     "JSONLD": {
         "extensions": [
             ".jsonld"
-        ]
+        ],
+        "function_patterns": []
     },
     "JSONiq": {
         "extensions": [
             ".jq"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jasmin": {
         "extensions": [
             ".j"
-        ]
+        ],
+        "function_patterns": []
     },
     "Java": {
         "extensions": [
@@ -1469,12 +1712,14 @@
     "Java Properties": {
         "extensions": [
             ".properties"
-        ]
+        ],
+        "function_patterns": []
     },
     "Java Server Pages": {
         "extensions": [
             ".jsp"
-        ]
+        ],
+        "function_patterns": []
     },
     "JavaScript": {
         "extensions": [
@@ -1501,142 +1746,168 @@
             ".ssjs",
             ".xsjs",
             ".xsjslib"
-        ]
+        ],
+        "function_patterns": []
     },
     "JavaScript+ERB": {
         "extensions": [
             ".js.erb"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jest Snapshot": {
         "extensions": [
             ".snap"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jinja": {
         "extensions": [
             ".jinja",
             ".j2",
             ".jinja2"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jison": {
         "extensions": [
             ".jison"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jison Lex": {
         "extensions": [
             ".jisonlex"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jolie": {
         "extensions": [
             ".ol",
             ".iol"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jsonnet": {
         "extensions": [
             ".jsonnet",
             ".libsonnet"
-        ]
+        ],
+        "function_patterns": []
     },
     "Julia": {
         "extensions": [
             ".jl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Jupyter Notebook": {
         "extensions": [
             ".ipynb"
-        ]
+        ],
+        "function_patterns": []
     },
     "KRL": {
         "extensions": [
             ".krl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Kaitai Struct": {
         "extensions": [
             ".ksy"
-        ]
+        ],
+        "function_patterns": []
     },
     "KakouneScript": {
         "extensions": [
             ".kak"
-        ]
+        ],
+        "function_patterns": []
     },
     "KiCad Layout": {
         "extensions": [
             ".kicad_pcb",
             ".kicad_mod",
             ".kicad_wks"
-        ]
+        ],
+        "function_patterns": []
     },
     "KiCad Legacy Layout": {
         "extensions": [
             ".brd"
-        ]
+        ],
+        "function_patterns": []
     },
     "KiCad Schematic": {
         "extensions": [
             ".sch"
-        ]
+        ],
+        "function_patterns": []
     },
     "Kit": {
         "extensions": [
             ".kit"
-        ]
+        ],
+        "function_patterns": []
     },
     "Kotlin": {
         "extensions": [
             ".kt",
             ".ktm",
             ".kts"
-        ]
+        ],
+        "function_patterns": []
     },
     "Kusto": {
         "extensions": [
             ".csl"
-        ]
+        ],
+        "function_patterns": []
     },
     "LFE": {
         "extensions": [
             ".lfe"
-        ]
+        ],
+        "function_patterns": []
     },
     "LLVM": {
         "extensions": [
             ".ll"
-        ]
+        ],
+        "function_patterns": []
     },
     "LOLCODE": {
         "extensions": [
             ".lol"
-        ]
+        ],
+        "function_patterns": []
     },
     "LSL": {
         "extensions": [
             ".lsl",
             ".lslp"
-        ]
+        ],
+        "function_patterns": []
     },
     "LTspice Symbol": {
         "extensions": [
             ".asy"
-        ]
+        ],
+        "function_patterns": []
     },
     "LabVIEW": {
         "extensions": [
             ".lvproj",
             ".lvlib"
-        ]
+        ],
+        "function_patterns": []
     },
     "Lark": {
         "extensions": [
             ".lark"
-        ]
+        ],
+        "function_patterns": []
     },
     "Lasso": {
         "extensions": [
@@ -1644,105 +1915,123 @@
             ".las",
             ".lasso8",
             ".lasso9"
-        ]
+        ],
+        "function_patterns": []
     },
     "Latte": {
         "extensions": [
             ".latte"
-        ]
+        ],
+        "function_patterns": []
     },
     "Lean": {
         "extensions": [
             ".lean",
             ".hlean"
-        ]
+        ],
+        "function_patterns": []
     },
     "Less": {
         "extensions": [
             ".less"
-        ]
+        ],
+        "function_patterns": []
     },
     "Lex": {
         "extensions": [
             ".l",
             ".lex"
-        ]
+        ],
+        "function_patterns": []
     },
     "LilyPond": {
         "extensions": [
             ".ly",
             ".ily"
-        ]
+        ],
+        "function_patterns": []
     },
     "Limbo": {
         "extensions": [
             ".b",
             ".m"
-        ]
+        ],
+        "function_patterns": []
     },
     "Linker Script": {
         "extensions": [
             ".ld",
             ".lds",
             ".x"
-        ]
+        ],
+        "function_patterns": []
     },
     "Linux Kernel Module": {
         "extensions": [
             ".mod"
-        ]
+        ],
+        "function_patterns": []
     },
     "Liquid": {
         "extensions": [
             ".liquid"
-        ]
+        ],
+        "function_patterns": []
     },
     "Literate Agda": {
         "extensions": [
             ".lagda"
-        ]
+        ],
+        "function_patterns": []
     },
     "Literate CoffeeScript": {
         "extensions": [
             ".litcoffee",
             ".coffee.md"
-        ]
+        ],
+        "function_patterns": []
     },
     "Literate Haskell": {
         "extensions": [
             ".lhs"
-        ]
+        ],
+        "function_patterns": []
     },
     "LiveScript": {
         "extensions": [
             ".ls",
             "._ls"
-        ]
+        ],
+        "function_patterns": []
     },
     "Logos": {
         "extensions": [
             ".xm",
             ".x",
             ".xi"
-        ]
+        ],
+        "function_patterns": []
     },
     "Logtalk": {
         "extensions": [
             ".lgt",
             ".logtalk"
-        ]
+        ],
+        "function_patterns": []
     },
     "LookML": {
         "extensions": [
             ".lookml",
             ".model.lkml",
             ".view.lkml"
-        ]
+        ],
+        "function_patterns": []
     },
     "LoomScript": {
         "extensions": [
             ".ls"
-        ]
+        ],
+        "function_patterns": []
     },
     "Lua": {
         "extensions": [
@@ -1754,68 +2043,80 @@
             ".rbxs",
             ".rockspec",
             ".wlua"
-        ]
+        ],
+        "function_patterns": []
     },
     "M": {
         "extensions": [
             ".mumps",
             ".m"
-        ]
+        ],
+        "function_patterns": []
     },
     "M4": {
         "extensions": [
             ".m4"
-        ]
+        ],
+        "function_patterns": []
     },
     "M4Sugar": {
         "extensions": [
             ".m4"
-        ]
+        ],
+        "function_patterns": []
     },
     "MATLAB": {
         "extensions": [
             ".matlab",
             ".m"
-        ]
+        ],
+        "function_patterns": []
     },
     "MAXScript": {
         "extensions": [
             ".ms",
             ".mcr"
-        ]
+        ],
+        "function_patterns": []
     },
     "MLIR": {
         "extensions": [
             ".mlir"
-        ]
+        ],
+        "function_patterns": []
     },
     "MQL4": {
         "extensions": [
             ".mq4",
             ".mqh"
-        ]
+        ],
+        "function_patterns": []
     },
     "MQL5": {
         "extensions": [
             ".mq5",
             ".mqh"
-        ]
+        ],
+        "function_patterns": []
     },
     "MTML": {
         "extensions": [
             ".mtml"
-        ]
+        ],
+        "function_patterns": []
     },
     "MUF": {
         "extensions": [
             ".muf",
             ".m"
-        ]
+        ],
+        "function_patterns": []
     },
     "Macaulay2": {
         "extensions": [
             ".m2"
-        ]
+        ],
+        "function_patterns": []
     },
     "Makefile": {
         "extensions": [
@@ -1825,13 +2126,15 @@
             ".makefile",
             ".mk",
             ".mkfile"
-        ]
+        ],
+        "function_patterns": []
     },
     "Mako": {
         "extensions": [
             ".mako",
             ".mao"
-        ]
+        ],
+        "function_patterns": []
     },
     "Markdown": {
         "extensions": [
@@ -1846,17 +2149,20 @@
             ".ronn",
             ".scd",
             ".workbook"
-        ]
+        ],
+        "function_patterns": []
     },
     "Marko": {
         "extensions": [
             ".marko"
-        ]
+        ],
+        "function_patterns": []
     },
     "Mask": {
         "extensions": [
             ".mask"
-        ]
+        ],
+        "function_patterns": []
     },
     "Mathematica": {
         "extensions": [
@@ -1869,10 +2175,12 @@
             ".nbp",
             ".wl",
             ".wlt"
-        ]
+        ],
+        "function_patterns": []
     },
     "Maven POM": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Max": {
         "extensions": [
@@ -1881,53 +2189,63 @@
             ".maxproj",
             ".mxt",
             ".pat"
-        ]
+        ],
+        "function_patterns": []
     },
     "Mercury": {
         "extensions": [
             ".m",
             ".moo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Meson": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Metal": {
         "extensions": [
             ".metal"
-        ]
+        ],
+        "function_patterns": []
     },
     "Microsoft Developer Studio Project": {
         "extensions": [
             ".dsp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Microsoft Visual Studio Solution": {
         "extensions": [
             ".sln"
-        ]
+        ],
+        "function_patterns": []
     },
     "MiniD": {
         "extensions": [
             ".minid"
-        ]
+        ],
+        "function_patterns": []
     },
     "Mirah": {
         "extensions": [
             ".druby",
             ".duby",
             ".mirah"
-        ]
+        ],
+        "function_patterns": []
     },
     "Modelica": {
         "extensions": [
             ".mo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Modula-2": {
         "extensions": [
             ".mod"
-        ]
+        ],
+        "function_patterns": []
     },
     "Modula-3": {
         "extensions": [
@@ -1935,29 +2253,34 @@
             ".ig",
             ".m3",
             ".mg"
-        ]
+        ],
+        "function_patterns": []
     },
     "Module Management System": {
         "extensions": [
             ".mms",
             ".mmk"
-        ]
+        ],
+        "function_patterns": []
     },
     "Monkey": {
         "extensions": [
             ".monkey",
             ".monkey2"
-        ]
+        ],
+        "function_patterns": []
     },
     "Moocode": {
         "extensions": [
             ".moo"
-        ]
+        ],
+        "function_patterns": []
     },
     "MoonScript": {
         "extensions": [
             ".moon"
-        ]
+        ],
+        "function_patterns": []
     },
     "Motorola 68K Assembly": {
         "extensions": [
@@ -1966,104 +2289,123 @@
             ".inc",
             ".s",
             ".x68"
-        ]
+        ],
+        "function_patterns": []
     },
     "Muse": {
         "extensions": [
             ".muse"
-        ]
+        ],
+        "function_patterns": []
     },
     "Mustache": {
         "extensions": [
             ".mustache"
-        ]
+        ],
+        "function_patterns": []
     },
     "Myghty": {
         "extensions": [
             ".myt"
-        ]
+        ],
+        "function_patterns": []
     },
     "NASL": {
         "extensions": [
             ".nasl",
             ".inc"
-        ]
+        ],
+        "function_patterns": []
     },
     "NCL": {
         "extensions": [
             ".ncl"
-        ]
+        ],
+        "function_patterns": []
     },
     "NEON": {
         "extensions": [
             ".neon"
-        ]
+        ],
+        "function_patterns": []
     },
     "NL": {
         "extensions": [
             ".nl"
-        ]
+        ],
+        "function_patterns": []
     },
     "NPM Config": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "NSIS": {
         "extensions": [
             ".nsi",
             ".nsh"
-        ]
+        ],
+        "function_patterns": []
     },
     "NWScript": {
         "extensions": [
             ".nss"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nearley": {
         "extensions": [
             ".ne",
             ".nearley"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nemerle": {
         "extensions": [
             ".n"
-        ]
+        ],
+        "function_patterns": []
     },
     "NetLinx": {
         "extensions": [
             ".axs",
             ".axi"
-        ]
+        ],
+        "function_patterns": []
     },
     "NetLinx+ERB": {
         "extensions": [
             ".axs.erb",
             ".axi.erb"
-        ]
+        ],
+        "function_patterns": []
     },
     "NetLogo": {
         "extensions": [
             ".nlogo"
-        ]
+        ],
+        "function_patterns": []
     },
     "NewLisp": {
         "extensions": [
             ".nl",
             ".lisp",
             ".lsp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nextflow": {
         "extensions": [
             ".nf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nginx": {
         "extensions": [
             ".nginx",
             ".nginxconf",
             ".vhost"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nim": {
         "extensions": [
@@ -2072,39 +2414,46 @@
             ".nimble",
             ".nimrod",
             ".nims"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ninja": {
         "extensions": [
             ".ninja"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nit": {
         "extensions": [
             ".nit"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nix": {
         "extensions": [
             ".nix"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nu": {
         "extensions": [
             ".nu"
-        ]
+        ],
+        "function_patterns": []
     },
     "NumPy": {
         "extensions": [
             ".numpy",
             ".numpyw",
             ".numsc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Nunjucks": {
         "extensions": [
             ".njk"
-        ]
+        ],
+        "function_patterns": []
     },
     "OCaml": {
         "extensions": [
@@ -2115,133 +2464,158 @@
             ".mli",
             ".mll",
             ".mly"
-        ]
+        ],
+        "function_patterns": []
     },
     "ObjDump": {
         "extensions": [
             ".objdump"
-        ]
+        ],
+        "function_patterns": []
     },
     "Object Data Instance Notation": {
         "extensions": [
             ".odin"
-        ]
+        ],
+        "function_patterns": []
     },
     "ObjectScript": {
         "extensions": [
             ".cls"
-        ]
+        ],
+        "function_patterns": []
     },
     "Objective-C": {
         "extensions": [
             ".m",
             ".h"
-        ]
+        ],
+        "function_patterns": []
     },
     "Objective-C++": {
         "extensions": [
             ".mm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Objective-J": {
         "extensions": [
             ".j",
             ".sj"
-        ]
+        ],
+        "function_patterns": []
     },
     "Odin": {
         "extensions": [
             ".odin"
-        ]
+        ],
+        "function_patterns": []
     },
     "Omgrofl": {
         "extensions": [
             ".omgrofl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Opa": {
         "extensions": [
             ".opa"
-        ]
+        ],
+        "function_patterns": []
     },
     "Opal": {
         "extensions": [
             ".opal"
-        ]
+        ],
+        "function_patterns": []
     },
     "Open Policy Agent": {
         "extensions": [
             ".rego"
-        ]
+        ],
+        "function_patterns": []
     },
     "OpenCL": {
         "extensions": [
             ".cl",
             ".opencl"
-        ]
+        ],
+        "function_patterns": []
     },
     "OpenEdge ABL": {
         "extensions": [
             ".p",
             ".cls",
             ".w"
-        ]
+        ],
+        "function_patterns": []
     },
     "OpenQASM": {
         "extensions": [
             ".qasm"
-        ]
+        ],
+        "function_patterns": []
     },
     "OpenRC runscript": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "OpenSCAD": {
         "extensions": [
             ".scad"
-        ]
+        ],
+        "function_patterns": []
     },
     "OpenStep Property List": {
         "extensions": [
             ".plist",
             ".glyphs"
-        ]
+        ],
+        "function_patterns": []
     },
     "OpenType Feature File": {
         "extensions": [
             ".fea"
-        ]
+        ],
+        "function_patterns": []
     },
     "Org": {
         "extensions": [
             ".org"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ox": {
         "extensions": [
             ".ox",
             ".oxh",
             ".oxo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Oxygene": {
         "extensions": [
             ".oxygene"
-        ]
+        ],
+        "function_patterns": []
     },
     "Oz": {
         "extensions": [
             ".oz"
-        ]
+        ],
+        "function_patterns": []
     },
     "P4": {
         "extensions": [
             ".p4"
-        ]
+        ],
+        "function_patterns": []
     },
     "PEG.js": {
         "extensions": [
             ".pegjs"
-        ]
+        ],
+        "function_patterns": []
     },
     "PHP": {
         "extensions": [
@@ -2255,7 +2629,8 @@
             ".php5",
             ".phps",
             ".phpt"
-        ]
+        ],
+        "function_patterns": []
     },
     "PLSQL": {
         "extensions": [
@@ -2275,44 +2650,52 @@
             ".tps",
             ".trg",
             ".vw"
-        ]
+        ],
+        "function_patterns": []
     },
     "PLpgSQL": {
         "extensions": [
             ".pgsql",
             ".sql"
-        ]
+        ],
+        "function_patterns": []
     },
     "POV-Ray SDL": {
         "extensions": [
             ".pov",
             ".inc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pan": {
         "extensions": [
             ".pan"
-        ]
+        ],
+        "function_patterns": []
     },
     "Papyrus": {
         "extensions": [
             ".psc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Parrot": {
         "extensions": [
             ".parrot"
-        ]
+        ],
+        "function_patterns": []
     },
     "Parrot Assembly": {
         "extensions": [
             ".pasm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Parrot Internal Representation": {
         "extensions": [
             ".pir"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pascal": {
         "extensions": [
@@ -2323,19 +2706,22 @@
             ".lpr",
             ".pascal",
             ".pp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pawn": {
         "extensions": [
             ".pwn",
             ".inc",
             ".sma"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pep8": {
         "extensions": [
             ".pep"
-        ]
+        ],
+        "function_patterns": []
     },
     "Perl": {
         "extensions": [
@@ -2349,68 +2735,80 @@
             ".pm",
             ".psgi",
             ".t"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pic": {
         "extensions": [
             ".pic",
             ".chem"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pickle": {
         "extensions": [
             ".pkl"
-        ]
+        ],
+        "function_patterns": []
     },
     "PicoLisp": {
         "extensions": [
             ".l"
-        ]
+        ],
+        "function_patterns": []
     },
     "PigLatin": {
         "extensions": [
             ".pig"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pike": {
         "extensions": [
             ".pike",
             ".pmod"
-        ]
+        ],
+        "function_patterns": []
     },
     "PlantUML": {
         "extensions": [
             ".puml",
             ".iuml",
             ".plantuml"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pod": {
         "extensions": [
             ".pod"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pod 6": {
         "extensions": [
             ".pod",
             ".pod6"
-        ]
+        ],
+        "function_patterns": []
     },
     "PogoScript": {
         "extensions": [
             ".pogo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pony": {
         "extensions": [
             ".pony"
-        ]
+        ],
+        "function_patterns": []
     },
     "PostCSS": {
         "extensions": [
             ".pcss",
             ".postcss"
-        ]
+        ],
+        "function_patterns": []
     },
     "PostScript": {
         "extensions": [
@@ -2418,7 +2816,8 @@
             ".eps",
             ".epsi",
             ".pfa"
-        ]
+        ],
+        "function_patterns": []
     },
     "PowerBuilder": {
         "extensions": [
@@ -2426,29 +2825,34 @@
             ".sra",
             ".sru",
             ".srw"
-        ]
+        ],
+        "function_patterns": []
     },
     "PowerShell": {
         "extensions": [
             ".ps1",
             ".psd1",
             ".psm1"
-        ]
+        ],
+        "function_patterns": []
     },
     "Prisma": {
         "extensions": [
             ".prisma"
-        ]
+        ],
+        "function_patterns": []
     },
     "Processing": {
         "extensions": [
             ".pde"
-        ]
+        ],
+        "function_patterns": []
     },
     "Proguard": {
         "extensions": [
             ".pro"
-        ]
+        ],
+        "function_patterns": []
     },
     "Prolog": {
         "extensions": [
@@ -2456,50 +2860,59 @@
             ".pro",
             ".prolog",
             ".yap"
-        ]
+        ],
+        "function_patterns": []
     },
     "Propeller Spin": {
         "extensions": [
             ".spin"
-        ]
+        ],
+        "function_patterns": []
     },
     "Protocol Buffer": {
         "extensions": [
             ".proto"
-        ]
+        ],
+        "function_patterns": []
     },
     "Public Key": {
         "extensions": [
             ".asc",
             ".pub"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pug": {
         "extensions": [
             ".jade",
             ".pug"
-        ]
+        ],
+        "function_patterns": []
     },
     "Puppet": {
         "extensions": [
             ".pp"
-        ]
+        ],
+        "function_patterns": []
     },
     "Pure Data": {
         "extensions": [
             ".pd"
-        ]
+        ],
+        "function_patterns": []
     },
     "PureBasic": {
         "extensions": [
             ".pb",
             ".pbi"
-        ]
+        ],
+        "function_patterns": []
     },
     "PureScript": {
         "extensions": [
             ".purs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Python": {
         "extensions": [
@@ -2527,54 +2940,64 @@
         ]
     },
     "Python console": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Python traceback": {
         "extensions": [
             ".pytb"
-        ]
+        ],
+        "function_patterns": []
     },
     "Q#": {
         "extensions": [
             ".qs"
-        ]
+        ],
+        "function_patterns": []
     },
     "QML": {
         "extensions": [
             ".qml",
             ".qbs"
-        ]
+        ],
+        "function_patterns": []
     },
     "QMake": {
         "extensions": [
             ".pro",
             ".pri"
-        ]
+        ],
+        "function_patterns": []
     },
     "Qt Script": {
         "extensions": [
             ".qs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Quake": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "R": {
         "extensions": [
             ".r",
             ".rd",
             ".rsx"
-        ]
+        ],
+        "function_patterns": []
     },
     "RAML": {
         "extensions": [
             ".raml"
-        ]
+        ],
+        "function_patterns": []
     },
     "RDoc": {
         "extensions": [
             ".rdoc"
-        ]
+        ],
+        "function_patterns": []
     },
     "REALbasic": {
         "extensions": [
@@ -2584,35 +3007,41 @@
             ".rbres",
             ".rbtbar",
             ".rbuistate"
-        ]
+        ],
+        "function_patterns": []
     },
     "REXX": {
         "extensions": [
             ".rexx",
             ".pprx",
             ".rex"
-        ]
+        ],
+        "function_patterns": []
     },
     "RMarkdown": {
         "extensions": [
             ".rmd"
-        ]
+        ],
+        "function_patterns": []
     },
     "RPC": {
         "extensions": [
             ".x"
-        ]
+        ],
+        "function_patterns": []
     },
     "RPM Spec": {
         "extensions": [
             ".spec"
-        ]
+        ],
+        "function_patterns": []
     },
     "RUNOFF": {
         "extensions": [
             ".rnh",
             ".rno"
-        ]
+        ],
+        "function_patterns": []
     },
     "Racket": {
         "extensions": [
@@ -2620,12 +3049,14 @@
             ".rktd",
             ".rktl",
             ".scrbl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ragel": {
         "extensions": [
             ".rl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Raku": {
         "extensions": [
@@ -2642,31 +3073,37 @@
             ".raku",
             ".rakumod",
             ".t"
-        ]
+        ],
+        "function_patterns": []
     },
     "Rascal": {
         "extensions": [
             ".rsc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Raw token data": {
         "extensions": [
             ".raw"
-        ]
+        ],
+        "function_patterns": []
     },
     "ReScript": {
         "extensions": [
             ".res"
-        ]
+        ],
+        "function_patterns": []
     },
     "Readline Config": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Reason": {
         "extensions": [
             ".re",
             ".rei"
-        ]
+        ],
+        "function_patterns": []
     },
     "Rebol": {
         "extensions": [
@@ -2675,61 +3112,73 @@
             ".r2",
             ".r3",
             ".rebol"
-        ]
+        ],
+        "function_patterns": []
     },
     "Record Jar": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Red": {
         "extensions": [
             ".red",
             ".reds"
-        ]
+        ],
+        "function_patterns": []
     },
     "Redcode": {
         "extensions": [
             ".cw"
-        ]
+        ],
+        "function_patterns": []
     },
     "Redirect Rules": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Regular Expression": {
         "extensions": [
             ".regexp",
             ".regex"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ren'Py": {
         "extensions": [
             ".rpy"
-        ]
+        ],
+        "function_patterns": []
     },
     "RenderScript": {
         "extensions": [
             ".rs",
             ".rsh"
-        ]
+        ],
+        "function_patterns": []
     },
     "Rich Text Format": {
         "extensions": [
             ".rtf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ring": {
         "extensions": [
             ".ring"
-        ]
+        ],
+        "function_patterns": []
     },
     "Riot": {
         "extensions": [
             ".riot"
-        ]
+        ],
+        "function_patterns": []
     },
     "RobotFramework": {
         "extensions": [
             ".robot"
-        ]
+        ],
+        "function_patterns": []
     },
     "Roff": {
         "extensions": [
@@ -2761,7 +3210,8 @@
             ".nr",
             ".rno",
             ".tmac"
-        ]
+        ],
+        "function_patterns": []
     },
     "Roff Manpage": {
         "extensions": [
@@ -2785,12 +3235,14 @@
             ".9",
             ".man",
             ".mdoc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Rouge": {
         "extensions": [
             ".rg"
-        ]
+        ],
+        "function_patterns": []
     },
     "Ruby": {
         "extensions": [
@@ -2816,46 +3268,54 @@
             ".spec",
             ".thor",
             ".watchr"
-        ]
+        ],
+        "function_patterns": []
     },
     "Rust": {
         "extensions": [
             ".rs",
             ".rs.in"
-        ]
+        ],
+        "function_patterns": []
     },
     "SAS": {
         "extensions": [
             ".sas"
-        ]
+        ],
+        "function_patterns": []
     },
     "SCSS": {
         "extensions": [
             ".scss"
-        ]
+        ],
+        "function_patterns": []
     },
     "SELinux Policy": {
         "extensions": [
             ".te"
-        ]
+        ],
+        "function_patterns": []
     },
     "SMT": {
         "extensions": [
             ".smt2",
             ".smt"
-        ]
+        ],
+        "function_patterns": []
     },
     "SPARQL": {
         "extensions": [
             ".sparql",
             ".rq"
-        ]
+        ],
+        "function_patterns": []
     },
     "SQF": {
         "extensions": [
             ".sqf",
             ".hqf"
-        ]
+        ],
+        "function_patterns": []
     },
     "SQL": {
         "extensions": [
@@ -2868,52 +3328,62 @@
             ".tab",
             ".udf",
             ".viw"
-        ]
+        ],
+        "function_patterns": []
     },
     "SQLPL": {
         "extensions": [
             ".sql",
             ".db2"
-        ]
+        ],
+        "function_patterns": []
     },
     "SRecode Template": {
         "extensions": [
             ".srt"
-        ]
+        ],
+        "function_patterns": []
     },
     "SSH Config": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "STON": {
         "extensions": [
             ".ston"
-        ]
+        ],
+        "function_patterns": []
     },
     "SVG": {
         "extensions": [
             ".svg"
-        ]
+        ],
+        "function_patterns": []
     },
     "SWIG": {
         "extensions": [
             ".i"
-        ]
+        ],
+        "function_patterns": []
     },
     "Sage": {
         "extensions": [
             ".sage",
             ".sagews"
-        ]
+        ],
+        "function_patterns": []
     },
     "SaltStack": {
         "extensions": [
             ".sls"
-        ]
+        ],
+        "function_patterns": []
     },
     "Sass": {
         "extensions": [
             ".sass"
-        ]
+        ],
+        "function_patterns": []
     },
     "Scala": {
         "extensions": [
@@ -2921,12 +3391,14 @@
             ".kojo",
             ".sbt",
             ".sc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Scaml": {
         "extensions": [
             ".scaml"
-        ]
+        ],
+        "function_patterns": []
     },
     "Scheme": {
         "extensions": [
@@ -2936,24 +3408,28 @@
             ".sls",
             ".sps",
             ".ss"
-        ]
+        ],
+        "function_patterns": []
     },
     "Scilab": {
         "extensions": [
             ".sci",
             ".sce",
             ".tst"
-        ]
+        ],
+        "function_patterns": []
     },
     "Self": {
         "extensions": [
             ".self"
-        ]
+        ],
+        "function_patterns": []
     },
     "ShaderLab": {
         "extensions": [
             ".shader"
-        ]
+        ],
+        "function_patterns": []
     },
     "Shell": {
         "extensions": [
@@ -2969,90 +3445,108 @@
             ".tmux",
             ".tool",
             ".zsh"
-        ]
+        ],
+        "function_patterns": []
     },
     "ShellSession": {
         "extensions": [
             ".sh-session"
-        ]
+        ],
+        "function_patterns": []
     },
     "Shen": {
         "extensions": [
             ".shen"
-        ]
+        ],
+        "function_patterns": []
     },
     "Sieve": {
         "extensions": [
             ".sieve"
-        ]
+        ],
+        "function_patterns": []
     },
     "Singularity": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Slash": {
         "extensions": [
             ".sl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Slice": {
         "extensions": [
             ".ice"
-        ]
+        ],
+        "function_patterns": []
     },
     "Slim": {
         "extensions": [
             ".slim"
-        ]
+        ],
+        "function_patterns": []
     },
     "SmPL": {
         "extensions": [
             ".cocci"
-        ]
+        ],
+        "function_patterns": []
     },
     "Smali": {
         "extensions": [
             ".smali"
-        ]
+        ],
+        "function_patterns": []
     },
     "Smalltalk": {
         "extensions": [
             ".st",
             ".cs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Smarty": {
         "extensions": [
             ".tpl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Solidity": {
         "extensions": [
             ".sol"
-        ]
+        ],
+        "function_patterns": []
     },
     "Soong": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "SourcePawn": {
         "extensions": [
             ".sp",
             ".inc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Spline Font Database": {
         "extensions": [
             ".sfd"
-        ]
+        ],
+        "function_patterns": []
     },
     "Squirrel": {
         "extensions": [
             ".nut"
-        ]
+        ],
+        "function_patterns": []
     },
     "Stan": {
         "extensions": [
             ".stan"
-        ]
+        ],
+        "function_patterns": []
     },
     "Standard ML": {
         "extensions": [
@@ -3060,12 +3554,14 @@
             ".fun",
             ".sig",
             ".sml"
-        ]
+        ],
+        "function_patterns": []
     },
     "Starlark": {
         "extensions": [
             ".bzl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Stata": {
         "extensions": [
@@ -3076,50 +3572,59 @@
             ".mata",
             ".matah",
             ".sthlp"
-        ]
+        ],
+        "function_patterns": []
     },
     "StringTemplate": {
         "extensions": [
             ".st"
-        ]
+        ],
+        "function_patterns": []
     },
     "Stylus": {
         "extensions": [
             ".styl"
-        ]
+        ],
+        "function_patterns": []
     },
     "SubRip Text": {
         "extensions": [
             ".srt"
-        ]
+        ],
+        "function_patterns": []
     },
     "SugarSS": {
         "extensions": [
             ".sss"
-        ]
+        ],
+        "function_patterns": []
     },
     "SuperCollider": {
         "extensions": [
             ".sc",
             ".scd"
-        ]
+        ],
+        "function_patterns": []
     },
     "Svelte": {
         "extensions": [
             ".svelte"
-        ]
+        ],
+        "function_patterns": []
     },
     "Swift": {
         "extensions": [
             ".swift"
-        ]
+        ],
+        "function_patterns": []
     },
     "SystemVerilog": {
         "extensions": [
             ".sv",
             ".svh",
             ".vh"
-        ]
+        ],
+        "function_patterns": []
     },
     "TI Program": {
         "extensions": [
@@ -3127,37 +3632,44 @@
             ".8xk",
             ".8xk.txt",
             ".8xp.txt"
-        ]
+        ],
+        "function_patterns": []
     },
     "TLA": {
         "extensions": [
             ".tla"
-        ]
+        ],
+        "function_patterns": []
     },
     "TOML": {
         "extensions": [
             ".toml"
-        ]
+        ],
+        "function_patterns": []
     },
     "TSQL": {
         "extensions": [
             ".sql"
-        ]
+        ],
+        "function_patterns": []
     },
     "TSV": {
         "extensions": [
             ".tsv"
-        ]
+        ],
+        "function_patterns": []
     },
     "TSX": {
         "extensions": [
             ".tsx"
-        ]
+        ],
+        "function_patterns": []
     },
     "TXL": {
         "extensions": [
             ".txl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Tcl": {
         "extensions": [
@@ -3165,13 +3677,15 @@
             ".adp",
             ".tcl.in",
             ".tm"
-        ]
+        ],
+        "function_patterns": []
     },
     "Tcsh": {
         "extensions": [
             ".tcsh",
             ".csh"
-        ]
+        ],
+        "function_patterns": []
     },
     "TeX": {
         "extensions": [
@@ -3189,24 +3703,28 @@
             ".mkvi",
             ".sty",
             ".toc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Tea": {
         "extensions": [
             ".tea"
-        ]
+        ],
+        "function_patterns": []
     },
     "Terra": {
         "extensions": [
             ".t"
-        ]
+        ],
+        "function_patterns": []
     },
     "Texinfo": {
         "extensions": [
             ".texinfo",
             ".texi",
             ".txi"
-        ]
+        ],
+        "function_patterns": []
     },
     "Text": {
         "extensions": [
@@ -3215,51 +3733,61 @@
             ".nb",
             ".ncl",
             ".no"
-        ]
+        ],
+        "function_patterns": []
     },
     "TextMate Properties": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Textile": {
         "extensions": [
             ".textile"
-        ]
+        ],
+        "function_patterns": []
     },
     "Thrift": {
         "extensions": [
             ".thrift"
-        ]
+        ],
+        "function_patterns": []
     },
     "Turing": {
         "extensions": [
             ".t",
             ".tu"
-        ]
+        ],
+        "function_patterns": []
     },
     "Turtle": {
         "extensions": [
             ".ttl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Twig": {
         "extensions": [
             ".twig"
-        ]
+        ],
+        "function_patterns": []
     },
     "Type Language": {
         "extensions": [
             ".tl"
-        ]
+        ],
+        "function_patterns": []
     },
     "TypeScript": {
         "extensions": [
             ".ts"
-        ]
+        ],
+        "function_patterns": []
     },
     "Unified Parallel C": {
         "extensions": [
             ".upc"
-        ]
+        ],
+        "function_patterns": []
     },
     "Unity3D Asset": {
         "extensions": [
@@ -3270,34 +3798,40 @@
             ".meta",
             ".prefab",
             ".unity"
-        ]
+        ],
+        "function_patterns": []
     },
     "Unix Assembly": {
         "extensions": [
             ".s",
             ".ms"
-        ]
+        ],
+        "function_patterns": []
     },
     "Uno": {
         "extensions": [
             ".uno"
-        ]
+        ],
+        "function_patterns": []
     },
     "UnrealScript": {
         "extensions": [
             ".uc"
-        ]
+        ],
+        "function_patterns": []
     },
     "UrWeb": {
         "extensions": [
             ".ur",
             ".urs"
-        ]
+        ],
+        "function_patterns": []
     },
     "V": {
         "extensions": [
             ".v"
-        ]
+        ],
+        "function_patterns": []
     },
     "VBA": {
         "extensions": [
@@ -3306,17 +3840,20 @@
             ".frm",
             ".frx",
             ".vba"
-        ]
+        ],
+        "function_patterns": []
     },
     "VBScript": {
         "extensions": [
             ".vbs"
-        ]
+        ],
+        "function_patterns": []
     },
     "VCL": {
         "extensions": [
             ".vcl"
-        ]
+        ],
+        "function_patterns": []
     },
     "VHDL": {
         "extensions": [
@@ -3328,142 +3865,169 @@
             ".vhs",
             ".vht",
             ".vhw"
-        ]
+        ],
+        "function_patterns": []
     },
     "Vala": {
         "extensions": [
             ".vala",
             ".vapi"
-        ]
+        ],
+        "function_patterns": []
     },
     "Valve Data Format": {
         "extensions": [
             ".vdf"
-        ]
+        ],
+        "function_patterns": []
     },
     "Verilog": {
         "extensions": [
             ".v",
             ".veo"
-        ]
+        ],
+        "function_patterns": []
     },
     "Vim Help File": {
         "extensions": [
             ".txt"
-        ]
+        ],
+        "function_patterns": []
     },
     "Vim Script": {
         "extensions": [
             ".vim",
             ".vba",
             ".vmb"
-        ]
+        ],
+        "function_patterns": []
     },
     "Vim Snippet": {
         "extensions": [
             ".snip",
             ".snippet",
             ".snippets"
-        ]
+        ],
+        "function_patterns": []
     },
     "Visual Basic .NET": {
         "extensions": [
             ".vb",
             ".vbhtml"
-        ]
+        ],
+        "function_patterns": []
     },
     "Volt": {
         "extensions": [
             ".volt"
-        ]
+        ],
+        "function_patterns": []
     },
     "Vue": {
         "extensions": [
             ".vue"
-        ]
+        ],
+        "function_patterns": []
     },
     "Wavefront Material": {
         "extensions": [
             ".mtl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Wavefront Object": {
         "extensions": [
             ".obj"
-        ]
+        ],
+        "function_patterns": []
     },
     "Web Ontology Language": {
         "extensions": [
             ".owl"
-        ]
+        ],
+        "function_patterns": []
     },
     "WebAssembly": {
         "extensions": [
             ".wast",
             ".wat"
-        ]
+        ],
+        "function_patterns": []
     },
     "WebIDL": {
         "extensions": [
             ".webidl"
-        ]
+        ],
+        "function_patterns": []
     },
     "WebVTT": {
         "extensions": [
             ".vtt"
-        ]
+        ],
+        "function_patterns": []
     },
     "Wget Config": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "Wikitext": {
         "extensions": [
             ".mediawiki",
             ".wiki",
             ".wikitext"
-        ]
+        ],
+        "function_patterns": []
     },
     "Windows Registry Entries": {
         "extensions": [
             ".reg"
-        ]
+        ],
+        "function_patterns": []
     },
     "Wollok": {
         "extensions": [
             ".wlk"
-        ]
+        ],
+        "function_patterns": []
     },
     "World of Warcraft Addon Data": {
         "extensions": [
             ".toc"
-        ]
+        ],
+        "function_patterns": []
     },
     "X BitMap": {
         "extensions": [
             ".xbm"
-        ]
+        ],
+        "function_patterns": []
     },
     "X Font Directory Index": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "X PixMap": {
         "extensions": [
             ".xpm",
             ".pm"
-        ]
+        ],
+        "function_patterns": []
     },
     "X10": {
         "extensions": [
             ".x10"
-        ]
+        ],
+        "function_patterns": []
     },
     "XC": {
         "extensions": [
             ".xc"
-        ]
+        ],
+        "function_patterns": []
     },
     "XCompose": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "XML": {
         "extensions": [
@@ -3567,7 +4131,8 @@
             ".xspec",
             ".xul",
             ".zcml"
-        ]
+        ],
+        "function_patterns": []
     },
     "XML Property List": {
         "extensions": [
@@ -3578,19 +4143,22 @@
             ".tmPreferences",
             ".tmSnippet",
             ".tmTheme"
-        ]
+        ],
+        "function_patterns": []
     },
     "XPages": {
         "extensions": [
             ".xsp-config",
             ".xsp.metadata"
-        ]
+        ],
+        "function_patterns": []
     },
     "XProc": {
         "extensions": [
             ".xpl",
             ".xproc"
-        ]
+        ],
+        "function_patterns": []
     },
     "XQuery": {
         "extensions": [
@@ -3599,18 +4167,21 @@
             ".xql",
             ".xqm",
             ".xqy"
-        ]
+        ],
+        "function_patterns": []
     },
     "XS": {
         "extensions": [
             ".xs"
-        ]
+        ],
+        "function_patterns": []
     },
     "XSLT": {
         "extensions": [
             ".xslt",
             ".xsl"
-        ]
+        ],
+        "function_patterns": []
     },
     "Xojo": {
         "extensions": [
@@ -3620,17 +4191,20 @@
             ".xojo_script",
             ".xojo_toolbar",
             ".xojo_window"
-        ]
+        ],
+        "function_patterns": []
     },
     "Xonsh": {
         "extensions": [
             ".xsh"
-        ]
+        ],
+        "function_patterns": []
     },
     "Xtend": {
         "extensions": [
             ".xtend"
-        ]
+        ],
+        "function_patterns": []
     },
     "YAML": {
         "extensions": [
@@ -3644,140 +4218,166 @@
             ".yaml-tmlanguage",
             ".yaml.sed",
             ".yml.mysql"
-        ]
+        ],
+        "function_patterns": []
     },
     "YANG": {
         "extensions": [
             ".yang"
-        ]
+        ],
+        "function_patterns": []
     },
     "YARA": {
         "extensions": [
             ".yar",
             ".yara"
-        ]
+        ],
+        "function_patterns": []
     },
     "YASnippet": {
         "extensions": [
             ".yasnippet"
-        ]
+        ],
+        "function_patterns": []
     },
     "Yacc": {
         "extensions": [
             ".y",
             ".yacc",
             ".yy"
-        ]
+        ],
+        "function_patterns": []
     },
     "ZAP": {
         "extensions": [
             ".zap",
             ".xzap"
-        ]
+        ],
+        "function_patterns": []
     },
     "ZIL": {
         "extensions": [
             ".zil",
             ".mud"
-        ]
+        ],
+        "function_patterns": []
     },
     "Zeek": {
         "extensions": [
             ".zeek",
             ".bro"
-        ]
+        ],
+        "function_patterns": []
     },
     "ZenScript": {
         "extensions": [
             ".zs"
-        ]
+        ],
+        "function_patterns": []
     },
     "Zephir": {
         "extensions": [
             ".zep"
-        ]
+        ],
+        "function_patterns": []
     },
     "Zig": {
         "extensions": [
             ".zig"
-        ]
+        ],
+        "function_patterns": []
     },
     "Zimpl": {
         "extensions": [
             ".zimpl",
             ".zmpl",
             ".zpl"
-        ]
+        ],
+        "function_patterns": []
     },
     "cURL Config": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "desktop": {
         "extensions": [
             ".desktop",
             ".desktop.in"
-        ]
+        ],
+        "function_patterns": []
     },
     "dircolors": {
         "extensions": [
             ".dircolors"
-        ]
+        ],
+        "function_patterns": []
     },
     "eC": {
         "extensions": [
             ".ec",
             ".eh"
-        ]
+        ],
+        "function_patterns": []
     },
     "edn": {
         "extensions": [
             ".edn"
-        ]
+        ],
+        "function_patterns": []
     },
     "fish": {
         "extensions": [
             ".fish"
-        ]
+        ],
+        "function_patterns": []
     },
     "jq": {
         "extensions": [
             ".jq"
-        ]
+        ],
+        "function_patterns": []
     },
     "mIRC Script": {
         "extensions": [
             ".mrc"
-        ]
+        ],
+        "function_patterns": []
     },
     "mcfunction": {
         "extensions": [
             ".mcfunction"
-        ]
+        ],
+        "function_patterns": []
     },
     "mupad": {
         "extensions": [
             ".mu"
-        ]
+        ],
+        "function_patterns": []
     },
     "nanorc": {
         "extensions": [
             ".nanorc"
-        ]
+        ],
+        "function_patterns": []
     },
     "nesC": {
         "extensions": [
             ".nc"
-        ]
+        ],
+        "function_patterns": []
     },
     "ooc": {
         "extensions": [
             ".ooc"
-        ]
+        ],
+        "function_patterns": []
     },
     "q": {
         "extensions": [
             ".q"
-        ]
+        ],
+        "function_patterns": []
     },
     "reStructuredText": {
         "extensions": [
@@ -3785,31 +4385,37 @@
             ".rest",
             ".rest.txt",
             ".rst.txt"
-        ]
+        ],
+        "function_patterns": []
     },
     "robots.txt": {
-        "extensions": null
+        "extensions": null,
+        "function_patterns": []
     },
     "sed": {
         "extensions": [
             ".sed"
-        ]
+        ],
+        "function_patterns": []
     },
     "wdl": {
         "extensions": [
             ".wdl"
-        ]
+        ],
+        "function_patterns": []
     },
     "wisp": {
         "extensions": [
             ".wisp"
-        ]
+        ],
+        "function_patterns": []
     },
     "xBase": {
         "extensions": [
             ".prg",
             ".ch",
             ".prw"
-        ]
+        ],
+        "function_patterns": []
     }
 }
