@@ -17,7 +17,7 @@ from templates.python_template.utils.file_operations import overwrite_file
 
 licenses = ["mit", "afl-3.0"]
 target_directory = os.getcwd()
-author = "soIipsis"
+author = "soIipsist"
 
 
 class TestScaffolder(TestBase):

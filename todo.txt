@@ -38,6 +38,7 @@
   + languages.json
     + combine languages with function_patterns file
   + update repo if metadata is changed
+  - store everything in sqlite 
   - handle git template urls
   - create repo without using gh
   - add all licenses 

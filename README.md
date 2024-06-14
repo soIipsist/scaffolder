@@ -16,7 +16,7 @@ The following dependecies will be installed:
 1. Clone the git repository:
 
     ```bash
-    git clone https://github.com/soIipsis/scaffolder.git
+    git clone https://github.com/soIipsist/scaffolder.git
     ```
 
 2. Install all package dependencies:
