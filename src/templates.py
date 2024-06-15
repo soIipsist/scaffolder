@@ -10,7 +10,7 @@ import subprocess
 import shutil
 
 from utils.sqlite_item import *
-from data.sqlite_constants import *
+from data.sqlite_data import *
 
 
 class Template(SQLiteItem):
@@ -25,31 +25,13 @@ class Template(SQLiteItem):
         self.language = language
 
 
-def get_template_indices(template: str):
-    template_indices = [
-        i
-        for i, t in enumerate(template_metadata)
-        if template == t["name"] or template == t["directory"]
-    ]
-    return template_indices
-
-
 def get_template_directory(template: str):
 
     if is_valid_dir(template, False):
         template_directory = template
     else:
-        indices = get_template_indices(template)
-        if len(indices) == 0:
-            raise ValueError(
-                f"Template {template} does not exist. To add a new template, use the `templates add` command."
-            )
-
-        template_directory = template_metadata[get_template_indices(template)[0]].get(
-            "directory"
-        )
-        template_directory = template_directory.replace(
-            "__PARENTDIR__", parent_directory
+        raise ValueError(
+            f"Template {template} does not exist. To add a new template, use the `templates add` command."
         )
 
     if not os.path.exists(template_directory):
@@ -64,8 +46,6 @@ def add_template(
     language: str = "python",
     copy_template: bool = True,
 ):
-    if not isinstance(template_metadata, list):
-        raise ValueError("Template metadata not parsed correctly.")
 
     template_name = (
         os.path.basename(template_directory) if not template_name else template_name
