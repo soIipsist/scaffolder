@@ -30,7 +30,7 @@ class TestUpdate(TestBase):
 
     def get_test_files_dir(self, dirname: str = "dir1", language="python"):
         target_dir = {"python": "python_test_files", "java": "java_test_files"}
-        return os.path.join(os.getcwd(), target_dir.get(language), dirname)
+        return os.path.join(os.getcwd(), "files", target_dir.get(language), dirname)
 
     def test_get_functions(self):
         file1 = os.path.join(self.get_test_files_dir(), "file.py")

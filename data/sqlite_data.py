@@ -2,8 +2,8 @@ db_path = "scaffolder.db"
 template_table = "Template"
 template_values = [
     "id INTEGER PRIMARY KEY AUTOINCREMENT",
-    "directory TEXT NOT NULL UNIQUE",
-    "name TEXT NOT NULL UNIQUE",
+    "template_directory TEXT NOT NULL UNIQUE",
+    "template_name TEXT NOT NULL UNIQUE",
     "language TEXT",
 ]
 

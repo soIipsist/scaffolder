@@ -15,15 +15,18 @@ from data.sqlite_data import *
 
 class Template(SQLiteItem):
     template_directory: str
-    language: str
     template_name: str
+    language: str
 
     def __init__(
-        self, template_directory: str, template_name: str, language: str = "python"
+        self,
+        template_directory: str,
+        template_name: str = None,
+        language: str = "python",
     ) -> None:
         super().__init__(table_values=template_values)
-        self.template_directory = template_directory
-        self.template_name = template_name
+        self.template_directory = self.get_template_directory(template_directory)
+        self.template_name = self.get_template_name(template_name)
         self.language = language
 
     def get_template_directory(self, template_directory: str):
@@ -31,21 +34,35 @@ class Template(SQLiteItem):
         # check if the directory is valid
         if is_valid_dir(template_directory, False):
             return template_directory
+        # else check if it's a github repo
 
+        elif template_directory.startswith("https://github"):
+            pass
 
-def get_template_directory(template: str):
+    def get_template_name(self, template_name: str):
+        if template_name:
+            return template_name
 
-    if is_valid_dir(template, False):
-        template_directory = template
-    else:
-        raise ValueError(
-            f"Template {template} does not exist. To add a new template, use the `templates add` command."
-        )
+        return os.path.basename(self.template_directory)
 
-    if not os.path.exists(template_directory):
-        raise ValueError(f"template directory {template_directory} does not exist.")
+    def copy_template(self):
+        """
+        Copies template_directory to 'templates' if called
+        """
 
-    return template_directory
+        templates_dir = os.path.join(parent_directory, "templates", self.template_name)
+        if not os.path.exists(templates_dir):
+            os.makedirs(templates_dir)
+
+        command = f"cp -r {template_directory}/* {templates_dir}/"
+        subprocess.run(command, shell=True)
+        template_directory = templates_dir
+
+    def remove_template(self):
+        shutil.rmtree(self.template_directory, ignore_errors=True)
+
+    def __str__(self) -> str:
+        return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
 
 
 def add_template(
@@ -54,55 +71,18 @@ def add_template(
     language: str = "python",
     copy_template: bool = True,
 ):
-
-    template_name = (
-        os.path.basename(template_directory) if not template_name else template_name
-    )
-    template_directory = get_template_directory(template_directory)
-
-    if copy_template:
-
-        templates_dir = os.path.join(parent_directory, "templates", template_name)
-        if not os.path.exists(templates_dir):
-            os.makedirs(templates_dir)
-
-        command = f"cp -r {template_directory}/* {templates_dir}/"
-        subprocess.run(command, shell=True)
-        template_directory = templates_dir
+    pass
 
 
 def delete_template(template: str):
 
     # remove directory entirely
-    if len(template_indices) > 0:
-        shutil.rmtree(
-            template_metadata[template_indices[0]].get("directory"), ignore_errors=True
-        )
-
-    return template_indices
+    pass
 
 
 def list_templates(templates: list = []):
-
-    if not isinstance(template_metadata, list):
-        raise ValueError("Template metadata not parsed correctly.")
-
-    if not templates:
-        templates = template_metadata
-
-    for template in template_metadata:
-        if isinstance(template, dict):
-            template_directory = template.get("directory")
-            template_name = template.get("name", os.path.basename(template_directory))
-            template_language = template.get("language")
-
-            template_directory = template_directory.replace(
-                "__PARENTDIR__", parent_directory
-            )
-
-            print(
-                f"Template name: {template_name} \nDirectory: {template_directory}\nLanguage: {template_language}\n"
-            )
+    for template in templates:
+        temp = Template()
 
     return templates
 
@@ -116,7 +96,10 @@ if __name__ == "__main__":
         Argument(name=("-c", "--copy_template"), type=bool, default=True),
     ]
 
-    delete_arguments = [Argument(name=("-t", "--template"))]
+    delete_arguments = [
+        DirectoryArgument(name=("-t", "--template_directory")),
+        Argument(name=("-n", "--template_name")),
+    ]
 
     parser_arguments = [Argument(name="templates", nargs="?", default=None)]
 
