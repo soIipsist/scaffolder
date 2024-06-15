@@ -1,0 +1,16 @@
+[project]
+dependencies = []
+description = "CLI scaffolding tool designed to automatically generate projects using personalized templates."
+name = "scaffolder"
+readme = "README.md"
+requires-python = ">=3.11"
+version = "1.0.0"
+[[project.authors]]
+name = "soIipsist"
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools", "wheel"]
+
+[project.license]
+text = "MIT License"

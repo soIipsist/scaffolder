@@ -14,6 +14,7 @@ from xmltodict import parse as parse_xml
 from utils.url_utils import is_url
 
 from importlib import resources
+import fileinput
 
 
 def overwrite_file(file_path, content: str, encoding=None, errors=None):
@@ -241,3 +242,31 @@ def read_resource_file(
         raise ValueError("File not found")
     except (ValueError, json.JSONDecodeError, Exception) as e:
         return f"An error occurred: {e}, {e.__class__}"
+
+
+def find_and_replace_in_directory(
+    directory, search_word, replace_word, removed_dirs: list = []
+):
+    for root, dirs, files in os.walk(directory):
+
+        for d in removed_dirs:
+            if d in dirs:
+                dirs.remove(d)
+
+        for file in files:
+            file_path = os.path.join(root, file)
+
+            # Rename files containing the keyword
+            if search_word in file:
+                new_file_name = file.replace(search_word, replace_word)
+                new_file_path = os.path.join(root, new_file_name)
+                os.rename(file_path, new_file_path)
+                file_path = new_file_path
+
+            with fileinput.FileInput(file_path, inplace=True) as f:
+                try:
+                    for line in f:
+                        modified_line = line.replace(search_word, replace_word)
+                        print(modified_line, end="")
+                except Exception as e:
+                    print(e)

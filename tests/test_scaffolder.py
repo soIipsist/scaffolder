@@ -251,4 +251,4 @@ class TestScaffolder(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_create_license)
+    run_test_methods(TestScaffolder.test_get_function_patterns)

@@ -4,7 +4,7 @@ import pprint
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from utils.file_utils import read_json_file
+from utils.json_utils import read_json_file
 
 scaffolder_data_path = f"{parent_directory}/src/scaffolder.json"
 scaffolder_metadata = read_json_file(scaffolder_data_path)
