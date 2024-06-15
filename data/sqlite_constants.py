@@ -1,4 +1,4 @@
-db_path = "database.db"
+db_path = "scaffolder.db"
 template_table = "Template"
 template_values = [
     "id INTEGER PRIMARY KEY AUTOINCREMENT",

@@ -9,6 +9,21 @@ from src.constants import *
 import subprocess
 import shutil
 
+from utils.sqlite_item import *
+from data.sqlite_constants import *
+
+
+class Template(SQLiteItem):
+    directory: str
+    language: str
+    name: str
+
+    def __init__(self, directory: str, name: str, language: str = "python") -> None:
+        super().__init__(table_values=template_values)
+        self.directory = directory
+        self.name = name
+        self.language = language
+
 
 def get_template_indices(template: str):
     template_indices = [

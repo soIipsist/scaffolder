@@ -6,7 +6,7 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
 from src.constants import *
-from src.sqlite_constants import *
+from data.sqlite_constants import *
 
 
 def create_db(db_path: str = db_path, tables: list = tables, values: list = values):
