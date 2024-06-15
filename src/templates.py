@@ -14,15 +14,23 @@ from data.sqlite_data import *
 
 
 class Template(SQLiteItem):
-    directory: str
+    template_directory: str
     language: str
-    name: str
+    template_name: str
 
-    def __init__(self, directory: str, name: str, language: str = "python") -> None:
+    def __init__(
+        self, template_directory: str, template_name: str, language: str = "python"
+    ) -> None:
         super().__init__(table_values=template_values)
-        self.directory = directory
-        self.name = name
+        self.template_directory = template_directory
+        self.template_name = template_name
         self.language = language
+
+    def get_template_directory(self, template_directory: str):
+
+        # check if the directory is valid
+        if is_valid_dir(template_directory, False):
+            return template_directory
 
 
 def get_template_directory(template: str):
@@ -62,32 +70,14 @@ def add_template(
         subprocess.run(command, shell=True)
         template_directory = templates_dir
 
-    template_dict = {
-        "directory": template_directory,
-        "name": template_name,
-        "language": language,
-    }
-
-    if template_dict not in template_metadata:
-        template_metadata.append(template_dict)
-        overwrite_json_file(template_data_path, template_metadata)
-
 
 def delete_template(template: str):
-    template_indices = [
-        i
-        for i, t in enumerate(template_metadata)
-        if template == t["name"] or template == t["directory"]
-    ]
 
     # remove directory entirely
     if len(template_indices) > 0:
         shutil.rmtree(
             template_metadata[template_indices[0]].get("directory"), ignore_errors=True
         )
-
-    for index in reversed(template_indices):
-        del template_metadata[index]
 
     return template_indices
 

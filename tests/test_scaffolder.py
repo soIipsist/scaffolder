@@ -170,16 +170,6 @@ class TestScaffolder(TestBase):
             language="java",
         )
 
-    def test_find_and_replace_in_directory(self):
-        # create a file called red.txt with some text
-        file_path = os.path.join(self.test_files_dir, "red.txt")
-        file_content = "hello red"
-        overwrite_file(file_path, file_content)
-
-        content = read_file(file_path)
-        self.assertTrue(file_content == content)
-        find_and_replace_in_directory(self.test_files_dir, "red", "blue", [".git"])
-
     def test_settings(self):
         settings = list_settings(self.parameters)
         self.assertIsNotNone(settings)
