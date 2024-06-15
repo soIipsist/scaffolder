@@ -4,7 +4,7 @@ import os
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
-from templates.python_template.tests.test_base import TestBase, run_test_methods
+from tests.test_base import TestBase, run_test_methods
 
 from src.scaffold import *
 from src.update import *
@@ -14,7 +14,7 @@ from src.templates import *
 from src.constants import *
 from src.functions import find_functions_in_file
 
-from templates.python_template.utils.file_operations import overwrite_file
+from utils.file_utils import overwrite_file
 
 licenses = ["mit", "afl-3.0"]
 target_directory = os.getcwd()

@@ -23,12 +23,18 @@ def sanitize_values(values: list):
     expression = r"\W+"
 
     from utils.date_utils import get_date_format
+    from utils.url_utils import is_url
+    from utils.path_utils import is_valid_path
 
     if not isinstance(values, list):
         values = [values]
 
     for i, value in enumerate(values):
-        if not get_date_format(value):
+        if (
+            not get_date_format(value)
+            and not is_url(value, False)
+            and not is_valid_path(value, False)
+        ):
             values[i] = re.sub(expression, "", value)
     return values
 
@@ -54,9 +60,8 @@ def sanitize_filter_condition(filter_condition: str):
 
         key = key.strip()
         value = value.strip()
-
         filter_condition_keys.append(key)
-        sanitized_params.extend(sanitize_values(value))
+        sanitized_params.append(value)
 
     return filter_condition_keys, tuple(sanitized_params)
 
@@ -80,12 +85,8 @@ def filter_items(
     filter_condition = get_filter_condition(attrs)
 
     values = [getattr(object, attr) for attr in attrs if attr]
-
     for val in values:
-        if isinstance(val, str):
-            filter_condition = filter_condition.replace("?", f"'{val}'", 1)
-        else:
-            filter_condition = filter_condition.replace("?", f"{val}", 1)
+        filter_condition = filter_condition.replace("?", f"{val}", 1)
 
     return select_items(conn, table_name, filter_condition, type(object))
 
@@ -113,27 +114,26 @@ def insert_items(
         raise ValueError("'objects' must be a list.")
 
     try:
-        cursor = conn.cursor()
         column_names = (
-            get_column_names(cursor, table_name)
+            get_column_names(conn.cursor, table_name)
             if column_names is None
             else column_names
         )
-        # print(table_name)
         placeholders = ", ".join(["?"] * len(column_names))
         columns = ", ".join(column_names)
 
         query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
 
+        last_row_id = None
         for object in objects:
             values = get_object_values(object, column_names)
-            cursor.execute(query, values)
-            conn.commit()
+            cursor, results = execute_query(conn, query, values, return_cursor=True)
+            if cursor:
+                last_row_id = cursor.lastrowid if cursor.lastrowid else last_row_id
 
-        return cursor.lastrowid
+        return last_row_id
     except sqlite3.Error as e:
         print("Error inserting data:", e)
-        return None
 
 
 def update_item(
@@ -146,7 +146,6 @@ def update_item(
     """Update any given SQL object based on a filter condition."""
 
     try:
-        cursor = conn.cursor()
 
         if not isinstance(obj, dict):
             obj = vars(obj)
@@ -155,14 +154,19 @@ def update_item(
             updated_columns = obj.keys()
 
         set_clause = ", ".join([f"{column} = ?" for column in updated_columns])
+        filter_condition_keys, params = sanitize_filter_condition(filter_condition)
+        filter_condition_keys: list
+        filter_condition = get_filter_condition(filter_condition_keys)
+
         query = f"UPDATE {table_name} SET {set_clause} WHERE {filter_condition}"
 
-        update_values = tuple(obj.values())
-        cursor.execute(query, update_values)
-        conn.commit()
+        update_values = list(obj.values())
+        update_values.extend(params)
 
-        return cursor.lastrowid
-
+        cursor, results = execute_query(conn, query, update_values, return_cursor=True)
+        if cursor:
+            last_row_id = cursor.lastrowid if cursor.lastrowid else last_row_id
+        return last_row_id
     except sqlite3.Error as e:
         print("Error updating data: ", e)
         return -1
@@ -213,32 +217,13 @@ def select_items(
 
         query += f" WHERE {filter_condition}"
         results = execute_query(conn, query, params)
+        # print(query, params)
     else:
         results = execute_query(conn, query)
 
     return (
         results
         if not mapped_object_type
-        else map_sqlite_results_to_objects(results, mapped_object_type, column_names)
-    )
-
-
-def select_random_item(
-    conn: sqlite3.Connection,
-    table_name: str,
-    mapped_object_type=None,
-    column_names: list = [],
-):
-    """
-    Returns a random item stored in the SQLite database, if it exists.
-    """
-
-    query = f"SELECT * FROM {table_name} ORDER BY RANDOM() LIMIT 1"
-    results = execute_query(conn, query)
-
-    return (
-        results
-        if mapped_object_type is None
         else map_sqlite_results_to_objects(results, mapped_object_type, column_names)
     )
 
@@ -290,23 +275,34 @@ def delete_items(
         return execute_query(conn, query, params)
 
 
-def execute_query(conn: sqlite3.Connection, query: str, parameters: list = None):
+def execute_query(
+    conn: sqlite3.Connection, query: str, parameters: list = None, return_cursor=False
+):
     """
     Execute an SQL query on the SQLite database.
     """
 
+    results = []
+    cursor = None
+
     try:
         cursor = conn.cursor()
         if parameters:
+            # print(query, parameters)
             cursor.execute(query, parameters)
         else:
+            # print(query)
             cursor.execute(query)
         results = cursor.fetchall()
         conn.commit()
-        return results
+
     except sqlite3.Error as e:
         print("Error executing query:", e)
-        return []
+
+    if return_cursor:
+        return cursor, results
+
+    return results
 
 
 def create_table(conn: sqlite3.Connection, table_name: str, table_values: list):
@@ -330,12 +326,19 @@ def close_connection(conn: sqlite3.Connection):
         conn.close()
 
 
-def get_random_row(conn: sqlite3.Connection, table_name: str):
+def get_random_row(
+    conn: sqlite3.Connection, table_name: str, mapped_object_type: type = None
+):
     """
-    Returns random row of SQLite database table.
+    Returns a random row in the SQLite database, if it exists.
     """
+
     table_name = sanitize_values(table_name)[0]
-    # print(table_name)
-    return execute_query(
+    results = execute_query(
         conn, "SELECT * FROM {} ORDER BY RANDOM() LIMIT 1".format(table_name)
+    )
+    return (
+        results
+        if mapped_object_type is None
+        else map_sqlite_results_to_objects(results, mapped_object_type)
     )

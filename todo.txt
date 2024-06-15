@@ -1,8 +1,7 @@
-- python-template
- - tests
++ python_template
+ + tests
     + sqlite
     + sqlite item
-    - questionary item
     + parser
     + utils
      + date
@@ -10,7 +9,7 @@
      + dictionary
      + path
 
-- fastapi-template
+- fasterapi
   + user routes
     + login
     + register
@@ -38,9 +37,12 @@
   + languages.json
     + combine languages with function_patterns file
   + update repo if metadata is changed
+  + get updated functions bug fix
+
+  + remove python_template, use utils instead
   - store everything in sqlite 
   - handle git template urls
   - create repo without using gh
   - add all licenses 
   - add function patterns for all languages
-  + get updated functions bug fix
+

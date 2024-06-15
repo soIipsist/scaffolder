@@ -4,8 +4,8 @@ import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from templates.python_template.utils.file_operations import overwrite_json_file
-from templates.python_template.utils.parser import *
+from utils.file_utils import overwrite_json_file
+from utils.parser import *
 from src.constants import *
 import subprocess
 

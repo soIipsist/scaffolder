@@ -1,14 +1,14 @@
 from argparse import _SubParsersAction, ArgumentParser
 import argparse
 from datetime import datetime
-from templates.python_template.utils.dictionary_operations import safe_pop
+from utils.dict_utils import safe_pop
 
-from templates.python_template.utils.path_operations import is_valid_path, is_valid_dir
-from templates.python_template.utils.date_utils import get_current_date, parse_date
-from templates.python_template.utils.str_utils import str_to_bool
+from utils.path_utils import is_valid_path, is_valid_dir
+from utils.date_utils import get_current_date, parse_date
+from utils.str_utils import str_to_bool
 from inspect import signature
 
-from templates.python_template.utils.url_utils import is_url
+from utils.url_utils import is_url
 
 
 class Argument:
@@ -178,6 +178,9 @@ class Parser:
             self.create_subcommands(subcommands)
 
     def add_parser_arguments(self, parser_arguments: list):
+        """
+        Adds parser arguments to ArgumentParser object.
+        """
 
         if not all(
             isinstance(argument, Argument) for argument in self.parser_arguments
@@ -193,6 +196,9 @@ class Parser:
             self.parser.add_argument(*arg.name, **arg_dict)
 
     def create_subcommands(self, subcommands: list):
+        """
+        Creates a list of subparser commands.
+        """
 
         if not all(isinstance(subparser, SubCommand) for subparser in subcommands):
             raise ValueError("subparsers can only be of type Subparser.")
@@ -207,9 +213,6 @@ class Parser:
         """
         Given a dictionary of command-function pairs, return the appropriate function.
         """
-
-        # if not self.args:
-        #     raise ValueError("args not defined.")
 
         if not isinstance(cmd_dictionary, dict):
             raise ValueError("'commands' is not a dictionary.")
@@ -228,6 +231,7 @@ class Parser:
         self.args = vars(self.parser.parse_args())
 
         cmd = self.args.get("command")
+
         if cmd:
             subcommand_arguments = next(
                 subcommand.subcommand_arguments
@@ -258,23 +262,6 @@ class Parser:
 
         return temp_dict
 
-    def get_object_command_dict(self, obj, command_names: list = []):
-        cmd_dict = {}
-
-        object_methods = [
-            method_name
-            for method_name in dir(obj)
-            if callable(getattr(obj, method_name)) and not method_name.startswith("__")
-        ]
-
-        if not command_names:
-            command_names = object_methods
-
-        for name, method in zip(command_names, object_methods):
-            cmd_dict.update({name: getattr(obj, method)})
-
-        return cmd_dict
-
     def get_callable_args(self, func):
         """Returns a dictionary of parser arguments within a given function."""
 
@@ -293,6 +280,23 @@ class Parser:
             elif param.default == param.empty and param.name != "self":
                 args.update({key: None})
         return args
+
+    def get_object_command_dict(self, obj, command_names: list = []):
+        cmd_dict = {}
+
+        object_methods = [
+            method_name
+            for method_name in dir(obj)
+            if callable(getattr(obj, method_name)) and not method_name.startswith("__")
+        ]
+
+        if not command_names:
+            command_names = object_methods
+
+        for name, method in zip(command_names, object_methods):
+            cmd_dict.update({name: getattr(obj, method)})
+
+        return cmd_dict
 
     def run_command(self, cmd_dict: dict, dest="command"):
         "Executes a command with parser arguments, requiring a dictionary that links the command name to the associated function to be executed."

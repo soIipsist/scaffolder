@@ -3,10 +3,11 @@ import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from templates.python_template.utils.file_operations import read_file, overwrite_file
-from templates.python_template.utils.path_operations import is_valid_path
+from utils.file_utils import read_file, overwrite_file
+from utils.path_utils import is_valid_path
+from utils.parser import *
+
 from src.constants import *
-from templates.python_template.utils.parser import *
 import re
 
 

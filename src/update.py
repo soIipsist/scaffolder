@@ -5,9 +5,9 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
 from src.functions import find_files, get_updated_file_content, get_updated_functions
-from templates.python_template.utils.path_operations import is_valid_path
-from templates.python_template.utils.parser import *
-from templates.python_template.utils.dictionary_operations import (
+from utils.path_utils import is_valid_path
+from utils.parser import *
+from utils.dict_utils import (
     get_item_case_insensitive,
 )
 from src.constants import *

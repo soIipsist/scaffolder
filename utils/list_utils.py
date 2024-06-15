@@ -1,4 +1,4 @@
-def flatten(iterable):
+def flatten(iterable: list):
     arr = []
     for i in iterable:
         if isinstance(i, list):

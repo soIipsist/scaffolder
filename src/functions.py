@@ -1,6 +1,7 @@
 import os
 import re
-from templates.python_template.utils.file_operations import read_file
+from utils.file_utils import read_file
+
 
 def find_files(directory: str, file_names: list):
     """

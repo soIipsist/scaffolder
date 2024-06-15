@@ -2,7 +2,7 @@ import os
 import subprocess
 import shutil
 
-from templates.python_template.utils.dictionary_operations import invert_dict
+from utils.dict_utils import invert_dict
 
 
 def get_repository_visibility(repository_visibility: int):

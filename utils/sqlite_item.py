@@ -1,4 +1,4 @@
-from utils.file_operations import read_file, overwrite_file
+from utils.file_utils import read_file, overwrite_file
 from utils.sqlite import (
     select_items,
     update_item,
@@ -8,10 +8,15 @@ from utils.sqlite import (
     create_connection,
     sanitize_filter_condition,
     filter_items,
+    get_random_row,
 )
 import re
-from constants import db_path
 import os
+
+parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0, parent_directory)
+
+from utils.sqlite_connection import db_path
 
 conn = create_connection(db_path)
 
@@ -19,6 +24,8 @@ conn = create_connection(db_path)
 class SQLiteItem:
 
     error_message = None
+    logging = True
+    log_message = None
 
     def __init__(self, table_values: list, column_names: list = None) -> None:
         self.table_name = self.__class__.__name__
@@ -27,6 +34,7 @@ class SQLiteItem:
             column_names if column_names else self.get_column_names_from_table()
         )
         self.error_message = f"{self.__class__.__name__} does not exist"
+        self.logging = False
 
     @property
     def filter_condition(self):
@@ -64,6 +72,12 @@ class SQLiteItem:
 
         return [getattr(self, name) for name in attr_names]
 
+    def filter(self, attrs: list = []):
+        if attrs:
+            return filter_items(conn, self.table_name, attrs, self)
+        else:
+            return self.select_all()
+
     def select(self):
         items = select_items(
             conn,
@@ -72,13 +86,8 @@ class SQLiteItem:
             type(self),
             column_names=self.column_names,
         )
-        return items[0] if len(items) > 0 else None
 
-    def filter(self, attrs: list = []):
-        if attrs:
-            return filter_items(conn, self.table_name, attrs, self)
-        else:
-            return self.select_all()
+        return items[0] if len(items) > 0 else None
 
     def select_all(self):
         return select_items(conn, self.table_name, None, type(self), self.column_names)
@@ -127,3 +136,13 @@ class SQLiteItem:
 
         if insert:
             self.insert()
+
+    def get_random_item(self):
+        item = get_random_row(conn, self.table_name, type(self))
+        return item
+
+    def log(self, log_message: str = None):
+
+        if self.logging and log_message:
+            log_message = log_message if log_message else self.log_message
+            print(log_message)

@@ -12,10 +12,10 @@ from src.repository import (
 )
 from src.licenses import create_license
 from src.templates import get_template_directory
-from templates.python_template.utils.file_operations import (
+from utils.file_utils import (
     find_and_replace_in_directory,
 )
-from templates.python_template.utils.parser import *
+from utils.parser import *
 from src.constants import *
 
 

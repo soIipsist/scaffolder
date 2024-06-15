@@ -1,15 +1,11 @@
 import unittest
 import os
 import subprocess
-import inspect
 
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0, parentdir)
+parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0, parent_directory)
 
-# from templates.python_template.utils.sqlite import create_connection, close_connection, create_table, delete_items
 from pprint import PrettyPrinter
-
-from utils.sqlite_connection import reset_db, delete_db, create_db
 
 
 class TestBase(unittest.TestCase):
@@ -20,7 +16,7 @@ class TestBase(unittest.TestCase):
         self.pp = PrettyPrinter(indent=3)
 
     def execute_cmd(self, cmd):
-        os.chdir(f"{parentdir}/src")
+        os.chdir(f"{parent_directory}/src")
         print(cmd)
         completed_process = subprocess.run(cmd, shell=True)
         exit_code = completed_process.returncode
@@ -31,6 +27,36 @@ class TestBase(unittest.TestCase):
             for d in args:
                 print(d)
 
+    def get_files_directory(self):
+        return f"{parent_directory}/tests/files"
+
+    def get_file(self, file: str):
+        return os.path.join(self.get_files_directory(), file)
+
+    def delete_git_ignore_files(self):
+        # files = "tests/"
+        from utils.file_utils import read_file
+
+        parent_directory = os.path.dirname(os.getcwd())
+        git_ignore = os.path.join(parent_directory, ".gitignore")
+
+        files = read_file(git_ignore).splitlines()
+        removed = []
+        for file in files:
+            if f"*." in file:
+                # find all files with said extension
+                ext = file.split("*.")[1]
+                directory = os.path.join(parent_directory, os.path.dirname(file))
+
+                if os.path.exists(directory):
+                    for f in os.listdir(directory):
+                        if f.endswith(ext):
+                            file_path = os.path.join(directory, f)
+                            os.remove(file_path)
+                            removed.append(file_path)
+
+        return removed
+
     @classmethod
     def generate_default_test_methods(self):
         methods = [
@@ -39,14 +65,6 @@ class TestBase(unittest.TestCase):
             if callable(getattr(self, method_name)) and method_name.startswith("test")
         ]
         return methods
-
-
-def run_tests(test_methods: list, index: int = None):
-    test_case = None
-    if index is not None:
-        test_case = test_methods[index]
-        print(f"Running test '{test_case}'...")
-    unittest.main(defaultTest=test_case)
 
 
 def run_test_methods(test_methods: list):
