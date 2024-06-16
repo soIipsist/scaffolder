@@ -24,7 +24,6 @@ import configparser
 class TestSetup(TestBase):
     def setUp(self) -> None:
         super().setUp()
-        # create_db(db_path, tables, values)
 
     def get_dependencies(self):
         requirements_path = f"{parent_directory}/requirements.txt"

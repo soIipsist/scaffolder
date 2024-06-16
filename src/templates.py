@@ -3,7 +3,7 @@ import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from utils.json_utils import overwrite_json_file
+
 from utils.parser import *
 from src.constants import *
 import subprocess
@@ -20,7 +20,7 @@ class Template(SQLiteItem):
 
     def __init__(
         self,
-        template_directory: str,
+        template_directory: str = None,
         template_name: str = None,
         language: str = "python",
     ) -> None:
@@ -29,15 +29,14 @@ class Template(SQLiteItem):
         self.template_name = self.get_template_name(template_name)
         self.language = language
 
-    def get_template_directory(self, template_directory: str):
+    def get_template_directory(self, template_directory: str = None):
 
-        # check if the directory is valid
-        if is_valid_dir(template_directory, False):
-            return template_directory
-        # else check if it's a github repo
+        # if is_valid_dir(template_directory, False):
+        #     return template_directory
+        # elif template_directory.startswith("https://github"):
+        #     pass
 
-        elif template_directory.startswith("https://github"):
-            pass
+        return template_directory
 
     def get_template_name(self, template_name: str):
         if template_name:
@@ -51,6 +50,7 @@ class Template(SQLiteItem):
         """
 
         templates_dir = os.path.join(parent_directory, "templates", self.template_name)
+
         if not os.path.exists(templates_dir):
             os.makedirs(templates_dir)
 
@@ -71,18 +71,26 @@ def add_template(
     language: str = "python",
     copy_template: bool = True,
 ):
-    pass
+    template = Template(template_directory, template_name, language)
+    template.insert()
+
+    if copy_template:
+        template.copy_template()
+
+    return template
 
 
 def delete_template(template: str):
+    template = Template(template)
 
     # remove directory entirely
-    pass
 
 
-def list_templates(templates: list = []):
+def list_templates(templates: list = None):
     for template in templates:
-        temp = Template()
+        temp = Template(
+            template_directory=template,
+        )
 
     return templates
 
@@ -97,8 +105,7 @@ if __name__ == "__main__":
     ]
 
     delete_arguments = [
-        DirectoryArgument(name=("-t", "--template_directory")),
-        Argument(name=("-n", "--template_name")),
+        Argument(name=("-t", "--template")),
     ]
 
     parser_arguments = [Argument(name="templates", nargs="?", default=None)]
@@ -109,7 +116,5 @@ if __name__ == "__main__":
     ]
 
     parser = Parser(parser_arguments, subcommands)
-
     cmd_dict = {None: list_templates, "add": add_template, "delete": delete_template}
-
     parser.run_command(cmd_dict)
