@@ -20,6 +20,7 @@ class SettingsAction(argparse.Action):
 
 
 def list_settings(parameters: list = []):
+    scaffolder_metadata = read_json_file(scaffolder_data_path)
     if not parameters:
         parameters = scaffolder_metadata.keys()
 
@@ -32,7 +33,7 @@ def list_settings(parameters: list = []):
     return settings
 
 
-def update_settings(**args):
+def update_settings(args: dict):
     settings = {}
 
     for key, val in args.items():
@@ -45,12 +46,12 @@ def update_settings(**args):
     overwrite_json_file(scaffolder_data_path, new_settings)
 
 
-def edit_settings(default_editor: str = "vscode"):
+def view_settings_in_editor(default_editor: str = "vscode"):
     print(f"Default editor set to {default_editor}.")
 
     if default_editor == "vscode":
         default_editor = "code"
-    base_cmd = f"{default_editor} {parent_directory}/src/scaffolder.json"
+    base_cmd = f"{default_editor} {scaffolder_data_path}"
 
     subprocess.Popen(base_cmd, shell=True)
 
@@ -92,7 +93,7 @@ def main():
         None: list_settings,
         "update": update_settings,
         "view": list_settings,
-        "edit": edit_settings,
+        "edit": view_settings_in_editor,
     }
 
     parser.run_command(cmd_dict)

@@ -33,13 +33,6 @@ class TestTemplates(TestBase):
             self.template_directory, self.template_name, self.language
         )
 
-    def get_template_directory(self, template_directory="sample_template"):
-        return os.path.join(parent_directory, "templates", template_directory)
-
-    def get_python_template_directory(self):
-        path = "/Users/p/Desktop/soIipsis/python_template"
-        return path
-
     def test_get_template_name(self):
         template_directory = self.template.get_template_name()
         print(template_directory)

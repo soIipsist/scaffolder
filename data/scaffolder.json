@@ -1,15 +1,17 @@
 {
-  "template_directory": "python_template",
-  "destination_directory": "/Users/p/Desktop/soIipsist/python_template",
-  "package_name": "template",
-  "update_template_directory": "/Users/p/Desktop/soIipsist/superscraper/utils",
-  "update_destination_directory": "/Users/p/Desktop/soIipsist/scaffolder/templates/python_template/utils/",
-  "update_files": ["sqlite.py", "parser.py"],
-  "license": "mit",
-  "author": "soIipsist",
-  "year": "2024",
-  "author": "soIipsist",
-  "create_repository": true,
-  "gh_check": false,
-  "repository_visibility": 0
+    "template_directory": "gaga",
+    "destination_directory": "/Users/p/Desktop/soIipsist/python_template",
+    "package_name": "template",
+    "update_template_directory": "/Users/p/Desktop/soIipsist/superscraper/utils",
+    "update_destination_directory": "/Users/p/Desktop/soIipsist/scaffolder/templates/python_template/utils/",
+    "update_files": [
+        "sqlite.py",
+        "parser.py"
+    ],
+    "license": "mit",
+    "author": "soIipsist",
+    "year": "2024",
+    "create_repository": true,
+    "gh_check": false,
+    "repository_visibility": 0
 }

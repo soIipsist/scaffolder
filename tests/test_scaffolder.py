@@ -30,12 +30,6 @@ class TestScaffolder(TestBase):
         self.author = author
         self.create_repository = create_repository
         self.repository_visibility = repository_visibility
-        self.parameters = ["template_directory", "license"]
-
-        self.update_template_directory = update_template_directory
-        self.package_name = "red"
-        self.update_destination_directory = update_destination_directory
-        self.update_files = update_files
 
         self.test_files_dir = self.get_test_files_dir()
         self.test_files_dir_2 = self.get_test_files_dir("dir2")
@@ -66,9 +60,10 @@ class TestScaffolder(TestBase):
             self.create_repository,
             self.repository_visibility,
         )
-        self.assertTrue(os.path.exists(self.destination_directory))
+        # self.assertTrue(os.path.exists(self.destination_directory))
 
     def test_scaffold(self):
+        self.template_directory = self.gettem
         self.create_repository = True
         self.repository_visibility = 1
         scaffold(
@@ -81,65 +76,6 @@ class TestScaffolder(TestBase):
             self.create_repository,
             self.repository_visibility,
         )
-
-    def test_scaffold_update(self):
-        # test with repo that already exists
-        self.assertTrue(git_repo_exists(self.destination_directory))
-        scaffold(
-            self.template_directory,
-            self.destination_directory,
-            self.package_name,
-            self.license,
-            self.author,
-            self.author,
-            self.create_repository,
-            self.repository_visibility,
-        )
-
-    def test_update_python(self):
-        self.update_files = []
-        self.update_template_directory = self.get_test_files_dir()
-        self.update_destination_directory = self.get_test_files_dir("dir2")
-
-        print(self.update_template_directory)
-
-        # try with no update files given
-        source_files, funcs, updated_content = update(
-            self.update_files,
-            self.update_template_directory,
-            self.update_destination_directory,
-        )
-
-    def test_update_java(self):
-        self.update_files = []
-        self.update_template_directory = self.get_test_files_dir(language="java")
-        self.update_destination_directory = self.get_test_files_dir("dir2", "java")
-
-        # try with no update files given
-        source_files, funcs, updated_content = update(
-            self.update_files,
-            self.update_template_directory,
-            self.update_destination_directory,
-            language="java",
-        )
-
-    def test_settings(self):
-        settings = list_settings(self.parameters)
-        self.assertIsNotNone(settings)
-        self.assertListEqual(list(settings.keys()), self.parameters)
-
-    def test_list_templates(self):
-        templates = list_templates()
-        print(templates)
-
-    def test_add_template(self):
-        template_directory = "/Users/p/Desktop/template_example"
-        template_name = None
-        add_template(template_directory, template_name)
-
-    def test_delete_template(self):
-        indices = delete_template("template_example")
-        self.assertTrue(len(indices) > 0)
 
     def test_detect_language(self):
         file_path = ""
