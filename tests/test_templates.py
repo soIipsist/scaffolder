@@ -26,11 +26,14 @@ class TestTemplates(TestBase):
     def setUp(self) -> None:
         super().setUp()
         create_db(db_path, tables)
-        print(self.get_template_directory())
         self.template = Template(template_directory=self.get_template_directory())
 
     def get_template_directory(self, template_directory="sample_template"):
         return os.path.join(parent_directory, "templates", template_directory)
+
+    def test_get_template_name(self):
+        template_directory = self.template.get_template_name()
+        print(template_directory)
 
     def test_add_template(self):
         add_template()
@@ -40,7 +43,7 @@ class TestTemplates(TestBase):
         print(templates)
 
     def test_delete_template(self):
-        print(db_path)
+        print(self.template.filter_condition)
 
 
 if __name__ == "__main__":

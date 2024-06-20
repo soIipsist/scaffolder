@@ -1,7 +1,7 @@
 from pathlib import Path
 
-parent_directory = Path(__file__).resolve().parent
-db_path = f"{parent_directory}/scaffolder.db"
+db_directory = Path(__file__).resolve().parent
+db_path = f"{db_directory}/scaffolder.db"
 
 template_table = "Template"
 template_values = [

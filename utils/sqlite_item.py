@@ -4,9 +4,7 @@ from utils.sqlite import (
     update_item,
     insert_items,
     delete_items,
-    get_filter_condition,
     create_connection,
-    sanitize_filter_condition,
     filter_items,
     get_random_row,
 )
@@ -23,7 +21,6 @@ conn = create_connection(db_path)
 
 class SQLiteItem:
 
-    error_message = None
     logging = True
     log_message = None
 
@@ -33,8 +30,8 @@ class SQLiteItem:
         self.column_names = (
             column_names if column_names else self.get_column_names_from_table()
         )
-        self.error_message = f"{self.__class__.__name__} does not exist"
         self.logging = False
+        self._filter_condition = None
 
     @property
     def filter_condition(self):
@@ -72,22 +69,27 @@ class SQLiteItem:
 
         return [getattr(self, name) for name in attr_names]
 
-    def filter(self, attrs: list = []):
+    def filter_by(self, attrs: list = None):
         if attrs:
             return filter_items(conn, self.table_name, attrs, self)
         else:
             return self.select_all()
 
-    def select(self):
+    def select(self, filter_condition=None):
+
+        condition = (
+            self.filter_condition if filter_condition is None else filter_condition
+        )
+
         items = select_items(
             conn,
             self.table_name,
-            self.filter_condition,
+            condition,
             type(self),
             column_names=self.column_names,
         )
 
-        return items[0] if len(items) > 0 else None
+        return items
 
     def select_all(self):
         return select_items(conn, self.table_name, None, type(self), self.column_names)
@@ -95,24 +97,20 @@ class SQLiteItem:
     def insert(self):
         return insert_items(conn, self.table_name, [self], self.column_names)
 
-    def update(self):
+    def update(self, filter_condition=None):
         obj = self.get_unique_object()
-        return update_item(conn, self.table_name, obj, self.filter_condition)
+        condition = (
+            self.filter_condition if filter_condition is None else filter_condition
+        )
 
-    def delete(self):
-        delete_items(conn, self.table_name, self.filter_condition)
+        return update_item(conn, self.table_name, obj, condition)
 
-    # item operations
+    def delete(self, filter_condition=None):
 
-    def get_item(self):
-        item = self.select()
-
-        if not item:
-            print(self.error_message)
-        else:
-            item: SQLiteItem
-            item.filter_condition = self.filter_condition
-        return item
+        condition = (
+            self.filter_condition if filter_condition is None else filter_condition
+        )
+        return delete_items(conn, self.table_name, condition)
 
     def export_item(self, path: str):
         content = self.__str__()

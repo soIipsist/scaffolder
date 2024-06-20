@@ -2,6 +2,16 @@ import sqlite3
 from ast import literal_eval
 import re
 
+bad_inputs = [
+    "1; DROP TABLE Player; --",
+    " DROP TABLE Player;--",
+    "' OR 1=1; --",
+    "id = 1; DROP TABLE Log;",
+    "id = 1; DROP TABLE Player;",
+    "id = '1' OR '1'='1'",
+    "id = '1' UNION SELECT * FROM Player",
+]
+
 
 def create_connection(database_path: str):
     """
@@ -39,12 +49,10 @@ def sanitize_values(values: list):
     return values
 
 
-# filter condition modification
-
-
-def sanitize_filter_condition(filter_condition: str):
+def get_filter_condition(filter_condition: str, default_params: list = None):
     """
-    Sanitizes filter condition of type id = '1'. Returns the filter condition keys and a tuple of sanitized parameters.
+    Sanitizes filter condition of type id = '1'. Returns the filter condition with placeholders included and
+    a tuple of sanitized parameters.
     """
 
     if not isinstance(filter_condition, str):
@@ -52,41 +60,98 @@ def sanitize_filter_condition(filter_condition: str):
 
     filter_condition_keys = []
     sanitized_params = []
+    keywords = []
 
-    conditions = filter_condition.split("AND")
+    pattern = r"(\s+AND\s+|\s+OR\s+|\s+NOT\s+)"
+    parts = re.split(pattern, filter_condition)
 
-    for condition in conditions:
-        key, value = condition.split("=")
+    comparison_operators = [
+        "!=",
+        "<>",
+        ">=",
+        "<=",
+        ">",
+        "<",
+        "=",
+    ]
 
-        key = key.strip()
-        value = value.strip()
-        filter_condition_keys.append(key)
-        sanitized_params.append(value)
+    # Check for SQL injection patterns
+    sql_injection_patterns = [
+        r"(\bOR\b\s+\d+\s*=\s*\d+)",
+        r"(\bOR\b\s*true\b)",
+        r"(\bAND\b\s*false\b)",
+        r"(\bOR\b\s*1\s*=\s*1)",
+        r"(--|;|\/\*|\*\/|\bEXEC\b|\bUNION\b|\bSELECT\b|\bINSERT\b|\bUPDATE\b|\bDELETE\b)",
+        r"(\bOR\b\s*'[^']+'\s*=\s*'[^']+')",
+    ]
 
-    return filter_condition_keys, tuple(sanitized_params)
+    for pattern in sql_injection_patterns:
+        if re.search(pattern, filter_condition, re.IGNORECASE):
+            raise ValueError("Potential SQL injection detected.")
 
+    # Process the split parts
+    conditions = []
+    for part in parts:
+        part = part.strip()
+        if part in ("AND", "OR", "NOT"):
+            keywords.append(part)
+        else:
+            for operator in comparison_operators:
+                if operator in part:
 
-def get_filter_condition(keys: list):
+                    key, value = re.split(
+                        r"\s*" + re.escape(operator) + r"\s*", part, 1
+                    )
+                    key = key.strip()
+                    value = value.strip().strip(
+                        "'"
+                    )  # Assuming values are enclosed in single quotes
+                    filter_condition_keys.append(key)
+                    sanitized_params.append(value)
+                    conditions.append(f"{key} {operator} ?")
+                    break
+            else:
+                raise ValueError(f"Unsupported condition format: {part}")
 
-    filter_condition = []
+    # Construct the final filter condition with placeholders
+    final_filter_condition = conditions[0]
 
-    for key in keys:
-        filter_condition.append(f"{key} = ?")
+    if default_params:
+        default_idx = 0
+        for idx, param in enumerate(sanitized_params):
+            if param == "?":
+                sanitized_params[idx] = default_params[default_idx]
+                default_idx += 1
 
-    filter_condition = " AND ".join(filter_condition)
+    for i in range(len(keywords)):
+        final_filter_condition += f" {keywords[i]} {conditions[i + 1]}"
 
-    return filter_condition
+    return (
+        final_filter_condition,
+        tuple(sanitized_params),
+    )
 
 
 def filter_items(
-    conn: sqlite3.Connection, table_name: str, attrs: list, object: object
+    conn: sqlite3.Connection,
+    table_name: str,
+    attrs: list,
+    object: object,
+    keywords: list = None,
 ):
+    """Given an object and a list of attributes, return filtered items."""
 
-    filter_condition = get_filter_condition(attrs)
+    filter_condition = []
 
-    values = [getattr(object, attr) for attr in attrs if attr]
-    for val in values:
-        filter_condition = filter_condition.replace("?", f"{val}", 1)
+    for attr in attrs:
+        if hasattr(object, attr):
+            value = getattr(object, attr)
+            filter_condition.append(f"{attr} = {value}")
+
+    if not keywords:
+        # for idx, (keyword, cond) in enumerate(zip(keywords, filter_condition)):
+        #     filter_condition[idx] =
+        filter_condition = " AND ".join(filter_condition)
 
     return select_items(conn, table_name, filter_condition, type(object))
 
@@ -154,9 +219,7 @@ def update_item(
             updated_columns = obj.keys()
 
         set_clause = ", ".join([f"{column} = ?" for column in updated_columns])
-        filter_condition_keys, params = sanitize_filter_condition(filter_condition)
-        filter_condition_keys: list
-        filter_condition = get_filter_condition(filter_condition_keys)
+        filter_condition, params = get_filter_condition(filter_condition)
 
         query = f"UPDATE {table_name} SET {set_clause} WHERE {filter_condition}"
 
@@ -164,6 +227,7 @@ def update_item(
         update_values.extend(params)
 
         cursor, results = execute_query(conn, query, update_values, return_cursor=True)
+        last_row_id = None
         if cursor:
             last_row_id = cursor.lastrowid if cursor.lastrowid else last_row_id
         return last_row_id
@@ -211,9 +275,7 @@ def select_items(
     """
     query = f"SELECT * FROM {sanitize_values(table_name)[0]}"
     if filter_condition:
-        filter_condition_keys, params = sanitize_filter_condition(filter_condition)
-        filter_condition_keys: list
-        filter_condition = get_filter_condition(filter_condition_keys)
+        filter_condition, params = get_filter_condition(filter_condition)
 
         query += f" WHERE {filter_condition}"
         results = execute_query(conn, query, params)
@@ -270,8 +332,8 @@ def delete_items(
     if filter_condition == "all":
         return execute_query(conn, query)
     else:
-        filter_condition, params = sanitize_filter_condition(filter_condition)
-        query += f" WHERE {get_filter_condition(filter_condition)}"
+        filter_condition, params = get_filter_condition(filter_condition)
+        query += f" WHERE {filter_condition}"
         return execute_query(conn, query, params)
 
 

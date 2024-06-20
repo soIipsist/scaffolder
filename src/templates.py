@@ -1,4 +1,3 @@
-from pprint import pp
 import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,24 +24,20 @@ class Template(SQLiteItem):
         language: str = "python",
     ) -> None:
         super().__init__(table_values=template_values)
-        self.template_directory = self.get_template_directory(template_directory)
+        self.template_directory = template_directory
         self.template_name = self.get_template_name(template_name)
         self.language = language
+        self.filter_condition = f"template_name = {self.template_name}"
 
-    def get_template_directory(self, template_directory: str = None):
-
-        # if is_valid_dir(template_directory, False):
-        #     return template_directory
-        # elif template_directory.startswith("https://github"):
-        #     pass
-
-        return template_directory
-
-    def get_template_name(self, template_name: str):
+    def get_template_name(self, template_name: str = None):
         if template_name:
             return template_name
 
-        return os.path.basename(self.template_directory)
+        return (
+            os.path.basename(self.template_directory)
+            if self.template_directory
+            else None
+        )
 
     def copy_template(self):
         """
@@ -92,11 +87,15 @@ def list_templates(templates: list = None):
             template_directory=template,
         )
 
+        items = temp.select()
+
+        if len(items) == 1:
+            print(items[0])
+
     return templates
 
 
-if __name__ == "__main__":
-
+def main():
     add_arguments = [
         DirectoryArgument(name=("-t", "--template_directory")),
         Argument(name=("-n", "--template_name")),
@@ -118,3 +117,7 @@ if __name__ == "__main__":
     parser = Parser(parser_arguments, subcommands)
     cmd_dict = {None: list_templates, "add": add_template, "delete": delete_template}
     parser.run_command(cmd_dict)
+
+
+if __name__ == "__main__":
+    main()
