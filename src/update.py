@@ -47,23 +47,23 @@ def get_function_patterns(
 
 def update(
     update_files: list = update_files,
-    update_source_directory: str = update_source_directory,
+    update_template_directory: str = update_template_directory,
     update_destination_directory: str = update_destination_directory,
     language: str = None,
     function_patterns: list = None,
 ):
 
     if not update_files:
-        update_files = [file for file in os.listdir(update_source_directory)]
+        update_files = [file for file in os.listdir(update_template_directory)]
 
     print(
-        f'Updating changed files from "{update_source_directory}" to "{update_destination_directory}"...'
+        f'Updating changed files from "{update_template_directory}" to "{update_destination_directory}"...'
     )
 
     # find specified files in source directory
 
-    source_files = find_files(update_source_directory, update_files)
-    update_source_directory = os.path.normpath(update_source_directory)
+    source_files = find_files(update_template_directory, update_files)
+    update_template_directory = os.path.normpath(update_template_directory)
     update_destination_directory = os.path.normpath(update_destination_directory)
 
     funcs = []
@@ -74,7 +74,7 @@ def update(
         source_file_name = os.path.basename(source_path)
         dir_name = os.path.dirname(source_path)
 
-        if dir_name != update_source_directory:
+        if dir_name != update_template_directory:
             base_dir = os.path.basename(os.path.dirname(source_path))
             update_path = os.path.normpath(
                 f"{update_destination_directory}/{base_dir}/{source_file_name}"
@@ -111,7 +111,7 @@ def main():
     parser_arguments = [
         Argument(name=("-f", "--update_files"), nargs="+"),
         Argument(name=("-l", "--language")),
-        DirectoryArgument(name=("-s", "--update_source_directory")),
+        DirectoryArgument(name=("-s", "--update_template_directory")),
         DirectoryArgument(name=("-d", "--update_destination_directory")),
         Argument(name=("-p", "--function_patterns"), nargs="+"),
     ]

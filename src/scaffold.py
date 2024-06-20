@@ -11,7 +11,7 @@ from src.repository import (
     rename_repo,
 )
 from src.licenses import create_license
-from src.templates import get_template_directory
+from src.templates import Template, get_template
 from utils.file_utils import (
     find_and_replace_in_directory,
 )
@@ -20,39 +20,42 @@ from src.constants import *
 
 
 def scaffold(
-    template: str = template_directory,
+    template_directory: str = template_directory,
     destination_directory: str = destination_directory,
-    project_name: str = project_name,
+    package_name: str = package_name,
     license: str = license,
     author: str = author,
     year: str = year,
-    git_username: str = git_username,
     create_repository: bool = create_repository,
     repository_visibility: str = repository_visibility,
 ):
-    template_directory = get_template_directory(template)
+    templ = get_template(template_directory)
+    print(templ)
+
+    return
+    create_template(template_directory, destination_directory)
+
+    # find and replace all instances of template_name
+    find_and_replace_in_directory(
+        destination_directory, template_name, package_name, removed_dirs=[".git"]
+    )
 
     if not os.path.exists(destination_directory):
         subprocess.run(["mkdir", destination_directory], errors=None)
-        create_license(license, destination_directory, author, year)
-        create_template(template_directory, destination_directory)
     else:
         # path already exists, so update based on metadata
-        create_license(license, destination_directory, author, year)
-
-        if project_name:
+        if package_name:
             original_name = os.path.basename(destination_directory)
-            rename_repo(destination_directory, project_name, git_username)
-            find_and_replace_in_directory(
-                destination_directory, original_name, project_name, [".git"]
-            )
+            rename_repo(destination_directory, package_name, author)
 
     if not create_repository:
         return
 
+    create_license(license, destination_directory, author, year)
+
     repository_visibility = get_repository_visibility(repository_visibility)
-    git_username = (
-        git_username
+    author = (
+        author
         or subprocess.run(
             ["git", "config", "user.name"],
             stdout=subprocess.PIPE,
@@ -63,50 +66,31 @@ def scaffold(
 
     # initialize project directory
     if not (git_repo_exists(destination_directory)):
-        create_git_repository(
-            destination_directory, repository_visibility, git_username
-        )
+        create_git_repository(destination_directory, repository_visibility, author)
     else:
         print("Project already exists. Updating...")
-        update_git_repository(
-            destination_directory, repository_visibility, git_username
-        )
+        update_git_repository(destination_directory, repository_visibility, author)
 
 
-def create_template(template_directory: str, destination_directory: str):
-
-    project_name = os.path.basename(destination_directory)
+def create_template(template: Template, destination_directory: str):
 
     # copy template directory to project directory
-    print(
-        "Copying template files from {0} to {1}".format(
-            template_directory, destination_directory
-        )
-    )
-
-    command = f"cp -r {template_directory}/* {destination_directory}/"
-    subprocess.run(command, shell=True)
+    template.copy_template(template.template_directory, destination_directory)
 
     # get template project name
     template_name = os.path.split(template_directory)[-1]
-
-    # find and replace all instances of template_name
-    find_and_replace_in_directory(
-        destination_directory, template_name, project_name, removed_dirs=[".git"]
-    )
 
 
 def main():
 
     parser_arguments = [
-        Argument(name=("-t", "--template")),
+        Argument(name=("-t", "--template_directory")),
         DirectoryArgument(name=("-d", "--destination_directory")),
-        Argument(name=("-n", "--project_name")),
+        Argument(name=("-n", "--package_name")),
         BoolArgument(name=("-c", "--create_repository")),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-y", "--year")),
-        Argument(name=("-g", "--git_username")),
         Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
     ]
     parser = Parser(parser_arguments)

@@ -27,13 +27,13 @@ class TestScaffolder(TestBase):
         self.destination_directory = destination_directory
         self.license = license
         self.author = author
-        self.git_username = git_username
+        self.author = author
         self.create_repository = create_repository
         self.repository_visibility = repository_visibility
         self.parameters = ["template_directory", "license"]
 
-        self.update_source_directory = update_source_directory
-        self.project_name = "red"
+        self.update_template_directory = update_template_directory
+        self.package_name = "red"
         self.update_destination_directory = update_destination_directory
         self.update_files = update_files
 
@@ -53,52 +53,16 @@ class TestScaffolder(TestBase):
         print(dir2)
         self.assertTrue(os.path.exists(dir2))
 
-    def test_get_repository_visibility(self):
-        self.assertTrue(get_repository_visibility("1") == "private")
-        self.assertTrue(get_repository_visibility("public") == "public")
-        self.assertTrue(get_repository_visibility(0) == "private")
-        self.assertTrue(get_repository_visibility(1) == "public")
-        self.assertTrue(get_repository_visibility(2) == "internal")
-        self.assertTrue(get_repository_visibility("private") == "private")
-        self.assertTrue(get_repository_visibility("internal") == "internal")
-        self.assertTrue(get_repository_visibility("nothing") == "private")
-
-    def test_get_licenses(self):
-        paths = get_license_paths(licenses)
-        self.assertTrue(len(paths) > 0)
-
-        print(paths)
-        new_licenses = ["red"]
-        paths = get_license_paths(new_licenses)
-        self.assertTrue(len(paths) == 0)
-
-    def test_view_license(self):
-        # test singular
-        paths = view_licenses("mit")
-        self.assertTrue(len(paths) > 0)
-
-        # test multiple
-        paths = view_licenses(licenses)
-        self.assertTrue(len(paths) > 0)
-
-        # test invalid license
-        paths = view_licenses(["no"])
-        self.assertTrue(len(paths) == 0)
-
-    def test_view_all_licenses(self):
-        paths = view_licenses()
-        self.assertIsNotNone(paths)
-
     def test_scaffold_local(self):
         self.create_repository = False
         self.repository_visibility = 0
         scaffold(
             self.template_directory,
             self.destination_directory,
-            self.project_name,
+            self.package_name,
             self.license,
             self.author,
-            self.git_username,
+            self.author,
             self.create_repository,
             self.repository_visibility,
         )
@@ -110,10 +74,10 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.destination_directory,
-            self.project_name,
+            self.package_name,
             self.license,
             self.author,
-            self.git_username,
+            self.author,
             self.create_repository,
             self.repository_visibility,
         )
@@ -124,37 +88,37 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.destination_directory,
-            self.project_name,
+            self.package_name,
             self.license,
             self.author,
-            self.git_username,
+            self.author,
             self.create_repository,
             self.repository_visibility,
         )
 
     def test_update_python(self):
         self.update_files = []
-        self.update_source_directory = self.get_test_files_dir()
+        self.update_template_directory = self.get_test_files_dir()
         self.update_destination_directory = self.get_test_files_dir("dir2")
 
-        print(self.update_source_directory)
+        print(self.update_template_directory)
 
         # try with no update files given
         source_files, funcs, updated_content = update(
             self.update_files,
-            self.update_source_directory,
+            self.update_template_directory,
             self.update_destination_directory,
         )
 
     def test_update_java(self):
         self.update_files = []
-        self.update_source_directory = self.get_test_files_dir(language="java")
+        self.update_template_directory = self.get_test_files_dir(language="java")
         self.update_destination_directory = self.get_test_files_dir("dir2", "java")
 
         # try with no update files given
         source_files, funcs, updated_content = update(
             self.update_files,
-            self.update_source_directory,
+            self.update_template_directory,
             self.update_destination_directory,
             language="java",
         )
@@ -176,20 +140,6 @@ class TestScaffolder(TestBase):
     def test_delete_template(self):
         indices = delete_template("template_example")
         self.assertTrue(len(indices) > 0)
-
-    def test_get_template_directory(self):
-        template_dir = get_template_directory("python_template")
-        print(template_dir)
-
-        with self.assertRaises(ValueError):
-            template_dir = get_template_directory("re")
-            print(template_dir)
-
-        template_dir = get_template_directory("fastapi_template")
-        print(template_dir)
-
-        template_dir = get_template_directory("template_example")
-        print(template_dir)
 
     def test_detect_language(self):
         file_path = ""

@@ -29,18 +29,18 @@ def set_repository_visibility(
 def create_git_repository(
     destination_directory: str,
     repository_visibility: str,
-    git_username: str,
+    author: str,
 ):
 
-    project_name = os.path.basename(destination_directory)
+    package_name = os.path.basename(destination_directory)
 
-    git_origin = "https://github.com/{0}/{1}.git".format(git_username, project_name)
+    git_origin = "https://github.com/{0}/{1}.git".format(author, package_name)
     print(f"Creating git repository: {git_origin}")
 
     repo_visibility = "--{0}".format(repository_visibility)
 
     commands = [
-        ["gh", "repo", "create", project_name, repo_visibility],
+        ["gh", "repo", "create", package_name, repo_visibility],
         ["git", "init"],
         ["git", "add", "."],
         ["git", "commit", "-m", "published branch"],
@@ -75,7 +75,7 @@ def git_repo_exists(destination_directory: str):
 
 
 def update_git_repository(
-    destination_directory: str, repository_visibility: int, git_username: str
+    destination_directory: str, repository_visibility: int, author: str
 ):
 
     commands = [
@@ -98,9 +98,7 @@ def update_git_repository(
             except Exception as e:
                 print(e)
 
-    set_repository_visibility(
-        destination_directory, repository_visibility, git_username
-    )
+    set_repository_visibility(destination_directory, repository_visibility, author)
     print("Update completed.")
 
 
@@ -115,7 +113,7 @@ def rename_repo(destination_directory: str, repository_name: str, author: str):
     print(f"Renamed repository from {original_name} to {repository_name}.")
 
 
-def delete_repository(destination_directory: str, repository_name: str, author: str):
+def delete_repository(repository_name: str, author: str):
     try:
         # Construct the gh command to delete the repository
         command = ["gh", "repo", "delete", f"{author}/{repository_name}", "--confirm"]

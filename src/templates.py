@@ -39,9 +39,9 @@ class Template(SQLiteItem):
             else None
         )
 
-    def copy_template(self, template_directory: str):
+    def copy_template(self, template_directory: str, destination_directory=None):
         """
-        Copies template_directory to 'templates' if called
+        Copies template_directory to specified destination directory if called
         """
 
         if not os.path.exists(template_directory):
@@ -49,17 +49,17 @@ class Template(SQLiteItem):
                 f"Template directory {template_directory} does not exist."
             )
 
-        copied_template_directory = os.path.join(
-            parent_directory, "templates", self.template_name
+        destination_directory = (
+            os.path.join(parent_directory, "templates", self.template_name)
+            if destination_directory is None
+            else destination_directory
         )
 
-        if not os.path.exists(copied_template_directory):
-            os.makedirs(copied_template_directory)
+        if not os.path.exists(destination_directory):
+            os.makedirs(destination_directory)
 
-        shutil.copytree(
-            template_directory, copied_template_directory, dirs_exist_ok=True
-        )
-        return copied_template_directory
+        shutil.copytree(template_directory, destination_directory, dirs_exist_ok=True)
+        return destination_directory
 
     def remove_template(self):
         shutil.rmtree(self.template_directory, ignore_errors=True)

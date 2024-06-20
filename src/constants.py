@@ -18,16 +18,16 @@ languages_metadata: dict
 # scaffolder metadata
 template_directory = scaffolder_metadata.get("template_directory")
 destination_directory = scaffolder_metadata.get("destination_directory")
-project_name = scaffolder_metadata.get(
-    "project_name", os.path.basename(destination_directory)
+package_name = scaffolder_metadata.get(
+    "package_name", os.path.basename(destination_directory)
 )
-update_source_directory = scaffolder_metadata.get("update_source_directory")
+update_template_directory = scaffolder_metadata.get("update_template_directory")
 update_destination_directory = scaffolder_metadata.get("update_destination_directory")
 update_files = scaffolder_metadata.get("update_files")
 license = scaffolder_metadata.get("license")
 author = scaffolder_metadata.get("author")
 year = scaffolder_metadata.get("year", str(datetime.datetime.now().year))
-git_username = scaffolder_metadata.get("git_username")
+author = scaffolder_metadata.get("author")
 create_repository = scaffolder_metadata.get("create_repository")
 repository_visibility = scaffolder_metadata.get("repository_visibility")
 gh_check = scaffolder_metadata.get("gh_check")

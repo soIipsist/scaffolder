@@ -60,16 +60,15 @@ Users have the flexibility to customize parameters either by directly modifying 
 **_Note: All words containing the project's name will be renamed in the default template, including files._**
 
 ```bash
-scaffolder >  scaffold [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u GIT_USERNAME] [-r CREATE_REPOSITORY] [-v REPOSITORY_VISIBILITY]
+scaffolder >  scaffold [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u AUTHOR] [-r CREATE_REPOSITORY] [-v REPOSITORY_VISIBILITY]
 
 options:
   -h, --help                                                               show this help message and exit
   -t TEMPLATE, --template TEMPLATE                                         template name or directory to copy files from
   -p PROJECT_DIRECTORY, --destination_directory PROJECT_DIRECTORY              destination directory of your scaffolded project
-  -n PROJECT_NAME --project_name PROJECT_NAME      renames all instances of 'project_name' in your project
+  -n PACKAGE_NAME --package_name PACKAGE_NAME      renames all instances of 'package_name' in your project
   -l LICENSE, --license LICENSE                                            creates license file (mit, afl-3.0, apache-v2.0 etc.)
   -a AUTHOR, --author AUTHOR                                               set name of the author (replaces every instance within the license file)
-  -g GIT_USERNAME, --git_username GIT_USERNAME                             set git username (git config username is used by default)
   -r CREATE_REPOSITORY, --create_repository CREATE_REPOSITORY              if set to true, creates a git repository using the git cli tool (gh)
   -v REPOSITORY_VISIBILITY, --repository_visibility REPOSITORY_VISIBILITY  set git repository visibility (0: private, 1: public, 2: internal)
 
@@ -77,11 +76,11 @@ options:
 
 #### update
 
-Updates files in an `update_destination_directory` with those from a `update_source_directory`. The extraction of updated functions is governed by `function_patterns`, specified in the `languages.json` file. By default, Python pattern matching is employed.
+Updates files in an `update_destination_directory` with those from a `update_template_directory`. The extraction of updated functions is governed by `function_patterns`, specified in the `languages.json` file. By default, Python pattern matching is employed.
 
 ```bash
 scaffolder > update -h
-usage: scaffolder update [-h] [--update_source_directory SOURCE_DIRECTORY] [--update_destination_directory UPDATE_DESTINATION_DIRECTORY] [-f FUNCTION_PATTERNS [FUNCTION_PATTERNS ...]]
+usage: scaffolder update [-h] [--update_template_directory SOURCE_DIRECTORY] [--update_destination_directory UPDATE_DESTINATION_DIRECTORY] [-f FUNCTION_PATTERNS [FUNCTION_PATTERNS ...]]
                          files [files ...]
 
 positional arguments:
@@ -89,7 +88,7 @@ positional arguments:
 
 options:
   -h, --help                                                                                        show this help message and exit
-  --update_source_directory SOURCE_DIRECTORY                                                               project directory to update from
+  --update_template_directory SOURCE_DIRECTORY                                                               project directory to update from
   --update_destination_directory UPDATE_DESTINATION_DIRECTORY                                                               destination project directory for updated files
   -f FUNCTION_PATTERNS [FUNCTION_PATTERNS ...], --function_patterns FUNCTION_PATTERNS [FUNCTION_PATTERNS ...]
 
@@ -126,7 +125,7 @@ options:
 
 ```bash
 
-scaffolder > settings update [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u GIT_USERNAME] [-r CREATE_REPOSITORY]
+scaffolder > settings update [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u AUTHOR] [-r CREATE_REPOSITORY]
                                  [-v REPOSITORY_VISIBILITY] 
 
 options:
@@ -139,7 +138,7 @@ options:
                         creates license file (mit, afl-3.0, apache-v2.0)
   -a AUTHOR, --author AUTHOR
                         set name of the author (replaces every instance within the license file)
-  -u GIT_USERNAME, --git_username GIT_USERNAME
+  -u AUTHOR, --author AUTHOR
                         set git username (git config username is used by default)
   -r CREATE_REPOSITORY, --create_repository CREATE_REPOSITORY
                         if set to true, creates a git repository using the git cli tool
