@@ -39,19 +39,27 @@ class Template(SQLiteItem):
             else None
         )
 
-    def copy_template(self):
+    def copy_template(self, template_directory: str):
         """
         Copies template_directory to 'templates' if called
         """
 
-        templates_dir = os.path.join(parent_directory, "templates", self.template_name)
+        if not os.path.exists(template_directory):
+            raise FileNotFoundError(
+                f"Template directory {template_directory} does not exist."
+            )
 
-        if not os.path.exists(templates_dir):
-            os.makedirs(templates_dir)
+        copied_template_directory = os.path.join(
+            parent_directory, "templates", self.template_name
+        )
 
-        command = f"cp -r {template_directory}/* {templates_dir}/"
-        subprocess.run(command, shell=True)
-        template_directory = templates_dir
+        if not os.path.exists(copied_template_directory):
+            os.makedirs(copied_template_directory)
+
+        shutil.copytree(
+            template_directory, copied_template_directory, dirs_exist_ok=True
+        )
+        return copied_template_directory
 
     def remove_template(self):
         shutil.rmtree(self.template_directory, ignore_errors=True)
@@ -71,17 +79,19 @@ def get_template(template_path_or_name: str):
 
 
 def add_template(
-    template_directory: str,
+    template_directory: str = template_directory,
     template_name: str = None,
     language: str = "python",
     copy_template: bool = True,
 ):
     template = Template(template_directory, template_name, language)
-    template.insert()
 
     if copy_template:
-        template.copy_template()
+        template_dir = template.copy_template(template_directory)
+        template.template_directory = template_dir
+    template.insert()
 
+    print("Template directory", template.template_directory)
     return template
 
 

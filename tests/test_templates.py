@@ -36,15 +36,23 @@ class TestTemplates(TestBase):
     def get_template_directory(self, template_directory="sample_template"):
         return os.path.join(parent_directory, "templates", template_directory)
 
+    def get_python_template_directory(self):
+        path = "/Users/p/Desktop/soIipsis/python_template"
+        return path
+
     def test_get_template_name(self):
         template_directory = self.template.get_template_name()
         print(template_directory)
 
     def test_add_template(self):
-        add_template(
+        self.template_directory = self.get_python_template_directory()
+
+        template = add_template(
             self.template_directory,
             self.template_name,
         )
+        self.assertIsInstance(template, Template)
+        self.assertTrue(len(Template().select_all()) > 0)
 
     def test_list_templates(self):
         templates = Template().select_all()
@@ -57,6 +65,6 @@ class TestTemplates(TestBase):
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestTemplates.test_list_templates,
+            TestTemplates.test_add_template,
         ]
     )
