@@ -27,7 +27,8 @@ class TestRepository(TestBase):
     def setUp(self) -> None:
         super().setUp()
         create_db(db_path, tables)
-        self.repo = ""
+        self.author = "soIipsist"
+        self.repository_name = "sample_template"
 
     def test_get_repository_visibility(self):
         self.assertTrue(get_repository_visibility("1") == "private")
@@ -40,16 +41,29 @@ class TestRepository(TestBase):
         self.assertTrue(get_repository_visibility("nothing") == "private")
 
     def test_set_repository_visibility(self):
-        set_repository_visibility()
+        repo_visibility = set_repository_visibility(
+            self.repository_name, get_repository_visibility(1), self.author
+        )
+
+        self.assertIsInstance(repo_visibility, str)
 
     def test_rename_repository(self):
-        pass
+        template_dir = self.get_template_directory()
+        os.chdir(template_dir)
+        rename_repo(
+            os.path.basename("red"), os.path.basename(template_dir), self.author
+        )
 
     def test_create_repository(self):
         template_dir = self.get_template_directory()
+
+        original_dir = os.getcwd()
+        os.chdir(template_dir)
         create_git_repository(
-            template_dir, repository_visibility="public", author="soIipsist"
+            self.repository_name, repository_visibility="public", author="soIipsist"
         )
+
+        os.chdir(original_dir)
 
     def test_delete_repository(self):
         template_dir = self.get_template_directory()
@@ -57,13 +71,16 @@ class TestRepository(TestBase):
 
     def test_git_repo_exists(self):
         print(self.get_template_directory())
-        self.assertFalse(git_repo_exists(self.get_template_directory()))
+        self.assertTrue(git_repo_exists(self.get_template_directory()))
+
+        print(parent_directory)
         self.assertTrue(git_repo_exists(parent_directory))
 
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_git_repo_exists,
+            TestRepository.test_delete_repository,
+            # TestRepository.test_git_repo_exists,
         ]
     )

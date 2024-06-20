@@ -1,7 +1,5 @@
 import os
 import subprocess
-import shutil
-
 from utils.dict_utils import invert_dict
 
 
@@ -23,6 +21,8 @@ def set_repository_visibility(
         f"gh repo edit {author}/{repository_name} --visibility {repository_visibility}"
     )
     subprocess.run(command, shell=True)
+
+    return repository_visibility
 
 
 def create_git_repository(
@@ -64,8 +64,8 @@ def clone_repository(destination_directory: str, git_origin: str):
     subprocess.run(["git", "clone", git_origin], cwd=target_dir)
 
 
-def git_repo_exists(directory: str):
-    return os.path.exists(os.path.join(directory, ".git"))
+def git_repo_exists(repository: str):
+    return os.path.exists(os.path.join(repository, ".git"))
 
 
 def update_git_repository(
@@ -96,11 +96,7 @@ def update_git_repository(
     print("Update completed.")
 
 
-def rename_repo(destination_directory: str, repository_name: str, author: str):
-    if not (git_repo_exists(destination_directory)):
-        return
-    original_name = os.path.basename(destination_directory)
-
+def rename_repo(original_name: str, repository_name: str, author: str):
     command = f"gh repo rename {repository_name} -R {author}/{original_name} --yes"
     subprocess.run(command, shell=True)
 

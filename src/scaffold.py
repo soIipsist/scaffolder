@@ -43,6 +43,12 @@ def scaffold(
 
     # replace all instances of template name with new repository name
     template_name = templ.template_name
+
+    if not template_name:
+        template_name = os.path.basename(templ.template_directory)
+    print(template_name)
+    return
+
     find_and_replace_in_directory(
         destination_directory, template_name, repository_name, removed_dirs=[".git"]
     )
