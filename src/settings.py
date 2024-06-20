@@ -55,7 +55,7 @@ def edit_settings(default_editor: str = "vscode"):
     subprocess.Popen(base_cmd, shell=True)
 
 
-if __name__ == "__main__":
+def main():
 
     update_arguments = [
         Argument(name=("-t", "--template_directory")),
@@ -96,3 +96,7 @@ if __name__ == "__main__":
     }
 
     parser.run_command(cmd_dict)
+
+
+if __name__ == "__main__":
+    main()

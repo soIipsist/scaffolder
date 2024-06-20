@@ -102,12 +102,31 @@ def update_git_repository(
     print("Update completed.")
 
 
-def rename_repo(project_directory: str, repository_name: str, host: str):
+def rename_repo(project_directory: str, repository_name: str, author: str):
     if not (git_repo_exists(project_directory)):
         return
     original_name = os.path.basename(project_directory)
 
-    command = f"gh repo rename {repository_name} -R {host}/{original_name} --yes"
+    command = f"gh repo rename {repository_name} -R {author}/{original_name} --yes"
     subprocess.run(command, shell=True)
 
     print(f"Renamed repository from {original_name} to {repository_name}.")
+
+
+def delete_repository(project_directory: str, repository_name: str, author: str):
+    try:
+        # Construct the gh command to delete the repository
+        command = ["gh", "repo", "delete", f"{author}/{repository_name}", "--confirm"]
+
+        # Run the command
+        result = subprocess.run(command, capture_output=True, text=True)
+
+        # Check for errors
+        if result.returncode == 0:
+            print(
+                f"Successfully deleted the repository {author}/{repository_name} on GitHub."
+            )
+        else:
+            print(f"Error deleting repository: {result.stderr}")
+    except Exception as e:
+        print(f"An error occurred: {e}")

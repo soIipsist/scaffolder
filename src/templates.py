@@ -60,6 +60,16 @@ class Template(SQLiteItem):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
 
 
+def get_template(template_path_or_name: str):
+    if is_valid_dir(template_path_or_name):
+        templ = Template(template_directory=template_path_or_name)
+    else:
+        templ = Template(template_name=template_path_or_name)
+        items = templ.select()
+        return items[0] if len(items) > 0 else None
+    return templ
+
+
 def add_template(
     template_directory: str,
     template_name: str = None,
@@ -75,10 +85,16 @@ def add_template(
     return template
 
 
-def delete_template(template: str):
-    template = Template(template)
-
+def delete_template(template: str, remove_dir=True, delete_repo=False):
+    template = get_template(template_path_or_name=template)
+    template: SQLiteItem
+    template.delete()
     # remove directory entirely
+    if remove_dir:
+        template.remove_template()
+
+    if delete_repo:
+        template.delete()
 
 
 def list_templates(templates: list = None):
@@ -105,6 +121,8 @@ def main():
 
     delete_arguments = [
         Argument(name=("-t", "--template")),
+        BoolArgument(name=("-d", "--remove_dir"), default=True),
+        BoolArgument(name=("-r", "--remove_repo"), default=False),
     ]
 
     parser_arguments = [Argument(name="templates", nargs="?", default=None)]

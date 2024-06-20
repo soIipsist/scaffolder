@@ -29,3 +29,9 @@ requires = ["setuptools", "wheel"]
 
 [project.license]
 text = "MIT License"
+
+[project.scripts]
+scaffold = "src.scaffold:main"
+sc_settings = "src.settings:main"
+sc_update = "src.update:main"
+licenses = "src.licenses:main"

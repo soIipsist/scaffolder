@@ -75,7 +75,7 @@ def view_license(licenses: list = [], show_content: int = 0):
     return license_paths
 
 
-if __name__ == "__main__":
+def main():
     parser_arguments = [
         Argument(name=("-l", "--licenses"), nargs="+"),
         BoolArgument(name=("-c", "--show_content")),
@@ -84,3 +84,7 @@ if __name__ == "__main__":
     parser = Parser(parser_arguments)
     args = parser.get_command_args()
     view_license(**args)
+
+
+if __name__ == "__main__":
+    main()

@@ -92,7 +92,7 @@ def create_template(template_directory: str, project_directory: str):
     )
 
 
-if __name__ == "__main__":
+def main():
 
     parser_arguments = [
         Argument(name=("-t", "--template")),
@@ -110,3 +110,7 @@ if __name__ == "__main__":
     args = parser.get_command_args()
 
     scaffold(**args)
+
+
+if __name__ == "__main__":
+    main()

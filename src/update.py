@@ -106,7 +106,7 @@ def update(
     return source_files, funcs, updated_content
 
 
-if __name__ == "__main__":
+def main():
 
     parser_arguments = [
         Argument(name=("-f", "--update_files"), nargs="+"),
@@ -120,3 +120,7 @@ if __name__ == "__main__":
     args = parser.get_command_args()
     # print(args)
     update(**args)
+
+
+if __name__ == "__main__":
+    main()
