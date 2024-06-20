@@ -53,7 +53,7 @@ scaffolder > templates delete [-h] [-t TEMPLATE]
 
 #### scaffold
 
-Creates a new project using a specified `template` name or directory as a baseline. The resulting project will be scaffolded in a `project_directory` of your choice, as specified in the `scaffolder.json` settings file. The generated directory will always adopt the base name of the project_directory.
+Creates a new project using a specified `template` name or directory as a baseline. The resulting project will be scaffolded in a `destination_directory` of your choice, as specified in the `scaffolder.json` settings file. The generated directory will always adopt the base name of the destination_directory.
 
 Users have the flexibility to customize parameters either by directly modifying the file or by providing new values through the CLI. If `create_repository` is set to true, an initialized GitHub repository will be created automatically, with all the main files included in the original `template` directory.
 
@@ -65,7 +65,7 @@ scaffolder >  scaffold [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-
 options:
   -h, --help                                                               show this help message and exit
   -t TEMPLATE, --template TEMPLATE                                         template name or directory to copy files from
-  -p PROJECT_DIRECTORY, --project_directory PROJECT_DIRECTORY              destination directory of your scaffolded project
+  -p PROJECT_DIRECTORY, --destination_directory PROJECT_DIRECTORY              destination directory of your scaffolded project
   -n PROJECT_NAME --project_name PROJECT_NAME      renames all instances of 'project_name' in your project
   -l LICENSE, --license LICENSE                                            creates license file (mit, afl-3.0, apache-v2.0 etc.)
   -a AUTHOR, --author AUTHOR                                               set name of the author (replaces every instance within the license file)
@@ -133,7 +133,7 @@ options:
   -h, --help            show this help message and exit
   -t TEMPLATE, --template TEMPLATE
                         template name or directory to copy files from
-  -p PROJECT_DIRECTORY, --project_directory PROJECT_DIRECTORY
+  -p PROJECT_DIRECTORY, --destination_directory PROJECT_DIRECTORY
                         destination directory of your scaffolded project
   -l LICENSE, --license LICENSE
                         creates license file (mit, afl-3.0, apache-v2.0)

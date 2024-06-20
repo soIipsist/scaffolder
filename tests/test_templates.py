@@ -26,7 +26,12 @@ class TestTemplates(TestBase):
     def setUp(self) -> None:
         super().setUp()
         create_db(db_path, tables)
-        self.template = Template(template_directory=self.get_template_directory())
+        self.template_directory = self.get_template_directory()
+        self.template_name = None
+        self.language = "python"
+        self.template = Template(
+            self.template_directory, self.template_name, self.language
+        )
 
     def get_template_directory(self, template_directory="sample_template"):
         return os.path.join(parent_directory, "templates", template_directory)
@@ -36,7 +41,10 @@ class TestTemplates(TestBase):
         print(template_directory)
 
     def test_add_template(self):
-        add_template()
+        add_template(
+            self.template_directory,
+            self.template_name,
+        )
 
     def test_list_templates(self):
         templates = Template().select_all()
@@ -49,6 +57,6 @@ class TestTemplates(TestBase):
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestTemplates.test_delete_template,
+            TestTemplates.test_list_templates,
         ]
     )

@@ -21,25 +21,25 @@ def get_license_paths(licenses: list = []):
     return license_paths
 
 
-def create_license(license: str, project_directory: str, author: str, year: str):
+def create_license(license: str, destination_directory: str, author: str, year: str):
     license_path = get_license_paths([license])[0]
 
     # check if license exists
-    project_license_path = os.path.join(project_directory, "LICENSE")
+    project_license_path = os.path.join(destination_directory, "LICENSE")
     update = os.path.exists(project_license_path)
 
     if update:
         os.remove(project_license_path)
 
     if license_path:
-        command = f"cp {license_path} {project_directory}"
+        command = f"cp {license_path} {destination_directory}"
         subprocess.run(command, shell=True)
-        return update_license(project_directory, license, author, year)
+        return update_license(destination_directory, license, author, year)
 
 
-def update_license(project_directory: str, license: str, author: str, year: str):
+def update_license(destination_directory: str, license: str, author: str, year: str):
     # replace where author and year are in license
-    new_path = os.path.join(project_directory, license)
+    new_path = os.path.join(destination_directory, license)
     content = read_file(new_path)
 
     new_content = re.sub(r"\{author\}", author, content)
@@ -47,7 +47,7 @@ def update_license(project_directory: str, license: str, author: str, year: str)
     overwrite_file(new_path, new_content)
 
     # rename to LICENSE
-    dest = os.path.join(project_directory, "LICENSE")
+    dest = os.path.join(destination_directory, "LICENSE")
     os.rename(new_path, dest)
     return dest
 

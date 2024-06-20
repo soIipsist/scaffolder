@@ -24,7 +24,7 @@ class TestScaffolder(TestBase):
     def setUp(self) -> None:
         super().setUp()
         self.template_directory = template_directory
-        self.project_directory = project_directory
+        self.destination_directory = destination_directory
         self.license = license
         self.author = author
         self.git_username = git_username
@@ -93,7 +93,7 @@ class TestScaffolder(TestBase):
         license = "afl-3.0"
         path = create_license(
             license=license,
-            project_directory=project_directory,
+            destination_directory=destination_directory,
             author=author,
             year=year,
         )
@@ -105,7 +105,7 @@ class TestScaffolder(TestBase):
         self.repository_visibility = 0
         scaffold(
             self.template_directory,
-            self.project_directory,
+            self.destination_directory,
             self.project_name,
             self.license,
             self.author,
@@ -113,14 +113,14 @@ class TestScaffolder(TestBase):
             self.create_repository,
             self.repository_visibility,
         )
-        self.assertTrue(os.path.exists(self.project_directory))
+        self.assertTrue(os.path.exists(self.destination_directory))
 
     def test_scaffold(self):
         self.create_repository = True
         self.repository_visibility = 1
         scaffold(
             self.template_directory,
-            self.project_directory,
+            self.destination_directory,
             self.project_name,
             self.license,
             self.author,
@@ -131,10 +131,10 @@ class TestScaffolder(TestBase):
 
     def test_scaffold_update(self):
         # test with repo that already exists
-        self.assertTrue(git_repo_exists(self.project_directory))
+        self.assertTrue(git_repo_exists(self.destination_directory))
         scaffold(
             self.template_directory,
-            self.project_directory,
+            self.destination_directory,
             self.project_name,
             self.license,
             self.author,

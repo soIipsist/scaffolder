@@ -17,8 +17,10 @@ languages_metadata: dict
 
 # scaffolder metadata
 template_directory = scaffolder_metadata.get("template_directory")
-project_directory = scaffolder_metadata.get("project_directory")
-project_name = scaffolder_metadata.get("project_name")
+destination_directory = scaffolder_metadata.get("destination_directory")
+project_name = scaffolder_metadata.get(
+    "project_name", os.path.basename(destination_directory)
+)
 update_source_directory = scaffolder_metadata.get("update_source_directory")
 update_destination_directory = scaffolder_metadata.get("update_destination_directory")
 update_files = scaffolder_metadata.get("update_files")
@@ -29,5 +31,5 @@ git_username = scaffolder_metadata.get("git_username")
 create_repository = scaffolder_metadata.get("create_repository")
 repository_visibility = scaffolder_metadata.get("repository_visibility")
 gh_check = scaffolder_metadata.get("gh_check")
-licenses_directory = f"{parent_directory}/src/licenses"
+licenses_directory = f"{parent_directory}/data/licenses"
 pp = pprint.PrettyPrinter(indent="3")

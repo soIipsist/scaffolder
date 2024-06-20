@@ -21,7 +21,7 @@ from src.constants import *
 
 def scaffold(
     template: str = template_directory,
-    project_directory: str = project_directory,
+    destination_directory: str = destination_directory,
     project_name: str = project_name,
     license: str = license,
     author: str = author,
@@ -32,19 +32,19 @@ def scaffold(
 ):
     template_directory = get_template_directory(template)
 
-    if not os.path.exists(project_directory):
-        subprocess.run(["mkdir", project_directory], errors=None)
-        create_license(license, project_directory, author, year)
-        create_template(template_directory, project_directory)
+    if not os.path.exists(destination_directory):
+        subprocess.run(["mkdir", destination_directory], errors=None)
+        create_license(license, destination_directory, author, year)
+        create_template(template_directory, destination_directory)
     else:
         # path already exists, so update based on metadata
-        create_license(license, project_directory, author, year)
+        create_license(license, destination_directory, author, year)
 
         if project_name:
-            original_name = os.path.basename(project_directory)
-            rename_repo(project_directory, project_name, git_username)
+            original_name = os.path.basename(destination_directory)
+            rename_repo(destination_directory, project_name, git_username)
             find_and_replace_in_directory(
-                project_directory, original_name, project_name, [".git"]
+                destination_directory, original_name, project_name, [".git"]
             )
 
     if not create_repository:
@@ -62,25 +62,29 @@ def scaffold(
     )
 
     # initialize project directory
-    if not (git_repo_exists(project_directory)):
-        create_git_repository(project_directory, repository_visibility, git_username)
+    if not (git_repo_exists(destination_directory)):
+        create_git_repository(
+            destination_directory, repository_visibility, git_username
+        )
     else:
         print("Project already exists. Updating...")
-        update_git_repository(project_directory, repository_visibility, git_username)
+        update_git_repository(
+            destination_directory, repository_visibility, git_username
+        )
 
 
-def create_template(template_directory: str, project_directory: str):
+def create_template(template_directory: str, destination_directory: str):
 
-    project_name = os.path.basename(project_directory)
+    project_name = os.path.basename(destination_directory)
 
     # copy template directory to project directory
     print(
         "Copying template files from {0} to {1}".format(
-            template_directory, project_directory
+            template_directory, destination_directory
         )
     )
 
-    command = f"cp -r {template_directory}/* {project_directory}/"
+    command = f"cp -r {template_directory}/* {destination_directory}/"
     subprocess.run(command, shell=True)
 
     # get template project name
@@ -88,7 +92,7 @@ def create_template(template_directory: str, project_directory: str):
 
     # find and replace all instances of template_name
     find_and_replace_in_directory(
-        project_directory, template_name, project_name, removed_dirs=[".git"]
+        destination_directory, template_name, project_name, removed_dirs=[".git"]
     )
 
 
@@ -96,7 +100,7 @@ def main():
 
     parser_arguments = [
         Argument(name=("-t", "--template")),
-        DirectoryArgument(name=("-p", "--project_directory")),
+        DirectoryArgument(name=("-d", "--destination_directory")),
         Argument(name=("-n", "--project_name")),
         BoolArgument(name=("-c", "--create_repository")),
         Argument(name=("-l", "--license")),
