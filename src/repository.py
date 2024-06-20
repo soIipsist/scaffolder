@@ -1,18 +1,6 @@
 import os
 import subprocess
 from utils.dict_utils import invert_dict
-import re
-
-
-def is_github_repo_url(url):
-    """
-    Check if the given URL is a valid GitHub repository URL.
-    """
-
-    github_repo_pattern = re.compile(
-        r"^https://github\.com/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_]+)(/)?$"
-    )
-    return bool(github_repo_pattern.match(url))
 
 
 def get_repository_visibility(repository_visibility: int):
@@ -73,8 +61,9 @@ def create_git_repository(
 
 def clone_repository(destination_directory: str, git_origin: str):
     print(f"Cloning {destination_directory}")
-    target_dir = os.path.dirname(destination_directory)
-    subprocess.run(["git", "clone", git_origin], cwd=target_dir)
+    cwd = os.path.dirname(destination_directory)
+    print("CWD", cwd)
+    subprocess.run(["git", "clone", git_origin], cwd=cwd)
 
 
 def git_repo_exists(repository: str):

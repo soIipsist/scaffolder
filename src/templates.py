@@ -70,17 +70,16 @@ class Template(SQLiteItem):
 
 
 def get_template(template_path_or_name: str):
-    from repository import is_github_repo_url, clone_repository
 
     try:
         if is_valid_dir(template_path_or_name, False):
             templ = Template(template_directory=template_path_or_name)
-        elif is_github_repo_url(template_path_or_name):
-            clone_repository(os.getcwd(), template_path_or_name)
+
         else:
             templ = Template(template_name=template_path_or_name)
             items = templ.select()
             return items[0] if len(items) > 0 else None
+
         return templ
     except Exception as e:
         print("Exception: ", e)
@@ -92,6 +91,20 @@ def add_template(
     language: str = "python",
     copy_template: bool = True,
 ):
+    from repository import clone_repository
+
+    if template_directory and template_directory.startswith("https://github.com/"):
+
+        parts = template_directory[len("https://github.com/") :].split("/")
+
+        if len(parts) >= 2 and parts[1]:
+            template_name = parts[1]
+            print("origin", template_directory)
+            clone_repository(os.getcwd(), template_directory)
+            template_directory = os.path.join(os.getcwd(), template_name)
+            print(f"New cloned directory set to: {template_directory}.")
+            copy_template = False
+
     template = Template(template_directory, template_name, language)
 
     if copy_template:
@@ -115,13 +128,13 @@ def delete_template(template: str, remove_dir=True, delete_repo=False):
         template.delete()
 
 
-def list_templates(templates: list = None):
+def list_templates(templates: list = []):
     for template in templates:
-        temp = Template(
-            template_directory=template,
-        )
+        temp = Template(template_directory=template, template_name=template)
 
-        items = temp.select()
+        items = temp.select(
+            f"template_directory = {temp.template_directory} OR template_name = {temp.template_name}"
+        )
 
         if len(items) == 1:
             print(items[0])
@@ -131,7 +144,7 @@ def list_templates(templates: list = None):
 
 def main():
     add_arguments = [
-        DirectoryArgument(name=("-t", "--template_directory")),
+        Argument(name=("-t", "--template_directory")),
         Argument(name=("-n", "--template_name")),
         Argument(name=("-l", "--language"), default="python"),
         Argument(name=("-c", "--copy_template"), type=bool, default=True),
@@ -143,7 +156,7 @@ def main():
         BoolArgument(name=("-r", "--remove_repo"), default=False),
     ]
 
-    parser_arguments = [Argument(name="templates", nargs="?", default=None)]
+    parser_arguments = [Argument(name="templates", nargs="*", default=[])]
 
     subcommands = [
         SubCommand("add", add_arguments),
