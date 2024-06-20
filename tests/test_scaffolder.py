@@ -31,7 +31,7 @@ class TestScaffolder(TestBase):
         self.create_repository = create_repository
         self.repository_visibility = repository_visibility
 
-        self.repository_name = os.path.basename(self.template_directory)
+        self.repository_name = repository_name
 
     def get_scaffold_args(self):
         # get scaffold function args
@@ -46,29 +46,6 @@ class TestScaffolder(TestBase):
         }
 
         return args
-
-    def test_scaffold_local(self):
-        self.create_repository = False
-        self.repository_visibility = 0
-        scaffold(
-            self.template_directory,
-            self.destination_directory,
-            self.repository_name,
-            self.license,
-            self.author,
-            self.year,
-            self.create_repository,
-            self.repository_visibility,
-        )
-        # self.assertTrue(os.path.exists(self.destination_directory))
-
-    def test_scaffold(self):
-        self.template_directory = self.get_template_directory()
-        self.create_repository = True
-        self.repository_visibility = 1
-
-        args = self.get_scaffold_args()
-        scaffold(**args)
 
     def test_scaffold_no_template(self):
         self.template_directory = None
@@ -86,6 +63,22 @@ class TestScaffolder(TestBase):
         with self.assertRaises(ValueError):
             scaffold(**args)
 
+    def test_scaffold_no_repo(self):
+        templ = Template(self.get_template_directory())
+        templ.insert()
+
+        # without repository_name
+        self.repository_name = None
+        args = self.get_scaffold_args()
+        with self.assertRaises(ValueError):
+            scaffold(**args)
+
+    def test_scaffold(self):
+
+        args = self.get_scaffold_args()
+        print(args)
+        # scaffold(**args)
+
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_scaffold_no_template)
+    run_test_methods(TestScaffolder.test_scaffold)

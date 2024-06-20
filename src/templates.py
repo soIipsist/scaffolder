@@ -70,9 +70,13 @@ class Template(SQLiteItem):
 
 
 def get_template(template_path_or_name: str):
+    from repository import is_github_repo_url, clone_repository
+
     try:
         if is_valid_dir(template_path_or_name, False):
             templ = Template(template_directory=template_path_or_name)
+        elif is_github_repo_url(template_path_or_name):
+            clone_repository(os.getcwd(), template_path_or_name)
         else:
             templ = Template(template_name=template_path_or_name)
             items = templ.select()

@@ -36,6 +36,9 @@ def scaffold(
     if templ is None:
         raise ValueError(f"Template '{template_directory}' does not exist.")
 
+    if repository_name is None:
+        repository_name = os.path.basename(destination_directory)
+
     # copy template first
     templ.copy_template(template_directory, destination_directory)
     create_license(license, destination_directory, author, year)

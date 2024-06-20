@@ -1,6 +1,18 @@
 import os
 import subprocess
 from utils.dict_utils import invert_dict
+import re
+
+
+def is_github_repo_url(url):
+    """
+    Check if the given URL is a valid GitHub repository URL.
+    """
+
+    github_repo_pattern = re.compile(
+        r"^https://github\.com/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_]+)(/)?$"
+    )
+    return bool(github_repo_pattern.match(url))
 
 
 def get_repository_visibility(repository_visibility: int):
