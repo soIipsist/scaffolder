@@ -48,13 +48,13 @@ class TestLicenses(TestBase):
         self.assertIsNotNone(license_paths)
 
     def test_create_license(self):
-        license = "afl-3.0"
+        license = "mit"
         path = create_license(
             license=license,
-            destination_directory=destination_directory,
+            destination_directory=self.get_files_directory(),
             author=author,
-            year=year,
         )
+
         self.assertIsNotNone(path)
         self.assertTrue(os.path.exists(path))
 
@@ -62,6 +62,6 @@ class TestLicenses(TestBase):
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestLicenses.test_view_licenses,
+            TestLicenses.test_create_license,
         ]
     )

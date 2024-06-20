@@ -31,35 +31,31 @@ def get_license_paths(licenses=None, licenses_directory=licenses_directory):
     ]
 
 
-def create_license(license: str, destination_directory: str, author: str, year: str):
-    license_path = get_license_paths([license])[0]
+def create_license(
+    license: str,
+    destination_directory: str,
+    author: str,
+    year: str = year,
+):
+    if year is None:
+        year = datetime.datetime.now().year
 
-    # check if license exists
-    new_license_path = os.path.join(destination_directory, "LICENSE")
-    update = os.path.exists(new_license_path)
+    # copy original to destination directory
+    license_path = get_license_paths([license])
+    license_path = license_path[0] if len(license_path) > 0 else None
 
-    if update:
-        os.remove(new_license_path)
+    destination_license_path = os.path.join(destination_directory, "LICENSE")
 
     if license_path:
-        command = f"cp {license_path} {destination_directory}"
+        command = f"cp {license_path} {destination_license_path}"
         subprocess.run(command, shell=True)
-        return update_license(destination_directory, license, author, year)
 
+        content = read_file(destination_license_path)
+        new_content = re.sub(r"\{author\}", author, content)
+        new_content = re.sub(r"\{year\}", str(year), new_content)
+        overwrite_file(destination_license_path, new_content)
 
-def update_license(destination_directory: str, license: str, author: str, year: str):
-    # replace where author and year are in license
-    new_path = os.path.join(destination_directory, license)
-    content = read_file(new_path)
-
-    new_content = re.sub(r"\{author\}", author, content)
-    new_content = re.sub(r"\{year\}", str(year), new_content)
-    overwrite_file(new_path, new_content)
-
-    # rename to LICENSE
-    dest = os.path.join(destination_directory, "LICENSE")
-    os.rename(new_path, dest)
-    return dest
+    return destination_license_path
 
 
 def view_licenses(
