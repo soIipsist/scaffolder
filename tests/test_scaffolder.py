@@ -53,7 +53,7 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.destination_directory,
-            self.package_name,
+            self.repository_name,
             self.license,
             self.author,
             self.author,
@@ -69,7 +69,7 @@ class TestScaffolder(TestBase):
         scaffold(
             self.template_directory,
             self.destination_directory,
-            self.package_name,
+            self.repository_name,
             self.license,
             self.author,
             self.author,

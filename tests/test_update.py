@@ -29,7 +29,7 @@ class TestUpdate(TestBase):
         )
 
         self.update_template_directory = update_template_directory
-        self.package_name = "red"
+        self.repository_name = "red"
         self.update_destination_directory = update_destination_directory
         self.update_files = update_files
 

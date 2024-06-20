@@ -61,7 +61,7 @@ def main():
     update_arguments = [
         Argument(name=("-t", "--template_directory")),
         Argument(name=("-d", "--destination_directory")),
-        Argument(name=("-n", "--package_name")),
+        Argument(name=("-n", "--repository_name")),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-y", "--year")),

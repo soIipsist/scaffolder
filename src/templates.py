@@ -41,7 +41,7 @@ class Template(SQLiteItem):
 
     def copy_template(self, template_directory: str, destination_directory=None):
         """
-        Copies template_directory to specified destination directory if called
+        Copies template_directory to specified destination directory.
         """
 
         if not os.path.exists(template_directory):

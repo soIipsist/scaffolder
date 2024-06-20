@@ -39,10 +39,31 @@ class TestRepository(TestBase):
         self.assertTrue(get_repository_visibility("internal") == "internal")
         self.assertTrue(get_repository_visibility("nothing") == "private")
 
+    def test_set_repository_visibility(self):
+        set_repository_visibility()
+
+    def test_rename_repository(self):
+        pass
+
+    def test_create_repository(self):
+        template_dir = self.get_template_directory()
+        create_git_repository(
+            template_dir, repository_visibility="public", author="soIipsist"
+        )
+
+    def test_delete_repository(self):
+        template_dir = self.get_template_directory()
+        delete_git_repository(os.path.basename(template_dir), author="soIipsist")
+
+    def test_git_repo_exists(self):
+        print(self.get_template_directory())
+        self.assertFalse(git_repo_exists(self.get_template_directory()))
+        self.assertTrue(git_repo_exists(parent_directory))
+
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_get_repository_visibility,
+            TestRepository.test_git_repo_exists,
         ]
     )

@@ -66,7 +66,7 @@ options:
   -h, --help                                                               show this help message and exit
   -t TEMPLATE, --template TEMPLATE                                         template name or directory to copy files from
   -p PROJECT_DIRECTORY, --destination_directory PROJECT_DIRECTORY              destination directory of your scaffolded project
-  -n PACKAGE_NAME --package_name PACKAGE_NAME      renames all instances of 'package_name' in your project
+  -n REPOSITORY_NAME --repository_name REPOSITORY_NAME      renames all instances of 'repository_name' in your project
   -l LICENSE, --license LICENSE                                            creates license file (mit, afl-3.0, apache-v2.0 etc.)
   -a AUTHOR, --author AUTHOR                                               set name of the author (replaces every instance within the license file)
   -r CREATE_REPOSITORY, --create_repository CREATE_REPOSITORY              if set to true, creates a git repository using the git cli tool (gh)

@@ -16,10 +16,9 @@ def get_repository_visibility(repository_visibility: int):
 
 
 def set_repository_visibility(
-    destination_directory: str, repository_visibility: str, author: str
+    repository_name: str, repository_visibility: str, author: str
 ):
 
-    repository_name = os.path.basename(destination_directory)
     command = (
         f"gh repo edit {author}/{repository_name} --visibility {repository_visibility}"
     )
@@ -27,20 +26,18 @@ def set_repository_visibility(
 
 
 def create_git_repository(
-    destination_directory: str,
+    repository_name: str,
     repository_visibility: str,
     author: str,
 ):
 
-    package_name = os.path.basename(destination_directory)
-
-    git_origin = "https://github.com/{0}/{1}.git".format(author, package_name)
+    git_origin = "https://github.com/{0}/{1}.git".format(author, repository_name)
     print(f"Creating git repository: {git_origin}")
 
     repo_visibility = "--{0}".format(repository_visibility)
 
     commands = [
-        ["gh", "repo", "create", package_name, repo_visibility],
+        ["gh", "repo", "create", repository_name, repo_visibility],
         ["git", "init"],
         ["git", "add", "."],
         ["git", "commit", "-m", "published branch"],
@@ -55,27 +52,27 @@ def create_git_repository(
     for args in commands:
 
         try:
-            subprocess.run(args, cwd=destination_directory, check=True)
+            subprocess.run(args, check=True)
         except Exception as e:
             print(e)
 
-    # remove and clone again
-    clone_repository(destination_directory, git_origin)
+    return git_origin
 
 
 def clone_repository(destination_directory: str, git_origin: str):
-    # remove and clone again
-    shutil.rmtree(destination_directory, ignore_errors=True)
     target_dir = os.path.dirname(destination_directory)
     subprocess.run(["git", "clone", git_origin], cwd=target_dir)
 
 
-def git_repo_exists(destination_directory: str):
-    return os.path.exists(os.path.join(destination_directory, ".git"))
+def git_repo_exists(directory: str):
+    return os.path.exists(os.path.join(directory, ".git"))
 
 
 def update_git_repository(
-    destination_directory: str, repository_visibility: int, author: str
+    destination_directory: str,
+    repository_name: str = None,
+    repository_visibility: int = "public",
+    author: str = None,
 ):
 
     commands = [
@@ -85,10 +82,7 @@ def update_git_repository(
     ]
     # check if there were any changes
     output = subprocess.run(
-        ["git", "diff", "--name-status"],
-        capture_output=True,
-        text=True,
-        cwd=destination_directory,
+        ["git", "diff", "--name-status"], capture_output=True, text=True
     )
 
     if output.stdout:
@@ -98,7 +92,7 @@ def update_git_repository(
             except Exception as e:
                 print(e)
 
-    set_repository_visibility(destination_directory, repository_visibility, author)
+    set_repository_visibility(repository_name, repository_visibility, author)
     print("Update completed.")
 
 
@@ -113,15 +107,12 @@ def rename_repo(destination_directory: str, repository_name: str, author: str):
     print(f"Renamed repository from {original_name} to {repository_name}.")
 
 
-def delete_repository(repository_name: str, author: str):
+def delete_git_repository(repository_name: str, author: str):
     try:
-        # Construct the gh command to delete the repository
-        command = ["gh", "repo", "delete", f"{author}/{repository_name}", "--confirm"]
+        command = ["gh", "repo", "delete", f"{author}/{repository_name}", "--yes"]
 
-        # Run the command
         result = subprocess.run(command, capture_output=True, text=True)
 
-        # Check for errors
         if result.returncode == 0:
             print(
                 f"Successfully deleted the repository {author}/{repository_name} on GitHub."
