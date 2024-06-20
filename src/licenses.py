@@ -10,26 +10,36 @@ from src.constants import *
 import re
 
 
-def get_license_paths(licenses: list = []):
-    license_paths = [
+import os
+
+
+def get_license_paths(licenses=None, licenses_directory=licenses_directory):
+    if licenses is None:
+        licenses = []
+
+    if licenses == "all":
+        return [
+            os.path.join(licenses_directory, license)
+            for license in os.listdir(licenses_directory)
+        ]
+
+    return [
         path
         for license in licenses
         if (path := is_valid_path(os.path.join(licenses_directory, license), False))
         is not None
     ]
 
-    return license_paths
-
 
 def create_license(license: str, destination_directory: str, author: str, year: str):
     license_path = get_license_paths([license])[0]
 
     # check if license exists
-    project_license_path = os.path.join(destination_directory, "LICENSE")
-    update = os.path.exists(project_license_path)
+    new_license_path = os.path.join(destination_directory, "LICENSE")
+    update = os.path.exists(new_license_path)
 
     if update:
-        os.remove(project_license_path)
+        os.remove(new_license_path)
 
     if license_path:
         command = f"cp {license_path} {destination_directory}"
@@ -52,24 +62,18 @@ def update_license(destination_directory: str, license: str, author: str, year: 
     return dest
 
 
-def view_license(licenses: list = [], show_content: int = 0):
+def view_licenses(
+    licenses: list = "all", show_content: bool = False, show_paths: bool = True
+):
 
-    show_content = bool(show_content)
-
-    if not isinstance(licenses, list):
-        licenses = [licenses]
-
-    if licenses == "all" or not licenses:
-        license_paths = os.listdir(licenses_directory)
-        license_paths = get_license_paths(license_paths)
-    else:
-        license_paths = get_license_paths(licenses)
+    license_paths = get_license_paths(licenses)
 
     for path in license_paths:
         if show_content:
             content = read_file(path, "utf-8")
             print(content)
-        else:
+
+        if show_paths:
             print(path)
 
     return license_paths
@@ -79,11 +83,12 @@ def main():
     parser_arguments = [
         Argument(name=("-l", "--licenses"), nargs="+"),
         BoolArgument(name=("-c", "--show_content")),
+        BoolArgument(name=("-p", "--show_paths")),
     ]
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()
-    view_license(**args)
+    view_licenses(**args)
 
 
 if __name__ == "__main__":

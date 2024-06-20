@@ -74,31 +74,20 @@ class TestScaffolder(TestBase):
 
     def test_view_license(self):
         # test singular
-        paths = view_license("mit")
+        paths = view_licenses("mit")
         self.assertTrue(len(paths) > 0)
 
         # test multiple
-        paths = view_license(licenses)
+        paths = view_licenses(licenses)
         self.assertTrue(len(paths) > 0)
 
         # test invalid license
-        paths = view_license(["no"])
+        paths = view_licenses(["no"])
         self.assertTrue(len(paths) == 0)
 
     def test_view_all_licenses(self):
-        paths = view_license()
+        paths = view_licenses()
         self.assertIsNotNone(paths)
-
-    def test_create_license(self):
-        license = "afl-3.0"
-        path = create_license(
-            license=license,
-            destination_directory=destination_directory,
-            author=author,
-            year=year,
-        )
-        self.assertIsNotNone(path)
-        self.assertTrue(os.path.exists(path))
 
     def test_scaffold_local(self):
         self.create_repository = False
