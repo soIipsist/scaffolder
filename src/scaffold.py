@@ -33,12 +33,11 @@ def scaffold(
 ):
     templ = get_template(template_directory)
 
-    if not templ:
+    if templ is None:
         raise ValueError(f"Template '{template_directory}' does not exist.")
 
     # copy template first
-    templ.copy_template()
-
+    templ.copy_template(template_directory, destination_directory)
     create_license(license, destination_directory, author, year)
 
     # replace all instances of template name with new repository name
@@ -46,8 +45,8 @@ def scaffold(
 
     if not template_name:
         template_name = os.path.basename(templ.template_directory)
-    print(template_name)
-    return
+
+    print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
 
     find_and_replace_in_directory(
         destination_directory, template_name, repository_name, removed_dirs=[".git"]
@@ -65,6 +64,9 @@ def scaffold(
             ).stdout.strip()
         )
 
+        cwd = os.getcwd()
+        os.chdir(destination_directory)
+
         # initialize project directory
         if not (git_repo_exists(destination_directory)):
             git_origin = create_git_repository(
@@ -74,8 +76,10 @@ def scaffold(
             shutil.rmtree(destination_directory, ignore_errors=True)
             clone_repository(destination_directory, git_origin)
         else:
-            print("Project already exists. Updating...")
+            print("Repository already exists. Updating...")
             update_git_repository(repository_name, repository_visibility, author)
+
+        os.chdir(cwd)
 
 
 def main():

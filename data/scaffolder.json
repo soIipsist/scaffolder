@@ -1,11 +1,13 @@
 {
-    "template_directory": "gaga",
-    "destination_directory": "/Users/p/Desktop/soIipsist/python_template",
+    "template_directory": "/Users/p/Desktop/soIipsist/python_template",
+    "destination_directory": "/Users/p/Desktop/soIipsist/sample_template",
     "repository_name": "template",
-    "update_template_directory": "/Users/p/Desktop/soIipsist/superscraper/utils",
-    "update_destination_directory": "/Users/p/Desktop/soIipsist/scaffolder/templates/python_template/utils/",
+    "update_template_directory": "/Users/p/Desktop/soIipsist/python_template/utils",
+    "update_destination_directory": "/Users/p/Desktop/soIipsist/superscraper/utils/",
     "update_files": [
         "sqlite.py",
+        "sqlite_item.py",
+        "sqlite_connection.py",
         "parser.py"
     ],
     "license": "mit",

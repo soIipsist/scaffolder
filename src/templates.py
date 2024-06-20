@@ -58,6 +58,7 @@ class Template(SQLiteItem):
         if not os.path.exists(destination_directory):
             os.makedirs(destination_directory)
 
+        print(f"Copying template {template_directory} to {destination_directory}.")
         shutil.copytree(template_directory, destination_directory, dirs_exist_ok=True)
         return destination_directory
 
@@ -69,13 +70,16 @@ class Template(SQLiteItem):
 
 
 def get_template(template_path_or_name: str):
-    if is_valid_dir(template_path_or_name):
-        templ = Template(template_directory=template_path_or_name)
-    else:
-        templ = Template(template_name=template_path_or_name)
-        items = templ.select()
-        return items[0] if len(items) > 0 else None
-    return templ
+    try:
+        if is_valid_dir(template_path_or_name, False):
+            templ = Template(template_directory=template_path_or_name)
+        else:
+            templ = Template(template_name=template_path_or_name)
+            items = templ.select()
+            return items[0] if len(items) > 0 else None
+        return templ
+    except Exception as e:
+        print("Exception: ", e)
 
 
 def add_template(

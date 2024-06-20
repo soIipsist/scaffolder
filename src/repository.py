@@ -60,6 +60,7 @@ def create_git_repository(
 
 
 def clone_repository(destination_directory: str, git_origin: str):
+    print(f"Cloning {destination_directory}")
     target_dir = os.path.dirname(destination_directory)
     subprocess.run(["git", "clone", git_origin], cwd=target_dir)
 
