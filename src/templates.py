@@ -65,8 +65,14 @@ class Template(SQLiteItem):
     def remove_template(self):
         shutil.rmtree(self.template_directory, ignore_errors=True)
 
-    def __str__(self) -> str:
+    def get_template_description(self):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
+
+    def __str__(self) -> str:
+        return self.get_template_description()
+
+    def __repr__(self) -> str:
+        return self.get_template_description()
 
 
 def get_template(template_path_or_name: str):
@@ -100,7 +106,7 @@ def add_template(
         if len(parts) >= 2 and parts[1]:
             template_name = parts[1]
             print("origin", template_directory)
-            clone_repository(os.getcwd(), template_directory)
+            clone_repository(template_directory)
             template_directory = os.path.join(os.getcwd(), template_name)
             print(f"New cloned directory set to: {template_directory}.")
             copy_template = False
@@ -129,6 +135,7 @@ def delete_template(template: str, remove_dir=True, delete_repo=False):
 
 
 def list_templates(templates: list = []):
+
     for template in templates:
         temp = Template(template_directory=template, template_name=template)
 
@@ -138,14 +145,15 @@ def list_templates(templates: list = []):
 
         if len(items) == 1:
             print(items[0])
-
+    if not templates:
+        print(Template().select_all())
     return templates
 
 
 def main():
     add_arguments = [
-        Argument(name=("-t", "--template_directory")),
-        Argument(name=("-n", "--template_name")),
+        Argument(name=("-t", "--template_directory"), default=template_directory),
+        Argument(name=("-n", "--template_name"), default=repository_name),
         Argument(name=("-l", "--language"), default="python"),
         Argument(name=("-c", "--copy_template"), type=bool, default=True),
     ]
@@ -156,7 +164,7 @@ def main():
         BoolArgument(name=("-r", "--remove_repo"), default=False),
     ]
 
-    parser_arguments = [Argument(name="templates", nargs="*", default=[])]
+    parser_arguments = [Argument(name="templates", nargs="?", default=[])]
 
     subcommands = [
         SubCommand("add", add_arguments),
@@ -164,8 +172,16 @@ def main():
     ]
 
     parser = Parser(parser_arguments, subcommands)
-    cmd_dict = {None: list_templates, "add": add_template, "delete": delete_template}
-    parser.run_command(cmd_dict)
+    args = parser.get_command_args()
+    cmd_dict = {"add": add_template, "delete": delete_template}
+
+    func = parser.get_command_function(cmd_dict)
+
+    # if not func:
+    #     list_templates(**args)
+    # else:
+    #     args = parser.get_callable_args(func)
+    #     func(**args)
 
 
 if __name__ == "__main__":

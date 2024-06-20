@@ -77,7 +77,7 @@ def scaffold(
             )
             # remove and clone again
             shutil.rmtree(destination_directory, ignore_errors=True)
-            clone_repository(destination_directory, git_origin)
+            clone_repository(git_origin)
         else:
             print("Repository already exists. Updating...")
             update_git_repository(repository_name, repository_visibility, author)
