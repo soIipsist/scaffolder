@@ -84,16 +84,6 @@ Updates files in an `update_destination_directory` with those from a `update_tem
 scaffolder > update -h
 usage: scaffolder update [-h] [--update_template_directory SOURCE_DIRECTORY] [--update_destination_directory UPDATE_DESTINATION_DIRECTORY] [-f FUNCTION_PATTERNS [FUNCTION_PATTERNS ...]]
                          files [files ...]
-
-positional arguments:
-  files                                                                                             Template files to update (must be the same name)
-
-options:
-  -h, --help                                                                                        show this help message and exit
-  --update_template_directory SOURCE_DIRECTORY                                                               project directory to update from
-  --update_destination_directory UPDATE_DESTINATION_DIRECTORY                                                               destination project directory for updated files
-  -f FUNCTION_PATTERNS [FUNCTION_PATTERNS ...], --function_patterns FUNCTION_PATTERNS [FUNCTION_PATTERNS ...]
-
 ```
 
 #### licenses

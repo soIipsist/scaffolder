@@ -64,6 +64,7 @@ class Template(SQLiteItem):
 
     def remove_template(self):
         shutil.rmtree(self.template_directory, ignore_errors=True)
+        print(f"{self.template_directory} was deleted successfully!")
 
     def get_template_description(self):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
@@ -107,7 +108,7 @@ def add_template(
             template_name = parts[1]
             parent_templates_dir = os.path.join(parent_directory, "templates")
             clone_repository(template_directory, cwd=parent_templates_dir)
-            template_directory = os.path.join(os.getcwd(), template_name)
+            template_directory = os.path.join(parent_templates_dir, template_name)
             print(f"New cloned directory set to: {template_directory}.")
             copy_template = False
 
@@ -122,16 +123,13 @@ def add_template(
     return template
 
 
-def delete_template(template: str, remove_dir=True, delete_repo=False):
-    template = get_template(template_path_or_name=template)
-    template: SQLiteItem
-    template.delete()
-    # remove directory entirely
-    if remove_dir:
-        template.remove_template()
+def delete_template(template: str, remove_dir: bool = True):
+    templ = get_template(template_path_or_name=template)
 
-    if delete_repo:
-        template.delete()
+    if templ:
+        templ.delete()
+        if remove_dir:
+            templ.remove_template()
 
 
 def list_templates(templates: list = []):
@@ -161,7 +159,6 @@ def main():
     delete_arguments = [
         Argument(name=("-t", "--template")),
         BoolArgument(name=("-d", "--remove_dir"), default=True),
-        BoolArgument(name=("-r", "--remove_repo"), default=False),
     ]
 
     parser_arguments = [
