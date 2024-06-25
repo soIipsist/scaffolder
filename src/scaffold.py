@@ -9,7 +9,6 @@ from src.repository import (
     create_git_repository,
     git_repo_exists,
     update_git_repository,
-    rename_repo,
 )
 from src.licenses import create_license
 from src.templates import Template, get_template
@@ -39,7 +38,6 @@ def scaffold(
     if repository_name is None:
         repository_name = os.path.basename(destination_directory)
 
-    return
     # copy template first
     templ.copy_template(template_directory, destination_directory)
     create_license(license, destination_directory, author, year)
