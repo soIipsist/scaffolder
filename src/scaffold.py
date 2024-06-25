@@ -39,6 +39,7 @@ def scaffold(
     if repository_name is None:
         repository_name = os.path.basename(destination_directory)
 
+    return
     # copy template first
     templ.copy_template(template_directory, destination_directory)
     create_license(license, destination_directory, author, year)
@@ -95,7 +96,12 @@ def main():
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-y", "--year")),
-        Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
+        Argument(
+            name=("-v", "--repository_visibility"),
+            type=int,
+            choices=[0, 1, 2],
+            default=0,
+        ),
     ]
     parser = Parser(parser_arguments)
 

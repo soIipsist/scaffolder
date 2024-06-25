@@ -1,6 +1,7 @@
 {
     "template_directory": "/Users/p/Desktop/soIipsis/android_template",
-    "destination_directory": "/Users/p/Desktop/soIipsis/tests/notflix",
+    "destination_directory": "/Users/p/Desktop/soIipsis/notflix",
+    "repository_name": "notflix",
     "update_template_directory": "/Users/p/Desktop/soIipsist/python_template/utils",
     "update_destination_directory": "/Users/p/Desktop/soIipsist/superscraper/utils/",
     "update_files": [
@@ -9,8 +10,10 @@
         "sqlite_connection.py",
         "parser.py"
     ],
+    "year": "2040",
     "license": "mit",
     "author": "soIipsist",
     "create_repository": false,
-    "gh_check": false
+    "gh_check": false,
+    "repository_visibility": 0
 }

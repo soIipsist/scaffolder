@@ -59,10 +59,10 @@ def create_git_repository(
     return git_origin
 
 
-def clone_repository(git_origin: str):
+def clone_repository(git_origin: str, cwd: str = None):
     print(f"Cloning {git_origin}.")
-    subprocess.run(["git", "clone", git_origin])
-    return os.getcwd()
+    subprocess.run(["git", "clone", git_origin], cwd=cwd)
+    return cwd if cwd is not None else os.getcwd()
 
 
 def git_repo_exists(repository: str):

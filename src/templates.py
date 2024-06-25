@@ -105,8 +105,8 @@ def add_template(
 
         if len(parts) >= 2 and parts[1]:
             template_name = parts[1]
-            print("origin", template_directory)
-            clone_repository(template_directory)
+            parent_templates_dir = os.path.join(parent_directory, "templates")
+            clone_repository(template_directory, cwd=parent_templates_dir)
             template_directory = os.path.join(os.getcwd(), template_name)
             print(f"New cloned directory set to: {template_directory}.")
             copy_template = False
@@ -118,7 +118,7 @@ def add_template(
         template.template_directory = template_dir
     template.insert()
 
-    print("Template directory", template.template_directory)
+    print("Template directory: ", template.template_directory)
     return template
 
 
