@@ -164,7 +164,9 @@ def main():
         BoolArgument(name=("-r", "--remove_repo"), default=False),
     ]
 
-    parser_arguments = [Argument(name="templates", nargs="?", default=[])]
+    parser_arguments = [
+        Argument(name=("-t", "--template_names"), nargs="+", default=[])
+    ]
 
     subcommands = [
         SubCommand("add", add_arguments),
@@ -177,11 +179,15 @@ def main():
 
     func = parser.get_command_function(cmd_dict)
 
-    # if not func:
-    #     list_templates(**args)
-    # else:
-    #     args = parser.get_callable_args(func)
-    #     func(**args)
+    if not func:
+        template_names = args.get("template_names")
+        for t in template_names:
+            t = Template(template_name=t).select()
+            if t:
+                print(t)
+    else:
+        args = parser.get_callable_args(func)
+        func(**args)
 
 
 if __name__ == "__main__":
