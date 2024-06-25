@@ -1,4 +1,3 @@
-from io import BytesIO
 import mimetypes
 import os
 import json
@@ -33,72 +32,6 @@ def check_file_extension(choices, file_name) -> str:
             "Invalid file extension. File doesn't end with one of {}".format(choices)
         )
     return file_name
-
-
-def download_file(
-    url: str,
-    destination: str = None,
-    content_length=None,
-    chunk_size=256,
-    timeout=None,
-    allow_redirects=True,
-    return_response=True,
-) -> requests.Response:
-    """Downloads a file from the specified URL and saves it to the provided destination path."""
-
-    dl = 0
-    try:
-        response = requests.get(
-            url, stream=True, timeout=timeout, allow_redirects=allow_redirects
-        )
-        print("Status code: ", response.status_code)
-
-        if response.status_code == 200 and destination:
-            with open(destination, "wb") as f:
-                for chunk in response.iter_content(chunk_size=chunk_size):
-                    if content_length:  # content length exists
-                        content_length = int(content_length)
-                        dl += len(chunk)
-                        print(dl, "/", content_length)
-                    f.write(chunk)
-
-        return response if return_response else destination
-
-    except Exception as e:
-        print(e)
-
-
-def download_file_with_buffer(
-    url: str, destination: str = None, content_length=None, chunk_size=256
-) -> requests.Response:
-    """Downloads a file from the specified URL and saves it to the provided destination path."""
-
-    content_buffer = BytesIO()
-    dl = 0
-    try:
-        response = requests.get(url, stream=True)
-        if response.status_code == 200 and destination:
-            with open(destination, "wb") as f:
-                for chunk in response.iter_content(chunk_size=chunk_size):
-                    if content_length:  # content length exists
-                        content_length = int(content_length)
-                        dl += len(chunk)
-                        print(dl, "/", content_length)
-
-                    content_buffer.write(chunk)
-                    f.write(chunk)
-        else:
-            print(f"Failed to download. Status code: {response.status_code}")
-            return None
-
-        return content_buffer
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return None
-
-    except Exception as e:
-        print(e)
 
 
 def dump_data_in_file(file_path: str, data=[], errors=None):
@@ -270,3 +203,46 @@ def find_and_replace_in_directory(
                         print(modified_line, end="")
                 except Exception as e:
                     print(e)
+
+
+def download_file(
+    url: str,
+    destination: str = None,
+    content_length: int = None,
+    chunk_size: int = 256,
+    timeout: int = None,
+    allow_redirects: bool = True,
+    return_response: bool = True,
+    log_bytes=False,
+    log_percentage=True,
+) -> requests.Response:
+    """Downloads a file from the specified URL and saves it to the provided destination path."""
+
+    dl = 0
+    try:
+        response = requests.get(
+            url, stream=True, timeout=timeout, allow_redirects=allow_redirects
+        )
+        print("Status code: ", response.status_code)
+
+        if response.status_code == 200 and destination:
+            content_length = content_length or int(
+                response.headers.get("content-length", 0)
+            )
+
+            with open(destination, "wb") as f:
+                for chunk in response.iter_content(chunk_size=chunk_size):
+                    dl += len(chunk)
+                    f.write(chunk)
+                    if content_length:
+                        if log_bytes:
+                            print(f"{dl}/{content_length} bytes")
+
+                        if log_percentage:
+                            percentage = (dl / content_length) * 100
+                            print(f"Downloaded {percentage:.2f}%")
+
+        return response if return_response else destination
+
+    except Exception as e:
+        print(e)

@@ -91,7 +91,7 @@ def main():
         Argument(name=("-t", "--template_directory")),
         DirectoryArgument(name=("-d", "--destination_directory")),
         Argument(name=("-n", "--repository_name")),
-        BoolArgument(name=("-c", "--create_repository")),
+        BoolArgument(name=("-c", "--create_repository"), default=False),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-y", "--year")),

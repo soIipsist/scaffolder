@@ -8,8 +8,6 @@ from utils.path_utils import is_valid_path
 from utils.parser import *
 from src.constants import *
 import re
-
-
 import os
 
 
@@ -78,8 +76,8 @@ def view_licenses(
 def main():
     parser_arguments = [
         Argument(name=("-l", "--licenses"), nargs="+"),
-        BoolArgument(name=("-c", "--show_content")),
-        BoolArgument(name=("-p", "--show_paths")),
+        BoolArgument(name=("-p", "--show_paths"), default=False),
+        BoolArgument(name=("-c", "--show_content"), default=True),
     ]
 
     parser = Parser(parser_arguments)

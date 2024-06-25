@@ -257,7 +257,7 @@ class Parser:
 
         temp_dict = self.args.copy()
         for key, item in self.args.items():
-            if not item:
+            if item is None:
                 temp_dict.pop(key)
 
         return temp_dict

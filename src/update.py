@@ -118,7 +118,6 @@ def main():
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()
-    # print(args)
     update(**args)
 
 
