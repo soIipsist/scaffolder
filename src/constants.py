@@ -18,7 +18,9 @@ languages_metadata: dict
 # scaffolder metadata
 template_directory = scaffolder_metadata.get("template_directory")
 destination_directory = scaffolder_metadata.get("destination_directory")
-repository_name = scaffolder_metadata.get("repository_name")
+repository_name = scaffolder_metadata.get(
+    "repository_name", os.path.basename(destination_directory)
+)
 update_template_directory = scaffolder_metadata.get("update_template_directory")
 update_destination_directory = scaffolder_metadata.get("update_destination_directory")
 update_files = scaffolder_metadata.get("update_files")

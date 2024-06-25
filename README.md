@@ -41,7 +41,9 @@ The following dependecies will be installed:
 
 #### templates
 
-A `template` can be any directory, as long as it resides within the `templates` folder, or specified in the `templates.json` file. During the scaffolding process, all template files will be transferred to the newly created project directory. You can manage templates by adding or deleting them using the `add` and `delete` subcommands respectively.
+A `template` is the directory that serves as a reference, from which files are copied during the scaffolding process. A reference name is assigned to all templates upon creation. If not specified, the base name of the `destination_directory` will be used as the default.
+
+You can manage templates by adding or deleting them using the `add` and `delete` subcommands respectively.
 
 ```bash
 scaffolder > templates add [-h] [-t TEMPLATE]
@@ -96,15 +98,10 @@ options:
 
 #### licenses
 
-The `licenses` command can be used to list all supported software license files. If a valid `license` is specified, its content will be printed out.
+The `licenses` command can be used to list all supported software license files. If a valid `license` is specified, its content and/or path will be printed out.
 
 ```bash
-scaffolder > licenses [-h] [-l LICENSE]
-
-
-options:
-  -h, --help                     show this help message and exit
-  -l LICENSE, --license LICENSE
+scaffolder > licenses [-h] [-l LICENSE] [-c show_content] [-p --show_paths]
 ```
 
 #### settings
@@ -113,46 +110,9 @@ View `scaffolder.json` metadata, or manually update a specified parameter.
 
 ```bash
 
-scaffolder > settings [-h] {update} ...
-
-positional arguments:
-  {update, view}
-
-options:
-  -h, --help     show this help message and exit
-
-```
-
-```bash
-
-scaffolder > settings update [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u AUTHOR] [-r CREATE_REPOSITORY]
-                                 [-v REPOSITORY_VISIBILITY] 
-
-options:
-  -h, --help            show this help message and exit
-  -t TEMPLATE, --template TEMPLATE
-                        template name or directory to copy files from
-  -p PROJECT_DIRECTORY, --destination_directory PROJECT_DIRECTORY
-                        destination directory of your scaffolded project
-  -l LICENSE, --license LICENSE
-                        creates license file (mit, afl-3.0, apache-v2.0)
-  -a AUTHOR, --author AUTHOR
-                        set name of the author (replaces every instance within the license file)
-  -u AUTHOR, --author AUTHOR
-                        set git username (git config username is used by default)
-  -r CREATE_REPOSITORY, --create_repository CREATE_REPOSITORY
-                        if set to true, creates a git repository using the git cli tool
-  -v REPOSITORY_VISIBILITY, --repository_visibility REPOSITORY_VISIBILITY
-                        set git repository visibility (0: private, 1: public, 2: internal)
-  -g GH_CHECK, --gh_check GH_CHECK 
-               if set to true, checks if gh is authenticated on startup
+scaffolder > settings update [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u AUTHOR] [-r CREATE_REPOSITORY] [-v REPOSITORY_VISIBILITY] 
 ```
 
 ```bash
 scaffolder > settings view [-h] [-p PARAMETERS]
-
-options:
-  -h, --help            show this help message and exit
-  -p PARAMETERS, --parameters PARAMETERS
-                        
 ```
