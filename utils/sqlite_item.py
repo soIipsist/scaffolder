@@ -1,3 +1,10 @@
+import re
+import os
+
+parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.sys.path.insert(0, parent_directory)
+
+from utils.sqlite_connection import db_path
 from utils.file_utils import read_file, overwrite_file
 from utils.sqlite import (
     select_items,
@@ -8,13 +15,6 @@ from utils.sqlite import (
     filter_items,
     get_random_row,
 )
-import re
-import os
-
-parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0, parent_directory)
-
-from utils.sqlite_connection import db_path
 
 conn = create_connection(db_path)
 

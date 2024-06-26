@@ -9,13 +9,13 @@
      + dictionary
      + path
 
-- fasterapi
++ fasterapi
   + user routes
     + login
     + register
     + update
     + delete
-    - login/logout/auth
+    + login/logout/auth
 
 + scaffolder
  + rewrite and add scripts
@@ -40,9 +40,18 @@
   + get updated functions bug fix
 
   + remove python_template, use utils instead
-  - store everything in sqlite 
-  - handle git template urls
-  - create repo without using gh
-  - add all licenses 
-  - add function patterns for all languages
+  + handle git template urls
+  + add all licenses
 
+  - store everything in sqlite
+    - replace languages.json with sqlite table
+    - add optional repo_url as template parameter
+
+  - add function patterns for most used languages
+   - C
+   - cpp
+   - go
+   - python 
+   - java 
+   - javascript
+  - create repo without using gh

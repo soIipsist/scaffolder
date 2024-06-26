@@ -10,6 +10,12 @@ template_values = [
     "language TEXT",
 ]
 
+language_table = "Language"
+language_values = [
+    "language TEXT NOT NULL UNIQUE",
+    "extensions TEXT",
+    "function_patterns TEXT",
+]
 
-tables = [template_table]
-values = [template_values]
+tables = [template_table, language_table]
+values = [template_values, language_values]

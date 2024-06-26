@@ -5,7 +5,6 @@ os.sys.path.insert(0, parent_directory)
 
 from utils.parser import *
 from src.constants import *
-import subprocess
 import shutil
 
 from utils.sqlite_item import *
