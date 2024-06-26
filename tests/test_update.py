@@ -24,9 +24,7 @@ author = "soIipsist"
 class TestUpdate(TestBase):
     def setUp(self) -> None:
         super().setUp()
-        self.function_patterns = languages_metadata.get("Python").get(
-            "function_patterns"
-        )
+        self.function_patterns = languages.get("Python").get("function_patterns")
 
         self.update_template_directory = update_template_directory
         self.repository_name = "red"

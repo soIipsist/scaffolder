@@ -4,16 +4,15 @@ import pprint
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
+
+from src.languages import Language
 from utils.json_utils import read_json_file
 
 scaffolder_data_path = f"{parent_directory}/data/scaffolder.json"
 scaffolder_metadata = read_json_file(scaffolder_data_path)
 scaffolder_metadata: dict
 
-
-languages_path = f"{parent_directory}/data/languages.json"
-languages_metadata = read_json_file(languages_path)
-languages_metadata: dict
+languages = Language().select_all()
 
 # scaffolder metadata
 template_directory = scaffolder_metadata.get("template_directory")

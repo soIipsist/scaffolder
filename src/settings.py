@@ -20,7 +20,6 @@ class SettingsAction(argparse.Action):
 
 
 def list_settings(parameters: list = []):
-    scaffolder_metadata = read_json_file(scaffolder_data_path)
     if not parameters:
         parameters = scaffolder_metadata.keys()
 

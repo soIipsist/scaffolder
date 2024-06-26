@@ -2,7 +2,6 @@ import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from src.constants import *
 from data.sqlite_data import *
 from utils.sqlite import create_connection, create_table, close_connection, delete_items
 

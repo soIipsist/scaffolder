@@ -17,7 +17,7 @@ def detect_language(file_path: str):
     is_valid_path(file_path)
     extension = os.path.splitext(file_path)[1]
 
-    for key, vals in languages_metadata.items():
+    for key, vals in languages.items():
         extensions = vals.get("extensions")
         if extensions and extension in extensions:
             key: str
@@ -36,7 +36,7 @@ def get_function_patterns(
         language = detect_language(file_path)
 
     default_patterns = ["\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"]
-    l = get_item_case_insensitive(languages_metadata, language)
+    l = get_item_case_insensitive(languages, language)
 
     if not l:
         return default_patterns
