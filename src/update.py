@@ -7,9 +7,6 @@ os.sys.path.insert(0, parent_directory)
 from src.functions import find_files, get_updated_file_content, get_updated_functions
 from utils.path_utils import is_valid_path
 from utils.parser import *
-from utils.dict_utils import (
-    get_item_case_insensitive,
-)
 from src.constants import *
 from src.languages import detect_language
 
@@ -24,13 +21,12 @@ def get_function_patterns(
         language = detect_language(file_path)
 
     default_patterns = ["\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"]
-    l = get_item_case_insensitive(languages, language)
 
-    if not l:
-        return default_patterns
-    else:
-        l: dict
-        return l.get("function_patterns", default_patterns)
+    lang = Language(language=language).select()
+
+    if len(lang) > 0:
+        function_patterns = getattr(lang[0], "function_patterns")
+        return function_patterns if function_patterns else default_patterns
 
 
 def update(

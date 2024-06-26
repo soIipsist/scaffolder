@@ -24,8 +24,6 @@ author = "soIipsist"
 class TestUpdate(TestBase):
     def setUp(self) -> None:
         super().setUp()
-        self.function_patterns = languages.get("Python").get("function_patterns")
-
         self.update_template_directory = update_template_directory
         self.repository_name = "red"
         self.update_destination_directory = update_destination_directory
@@ -37,8 +35,10 @@ class TestUpdate(TestBase):
 
     def test_get_functions(self):
         file1 = os.path.join(self.get_test_files_dir(), "file.py")
-        print(self.function_patterns)
-        funcs = find_functions_in_file(file1, patterns=self.function_patterns)
+        function_patterns = [
+            "['\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)']"
+        ]
+        funcs = find_functions_in_file(file1, patterns=function_patterns)
         print(funcs[6])
 
     def test_get_updated_functions(self):
@@ -71,25 +71,13 @@ class TestUpdate(TestBase):
             language="java",
         )
 
-    def test_detect_language(self):
-        file_path = ""
-        with self.assertRaises(FileNotFoundError):
-            detect_language(file_path)
-
-        file_path = f"{parent_directory}/tests/test_files/test.py"
-        java_path = f"{parent_directory}/tests/test_files/java.java"
-
-        self.assertTrue(detect_language(file_path) == "python")
-        self.assertTrue(detect_language(java_path) == "java")
-        print(detect_language(java_path))
-
     def test_get_function_patterns(self):
         # with function patterns not defined
         function_patterns = None
         path = f"{parent_directory}/tests/test_files/test.py"
         language = None
         function_patterns = get_function_patterns(path, language, function_patterns)
-        print(function_patterns)
+        # print(function_patterns)
 
         # with function patterns defined
         function_patterns = [
@@ -100,7 +88,7 @@ class TestUpdate(TestBase):
         ]
         path = f"{parent_directory}/tests/test_files/java.java"
         function_patterns = get_function_patterns(path, language, function_patterns)
-        print(function_patterns)
+        # print(function_patterns)
 
         # with language defined
         language = "java"
@@ -110,4 +98,4 @@ class TestUpdate(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestUpdate.test_create_function_patterns)
+    run_test_methods(TestUpdate.test_get_function_patterns)

@@ -51,15 +51,3 @@ def safe_pop(dictionary: dict, keys: list):
     for key in keys:
         if key in dictionary:
             dictionary.pop(key)
-
-
-def get_item_case_insensitive(dictionary: dict, item: str):
-    """
-    Returns item regardless of case.
-    """
-
-    for key in dictionary.keys():
-        if key.lower() == item.lower():
-            return dictionary[key]
-
-    return None

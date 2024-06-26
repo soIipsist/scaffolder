@@ -27,6 +27,15 @@ class Language(SQLiteItem):
         self.function_patterns = function_patterns
         self.filter_condition = f"language = {self.language}"
 
+    def get_description(self):
+        return f"{self.language}"
+
+    def __repr__(self) -> str:
+        return self.get_description()
+
+    def __str__(self) -> str:
+        return self.get_description()
+
 
 def detect_language(file_path: str):
 
