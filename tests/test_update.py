@@ -71,31 +71,6 @@ class TestUpdate(TestBase):
             language="java",
         )
 
-    def test_get_function_patterns(self):
-        # with function patterns not defined
-        function_patterns = None
-        path = f"{parent_directory}/tests/test_files/test.py"
-        language = None
-        function_patterns = get_function_patterns(path, language, function_patterns)
-        # print(function_patterns)
-
-        # with function patterns defined
-        function_patterns = [
-            "public\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-            "public void\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-            "private\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-            "protected\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-        ]
-        path = f"{parent_directory}/tests/test_files/java.java"
-        function_patterns = get_function_patterns(path, language, function_patterns)
-        # print(function_patterns)
-
-        # with language defined
-        language = "java"
-        function_patterns = None
-        function_patterns = get_function_patterns(path, language, function_patterns)
-        print(function_patterns)
-
 
 if __name__ == "__main__":
-    run_test_methods(TestUpdate.test_get_function_patterns)
+    run_test_methods(TestUpdate.test_update_java)
