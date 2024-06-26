@@ -11,19 +11,7 @@ from utils.dict_utils import (
     get_item_case_insensitive,
 )
 from src.constants import *
-
-
-def detect_language(file_path: str):
-    is_valid_path(file_path)
-    extension = os.path.splitext(file_path)[1]
-
-    for key, vals in languages.items():
-        extensions = vals.get("extensions")
-        if extensions and extension in extensions:
-            key: str
-            return key.lower()
-
-    return "python"
+from src.languages import detect_language
 
 
 def get_function_patterns(

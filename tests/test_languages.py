@@ -20,16 +20,35 @@ class TestLanguages(TestBase):
         super().setUp()
         create_db(db_path, tables)
 
-    def test_add_languages():
+    def test_add_languages(self):
         add_languages()
 
-    def test_detect_language():
-        pass
+    def test_detect_language(self):
+        # C test
+        path = self.get_file("file.c", "c_test_files")
+        self.assertTrue(os.path.exists(path))
+        lang = detect_language(path)
+        self.assertTrue(lang == "c")
+        print(lang)
+
+        # C++ test
+        path = self.get_file("file.cpp", "cpp_test_files")
+        self.assertTrue(os.path.exists(path))
+        lang = detect_language(path)
+        self.assertTrue(lang == "c++")
+        print(lang)
+
+        # python test
+        path = self.get_file("main.py", "python_test_files")
+        self.assertTrue(os.path.exists(path))
+        lang = detect_language(path)
+        self.assertTrue(lang == "python")
+        print(lang)
 
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestLanguages.test_add_languages,
+            TestLanguages.test_detect_language,
         ]
     )

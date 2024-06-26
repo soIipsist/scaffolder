@@ -28,7 +28,9 @@ class Language(SQLiteItem):
         self.filter_condition = f"language = {self.language}"
 
 
-def detect_language(file_path: str, languages: list = None):
+def detect_language(file_path: str):
+
+    from src.constants import languages
 
     if not languages:
         languages = Language().select_all()
@@ -38,8 +40,7 @@ def detect_language(file_path: str, languages: list = None):
     for language in languages:
         language: Language
         if extension in language.extensions:
-            key: str
-            return key.lower()
+            return language.language
 
     return "python"
 

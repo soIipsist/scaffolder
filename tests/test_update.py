@@ -44,21 +44,6 @@ class TestUpdate(TestBase):
     def test_get_updated_functions(self):
         pass
 
-    def test_create_function_patterns(self):
-        languages = read_json_file(languages_path)
-        languages: dict
-
-        new_languages = languages.copy()
-
-        for key, val in new_languages.items():
-            key: dict
-            if isinstance(val, dict):
-                if not "function_patterns" in val:
-                    val.update({"function_patterns": []})
-                    print(val)
-
-        overwrite_json_file(languages_path, new_languages)
-
     def test_update_python(self):
         self.update_files = []
         self.update_template_directory = self.get_test_files_dir()

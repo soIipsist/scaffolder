@@ -27,11 +27,14 @@ class TestBase(unittest.TestCase):
             for d in args:
                 print(d)
 
-    def get_files_directory(self):
-        return f"{parent_directory}/tests/files"
+    def get_files_directory(self, sub_dir: str = None):
+        file_dir = f"{parent_directory}/tests/files"
+        if sub_dir:
+            file_dir = os.path.join(file_dir, sub_dir)
+        return file_dir
 
-    def get_file(self, file: str):
-        return os.path.join(self.get_files_directory(), file)
+    def get_file(self, file: str, sub_dir=None):
+        return os.path.join(self.get_files_directory(sub_dir), file)
 
     def get_template_directory(self, template_directory="sample_template"):
         return os.path.join(parent_directory, "templates", template_directory)
