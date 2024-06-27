@@ -84,10 +84,11 @@ class TestFunctions(TestBase):
         funcs = self.find_functions(lang="c++", patterns=self.cpp_patterns)
         print(len(funcs))
 
-        print(funcs)
-
     def test_find_python_functions(self):
-        pass
+        funcs = self.find_functions(lang="python", patterns=self.python_patterns)
+        # print(len(funcs))
+        print(funcs[1])
+        # pprint.pprint(funcs)
 
     def test_update_function_patterns(self):
 
@@ -105,4 +106,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_find_cpp_functions)
+    run_test_methods(TestFunctions.test_find_python_functions)
