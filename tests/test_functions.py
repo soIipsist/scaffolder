@@ -31,7 +31,9 @@ class TestFunctions(TestBase):
         self.python_patterns = [
             "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)"
         ]
-        self.c_patterns = []
+        self.c_patterns = [
+            "\\s*\\w[\\w\\s\\*]*\\s+\\w+\\s*\\([^)]*\\)\\s*(\\{[^}]*\\}|;|$)"
+        ]
         self.cpp_patterns = []
         self.go_patterns = []
         self.cs_patterns = []
@@ -71,6 +73,12 @@ class TestFunctions(TestBase):
         funcs = self.find_functions(patterns=self.java_patterns)
         print(len(funcs))
 
+    def test_find_c_functions(self):
+        funcs = self.find_functions(lang="c", patterns=self.c_patterns)
+
+        print(funcs)
+        print(len(funcs))
+
     def test_find_python_functions(self):
         pass
 
@@ -90,4 +98,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_update_function_patterns)
+    run_test_methods(TestFunctions.test_find_c_functions)
