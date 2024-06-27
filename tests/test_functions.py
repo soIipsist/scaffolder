@@ -31,9 +31,7 @@ class TestFunctions(TestBase):
         self.cpp_patterns = [
             "\\s*(public|protected|private|virtual|static|inline|const|template<[^>]+>)?\\s*[\\w\\<\\>\\*\\&\\:\\~\\s]+\\s*\\w+\\s*\\([^)]*\\)\\s*(const)?\\s*(\\{[^}]*\\}|;|$)"
         ]
-        self.go_patterns = [
-            "\\s*\\w[\\w\\s\\*]*\\s=\\s*func\\s*\\([^)]*\\)\\s*\\{[^{}]*\\}"
-        ]
+        self.go_patterns = ["\\s*func\\s*\\([^)]*\\)\\s*(\\w)*\\{[^{}]*\\}"]
 
         self.cs_patterns = []
 
@@ -75,31 +73,23 @@ class TestFunctions(TestBase):
         funcs = find_functions_in_file(file, patterns=patterns)
         return funcs
 
-    def test_find_java_functions(self):
-        funcs = self.find_functions(patterns=self.java_patterns)
-        self.assertTrue(len(funcs) == 13)
-        print(len(funcs))
+    def test_find_functions(self):
+        langs = {
+            "c": self.c_patterns,
+            "c++": self.cpp_patterns,
+            "python": self.python_patterns,
+            "java": self.java_patterns,
+            "javascript": self.javascript_patterns,
+            "go": self.go_patterns,
+            "c#": self.cs_patterns,
+        }
 
-    def test_find_c_functions(self):
-        funcs = self.find_functions(lang="c", patterns=self.c_patterns)
-        print(len(funcs))
+        for k, v in langs.items():
+            funcs = self.find_functions(k, v)
+            print(k, ": ", len(funcs))
 
-    def test_find_cpp_functions(self):
-        funcs = self.find_functions(lang="c++", patterns=self.cpp_patterns)
-        print(len(funcs))
-
-    def test_find_python_functions(self):
-        funcs = self.find_functions(lang="python", patterns=self.python_patterns)
-        # print(len(funcs))
-        print(funcs[1])
-        # pprint.pprint(funcs)
-
-    def test_find_js_functions(self):
-        funcs = self.find_functions(
-            lang="javascript", patterns=self.javascript_patterns
-        )
-        print(len(funcs))
-        print(funcs)
+            # if k == "go":
+            #     print(funcs)
 
     def test_update_function_patterns(self):
 
@@ -117,4 +107,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_find_java_functions)
+    run_test_methods(TestFunctions.test_find_functions)

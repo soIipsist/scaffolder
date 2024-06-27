@@ -48,11 +48,11 @@
     - add optional repo_url as template parameter
 
   - add function patterns for most used languages
-   - C
-   - cpp
-   - go
+   + C
+   + cpp
+   + go
    - C#
-   + python 
-   + java 
-   - javascript
+   + python
+   + java
+   + javascript
   - create repo without using gh
