@@ -3,13 +3,13 @@ from ast import literal_eval
 import re
 
 bad_inputs = [
-    "1; DROP TABLE Player; --",
-    " DROP TABLE Player;--",
+    "1; DROP TABLE Language; --",
+    " DROP TABLE Language;--",
     "' OR 1=1; --",
-    "id = 1; DROP TABLE Log;",
-    "id = 1; DROP TABLE Player;",
+    "id = 1; DROP TABLE Language;",
+    "id = 1; DROP TABLE Language;",
     "id = '1' OR '1'='1'",
-    "id = '1' UNION SELECT * FROM Player",
+    "id = '1' UNION SELECT * FROM Language",
 ]
 
 
@@ -224,8 +224,8 @@ def update_item(
         query = f"UPDATE {table_name} SET {set_clause} WHERE {filter_condition}"
 
         update_values = list(obj.values())
+        update_values = get_object_values(obj, updated_columns)
         update_values.extend(params)
-
         cursor, results = execute_query(conn, query, update_values, return_cursor=True)
         last_row_id = None
         if cursor:
@@ -242,7 +242,10 @@ def get_object_values(object, column_names: list):
     values = []
 
     for name in column_names:
-        value = getattr(object, name)
+        if isinstance(object, dict):
+            value = object.get(name)
+        else:
+            value = getattr(object, name)
 
         if (
             isinstance(value, list)

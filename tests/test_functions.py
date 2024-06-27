@@ -25,9 +25,6 @@ class TestFunctions(TestBase):
     def setUp(self) -> None:
         super().setUp()
 
-    def test_get_updated_functions(self):
-        pass
-
     def test_get_function_patterns(self):
         # with function patterns not defined
         function_patterns = None
@@ -61,12 +58,11 @@ class TestFunctions(TestBase):
     def test_find_python_functions(self):
         pass
 
-    def update_function_patterns(self):
+    def test_update_function_patterns(self):
+        from utils.sqlite import bad_inputs
+
         patterns = {
-            "java": [
-                "\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*\\w+\\s+\\w+\\s*\\([^)]*\\)\\s*\\{.*?(?=\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*\\w+\\s+\\w+\\s*\\([^)]*\\)\\s*\\{|\\Z)"
-            ],
-            "python": [],
+            "java": bad_inputs[-3],
         }
 
         for k, v in patterns.items():
@@ -75,4 +71,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_find_java_functions)
+    run_test_methods(TestFunctions.test_update_function_patterns)
