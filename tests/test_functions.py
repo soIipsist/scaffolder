@@ -24,18 +24,6 @@ author = "soIipsist"
 class TestFunctions(TestBase):
     def setUp(self) -> None:
         super().setUp()
-        self.update_template_directory = update_template_directory
-        self.repository_name = "red"
-        self.update_destination_directory = update_destination_directory
-        self.update_files = update_files
-
-    def test_get_functions(self):
-        file1 = os.path.join(self.get_test_files_dir(), "file.py")
-        function_patterns = [
-            "['\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)']"
-        ]
-        funcs = find_functions_in_file(file1, patterns=function_patterns)
-        print(funcs[6])
 
     def test_get_updated_functions(self):
         pass
@@ -43,7 +31,8 @@ class TestFunctions(TestBase):
     def test_get_function_patterns(self):
         # with function patterns not defined
         function_patterns = None
-        path = f"{parent_directory}/tests/test_files/test.py"
+        path = self.get_file("main.py", "python_test_files")
+
         language = None
         function_patterns = get_function_patterns(path, language, function_patterns)
         # print(function_patterns)
@@ -51,13 +40,9 @@ class TestFunctions(TestBase):
         # with function patterns defined
         function_patterns = [
             "public\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-            "public void\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-            "private\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-            "protected\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
         ]
-        path = f"{parent_directory}/tests/test_files/java.java"
+        path = self.get_file("file.java", "java_test_files")
         function_patterns = get_function_patterns(path, language, function_patterns)
-        # print(function_patterns)
 
         # with language defined
         language = "java"
@@ -65,6 +50,29 @@ class TestFunctions(TestBase):
         function_patterns = get_function_patterns(path, language, function_patterns)
         print(function_patterns)
 
+    def test_find_java_functions(self):
+        file = self.get_file("file.java", "java_test_files")
+        function_patterns = [
+            "['\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)']"
+        ]
+        funcs = find_functions_in_file(file, patterns=function_patterns)
+        print(funcs)
+
+    def test_find_python_functions(self):
+        pass
+
+    def update_function_patterns(self):
+        patterns = {
+            "java": [
+                "\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*\\w+\\s+\\w+\\s*\\([^)]*\\)\\s*\\{.*?(?=\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*\\w+\\s+\\w+\\s*\\([^)]*\\)\\s*\\{|\\Z)"
+            ],
+            "python": [],
+        }
+
+        for k, v in patterns.items():
+            lang = Language(k, function_patterns=v)
+            lang.update()
+
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_get_function_patterns)
+    run_test_methods(TestFunctions.test_find_java_functions)

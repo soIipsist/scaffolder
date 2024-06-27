@@ -1,4 +1,4 @@
-package com.example.avaris.activities;
+package com.example.sample.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -10,15 +10,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 
-import com.example.avaris.callbacks.LoginCallback;
-import com.example.avaris.models.ApplicationUser;
-import com.example.avaris.databinding.ActivityMainBinding;
-import com.example.avaris.dialog.AuthorizeDialog;
-import com.example.avaris.dialog.SoftwareUpdateDialog;
-import com.example.avaris.interfaces.CallbackListener;
-import com.example.avaris.models.Login;
-import com.example.avaris.utilities.Constants;
-import com.example.avaris.utilities.Helper;
+import com.example.sample.callbacks.LoginCallback;
+import com.example.sample.models.ApplicationUser;
+import com.example.sample.databinding.ActivityMainBinding;
+import com.example.sample.dialog.AuthorizeDialog;
+import com.example.sample.dialog.SoftwareUpdateDialog;
+import com.example.sample.interfaces.CallbackListener;
+import com.example.sample.models.Login;
+import com.example.sample.utilities.Constants;
+import com.example.sample.utilities.Helper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,10 +55,10 @@ public class MainActivity extends BaseActivity {
     public void helloWorld(){
         Toast.makeText(getActivity(), "hello world", Toast.LENGTH_LONG).show();
     }
-    
 
-}
-
-public void goodbyeWorld(){
+    public void goodbyeWorld(){
         Toast.makeText(getActivity(), "goodbye world", Toast.LENGTH_LONG).show();
     }
+
+
+}

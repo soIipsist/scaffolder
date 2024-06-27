@@ -29,25 +29,14 @@ class TestUpdate(TestBase):
         self.update_destination_directory = update_destination_directory
         self.update_files = update_files
 
-    def get_test_files_dir(self, dirname: str = "dir1", language="python"):
-        target_dir = {"python": "python_test_files", "java": "java_test_files"}
-        return os.path.join(os.getcwd(), "files", target_dir.get(language), dirname)
-
-    def test_get_functions(self):
-        file1 = os.path.join(self.get_test_files_dir(), "file.py")
-        function_patterns = [
-            "['\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)']"
-        ]
-        funcs = find_functions_in_file(file1, patterns=function_patterns)
-        print(funcs[6])
-
-    def test_get_updated_functions(self):
-        pass
-
     def test_update_python(self):
         self.update_files = []
-        self.update_template_directory = self.get_test_files_dir()
-        self.update_destination_directory = self.get_test_files_dir("dir2")
+        self.update_template_directory = self.get_files_directory(
+            "sample_test_files", "original_dir"
+        )
+        self.update_destination_directory = self.get_files_directory(
+            "sample_test_files", "updated_dir"
+        )
 
         print(self.update_template_directory)
 
@@ -60,8 +49,6 @@ class TestUpdate(TestBase):
 
     def test_update_java(self):
         self.update_files = []
-        self.update_template_directory = self.get_test_files_dir(language="java")
-        self.update_destination_directory = self.get_test_files_dir("dir2", "java")
 
         # try with no update files given
         source_files, funcs, updated_content = update(
