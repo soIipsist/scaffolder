@@ -32,7 +32,7 @@ class TestLanguages(TestBase):
         print(lang)
 
         # C++ test
-        path = self.get_file("file.cpp", "cpp_test_files")
+        path = self.get_file("file.cpp", "c++_test_files")
         self.assertTrue(os.path.exists(path))
         lang = detect_language(path)
         self.assertTrue(lang == "c++")

@@ -25,18 +25,21 @@ class TestFunctions(TestBase):
     def setUp(self) -> None:
         super().setUp()
 
-        self.java_patterns = [
-            "\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*[\\w\\<\\>\\[\\]]+\\s+[\\w_]+\\s*\\([^)]*\\)\\s*(\\{.*?\\}|;)"
-        ]
-        self.python_patterns = [
-            "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)"
-        ]
         self.c_patterns = [
             "\\s*\\w[\\w\\s\\*]*\\s+\\w+\\s*\\([^)]*\\)\\s*(\\{[^}]*\\}|;|$)"
         ]
-        self.cpp_patterns = []
+        self.cpp_patterns = [
+            "\\s*(public|protected|private|virtual|static|inline|const|template<[^>]+>)?\\s*[\\w\\<\\>\\*\\&\\:\\~\\s]+\\s*\\w+\\s*\\([^)]*\\)\\s*(const)?\\s*(\\{[^}]*\\}|;|$)"
+        ]
         self.go_patterns = []
         self.cs_patterns = []
+
+        self.python_patterns = [
+            "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)"
+        ]
+        self.java_patterns = [
+            "\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*[\\w\\<\\>\\[\\]]+\\s+[\\w_]+\\s*\\([^)]*\\)\\s*(\\{.*?\\}|;)"
+        ]
         self.javascript_patterns = []
 
     def test_get_function_patterns(self):
@@ -75,9 +78,13 @@ class TestFunctions(TestBase):
 
     def test_find_c_functions(self):
         funcs = self.find_functions(lang="c", patterns=self.c_patterns)
+        print(len(funcs))
+
+    def test_find_cpp_functions(self):
+        funcs = self.find_functions(lang="c++", patterns=self.cpp_patterns)
+        print(len(funcs))
 
         print(funcs)
-        print(len(funcs))
 
     def test_find_python_functions(self):
         pass
@@ -98,4 +105,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_find_c_functions)
+    run_test_methods(TestFunctions.test_find_cpp_functions)
