@@ -39,7 +39,7 @@ class TestLanguages(TestBase):
         print(lang)
 
         # python test
-        path = self.get_file("main.py", "python_test_files")
+        path = self.get_file("file.py", "python_test_files")
         self.assertTrue(os.path.exists(path))
         lang = detect_language(path)
         self.assertTrue(lang == "python")

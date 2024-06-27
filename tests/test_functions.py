@@ -25,49 +25,68 @@ class TestFunctions(TestBase):
     def setUp(self) -> None:
         super().setUp()
 
+        self.java_patterns = [
+            "\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*[\\w\\<\\>\\[\\]]+\\s+[\\w_]+\\s*\\([^)]*\\)\\s*(\\{.*?\\}|;)"
+        ]
+        self.python_patterns = [
+            "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)"
+        ]
+        self.c_patterns = []
+        self.cpp_patterns = []
+        self.go_patterns = []
+        self.cs_patterns = []
+        self.javascript_patterns = []
+
     def test_get_function_patterns(self):
         # with function patterns not defined
         function_patterns = None
-        path = self.get_file("main.py", "python_test_files")
+        path = self.get_file("file.py", "python_test_files")
 
         language = None
         function_patterns = get_function_patterns(path, language, function_patterns)
         # print(function_patterns)
 
-        # with function patterns defined
-        function_patterns = [
-            "public\\s*(\\w+\\s+\\w+\\s*\\([^)]*\\))\\s*\\{[^}]*\\}",
-        ]
+        # with no language defined
         path = self.get_file("file.java", "java_test_files")
-        function_patterns = get_function_patterns(path, language, function_patterns)
+        function_patterns = get_function_patterns(path, language, self.java_patterns)
 
         # with language defined
         language = "java"
         function_patterns = None
-        function_patterns = get_function_patterns(path, language, function_patterns)
+        function_patterns = get_function_patterns(path, language, self.java_patterns)
         print(function_patterns)
 
+    def find_functions(self, lang="java", patterns=None):
+        lang = Language(language=lang).select()[0]
+
+        lang: Language
+        file = self.get_file(
+            f"file.{lang.extensions[0]}", f"{lang.language}_test_files"
+        )
+        patterns = lang.function_patterns if patterns is None else patterns
+        funcs = find_functions_in_file(file, patterns=patterns)
+        return funcs
+
     def test_find_java_functions(self):
-        file = self.get_file("file.java", "java_test_files")
-        function_patterns = [
-            "['\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)']"
-        ]
-        funcs = find_functions_in_file(file, patterns=function_patterns)
-        print(funcs)
+        funcs = self.find_functions(patterns=self.java_patterns)
+        print(len(funcs))
 
     def test_find_python_functions(self):
         pass
 
     def test_update_function_patterns(self):
-        from utils.sqlite import bad_inputs
 
-        patterns = {
-            "java": bad_inputs[-3],
-        }
+        patterns = {"java": self.java_patterns, "python": self.python_patterns}
 
         for k, v in patterns.items():
             lang = Language(k, function_patterns=v)
-            lang.update()
+            lang = lang.select()
+
+            if lang:
+                lang = lang[0]
+                lang: Language
+                lang.function_patterns = v
+                lang.update()
 
 
 if __name__ == "__main__":

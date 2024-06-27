@@ -33,9 +33,7 @@ def find_functions_in_file(file_path: str, patterns: list):
     matches = []
 
     for pattern in patterns:
-        matches.extend(
-            re.finditer(f"{pattern}", file_content, re.MULTILINE | re.DOTALL)
-        )
+        matches.extend(re.finditer(pattern, file_content, re.MULTILINE | re.DOTALL))
 
     for match in matches:
         function = match.group(0)  # Use group(0) to get the entire match
