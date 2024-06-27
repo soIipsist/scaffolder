@@ -31,7 +31,10 @@ class TestFunctions(TestBase):
         self.cpp_patterns = [
             "\\s*(public|protected|private|virtual|static|inline|const|template<[^>]+>)?\\s*[\\w\\<\\>\\*\\&\\:\\~\\s]+\\s*\\w+\\s*\\([^)]*\\)\\s*(const)?\\s*(\\{[^}]*\\}|;|$)"
         ]
-        self.go_patterns = []
+        self.go_patterns = [
+            "\\s*\\w[\\w\\s\\*]*\\s=\\s*func\\s*\\([^)]*\\)\\s*\\{[^{}]*\\}"
+        ]
+
         self.cs_patterns = []
 
         self.python_patterns = [
@@ -47,14 +50,14 @@ class TestFunctions(TestBase):
     def test_get_function_patterns(self):
         # with function patterns not defined
         function_patterns = None
-        path = self.get_file("file.py", "python_test_files")
+        path = self.get_file("file.py", "language_test_files")
 
         language = None
         function_patterns = get_function_patterns(path, language, function_patterns)
         # print(function_patterns)
 
         # with no language defined
-        path = self.get_file("file.java", "java_test_files")
+        path = self.get_file("file.java", "language_test_files")
         function_patterns = get_function_patterns(path, language, self.java_patterns)
 
         # with language defined
@@ -67,15 +70,14 @@ class TestFunctions(TestBase):
         lang = Language(language=lang).select()[0]
 
         lang: Language
-        file = self.get_file(
-            f"file.{lang.extensions[0]}", f"{lang.language}_test_files"
-        )
+        file = self.get_file(f"file.{lang.extensions[0]}", "language_test_files")
         patterns = lang.function_patterns if patterns is None else patterns
         funcs = find_functions_in_file(file, patterns=patterns)
         return funcs
 
     def test_find_java_functions(self):
         funcs = self.find_functions(patterns=self.java_patterns)
+        self.assertTrue(len(funcs) == 13)
         print(len(funcs))
 
     def test_find_c_functions(self):
@@ -115,4 +117,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_find_js_functions)
+    run_test_methods(TestFunctions.test_find_java_functions)

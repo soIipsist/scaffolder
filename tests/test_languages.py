@@ -25,21 +25,21 @@ class TestLanguages(TestBase):
 
     def test_detect_language(self):
         # C test
-        path = self.get_file("file.c", "c_test_files")
+        path = self.get_file("file.c", "language_test_files")
         self.assertTrue(os.path.exists(path))
         lang = detect_language(path)
         self.assertTrue(lang == "c")
         print(lang)
 
         # C++ test
-        path = self.get_file("file.cpp", "c++_test_files")
+        path = self.get_file("file.cpp", "language_test_files")
         self.assertTrue(os.path.exists(path))
         lang = detect_language(path)
         self.assertTrue(lang == "c++")
         print(lang)
 
         # python test
-        path = self.get_file("file.py", "python_test_files")
+        path = self.get_file("file.py", "language_test_files")
         self.assertTrue(os.path.exists(path))
         lang = detect_language(path)
         self.assertTrue(lang == "python")
