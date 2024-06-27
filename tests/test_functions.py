@@ -40,7 +40,9 @@ class TestFunctions(TestBase):
         self.java_patterns = [
             "\\s*(public|protected|private|static|final|native|synchronized|abstract|transient|volatile|\\s)*\\s*[\\w\\<\\>\\[\\]]+\\s+[\\w_]+\\s*\\([^)]*\\)\\s*(\\{.*?\\}|;)"
         ]
-        self.javascript_patterns = []
+        self.javascript_patterns = [
+            "\\s*(const|export|let|\\s)*\\s*[\\w_]+\\s*=\\s*(async\\s*)*\\([^)]*\\)\\s*=>\\s*[^;]+;"
+        ]
 
     def test_get_function_patterns(self):
         # with function patterns not defined
@@ -90,6 +92,13 @@ class TestFunctions(TestBase):
         print(funcs[1])
         # pprint.pprint(funcs)
 
+    def test_find_js_functions(self):
+        funcs = self.find_functions(
+            lang="javascript", patterns=self.javascript_patterns
+        )
+        print(len(funcs))
+        print(funcs)
+
     def test_update_function_patterns(self):
 
         patterns = {"java": self.java_patterns, "python": self.python_patterns}
@@ -106,4 +115,4 @@ class TestFunctions(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestFunctions.test_find_python_functions)
+    run_test_methods(TestFunctions.test_find_js_functions)
