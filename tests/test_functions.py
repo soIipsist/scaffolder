@@ -31,9 +31,16 @@ class TestFunctions(TestBase):
         self.cpp_patterns = [
             "\\s*(public|protected|private|virtual|static|inline|const|template<[^>]+>)?\\s*[\\w\\<\\>\\*\\&\\:\\~\\s]+\\s*\\w+\\s*\\([^)]*\\)\\s*(const)?\\s*(\\{[^}]*\\}|;|$)"
         ]
-        self.go_patterns = ["\\s*func\\s*\\([^)]*\\)\\s*(\\w)*\\{[^{}]*\\}"]
+        self.go_patterns = [
+            "\\s*\\bfunc\\b\\s*\\w*\\s*\\([^)]*\\)\\s*(\\{.*\\}$)"
+            # "\\s*\\w+\\s*func\\s*\\([^)]*\\)\\s*{[^{}]*\\}(\\(\\d\\))*",
+            # "\\s*func\\s*\\w*\\([^)]*\\)\\s*(\\w)*\\{[^{}]*\\}",
+            # "\\s*\\w+\\s*\\:\\=\\s*func\\s*\\([^)]*\\)\\s*\\w*\\s*{[^{}]*\\}",
+        ]
 
-        self.cs_patterns = []
+        self.cs_patterns = [
+            "\\s*(public|protected|private|static|internal|sealed|\\s)*\\s*[\\w\\<\\>\\[\\]]+\\s+[\\w_]+\\s*\\([^)]*\\)\\s*(\\{.*?\\}|;)"
+        ]
 
         self.python_patterns = [
             "\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:|\\Z)"
@@ -88,8 +95,8 @@ class TestFunctions(TestBase):
             funcs = self.find_functions(k, v)
             print(k, ": ", len(funcs))
 
-            # if k == "go":
-            #     print(funcs)
+            if k == "c#":
+                print(funcs)
 
     def test_update_function_patterns(self):
 

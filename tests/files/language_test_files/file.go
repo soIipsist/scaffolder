@@ -14,6 +14,7 @@ func testcount(x int) int {
 	return testcount(x + 1)
 }
 
+
 func main() {
 	// Lambda functions assigned to variables
 	add := func(a, b int) int {
