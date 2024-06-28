@@ -19,7 +19,7 @@ class Template(SQLiteItem):
 
     def __init__(
         self,
-        template_directory: str = template_directory,
+        template_directory: str = None,
         template_name: str = None,
         language: str = "python",
         repository_url: str = None,
@@ -53,7 +53,7 @@ class Template(SQLiteItem):
             if len(parts) >= 2 and parts[1]:
                 template_name = parts[1]
                 self.template_directory = os.path.join(os.getcwd(), template_name)
-        return repository_url
+            return repository_url
 
     def copy_template(self, template_directory: str, destination_directory=None):
         """

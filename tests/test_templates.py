@@ -25,12 +25,6 @@ class TestTemplates(TestBase):
         self.language = "python"
         # self.repository_url = None
         self.repository_url = "https://github.com/soIipsist/adb-wrapper"
-        self.template = Template(
-            self.template_directory,
-            self.template_name,
-            self.language,
-            self.repository_url,
-        )
 
     def get_template_args(self):
         return {
@@ -42,18 +36,50 @@ class TestTemplates(TestBase):
 
     def test_get_repository_url(self):
 
-        url = "https://github.com/soIipsist/adb-wrapper"
-        self.repository_url = self.template.get_repository_url(url)
+        self.repository_url = "https://github.com/soIipsist/adb-wrapper"
         template_args = self.get_template_args()
-        self.template = Template(**template_args)
-        self.assertTrue(self.template.repository_url == self.repository_url)
+        template = Template(**template_args)
+
+        self.assertTrue(template.repository_url == self.repository_url)
         self.assertTrue(
-            self.template.template_directory == os.path.join(os.getcwd(), "adb-wrapper")
+            template.template_directory == os.path.join(os.getcwd(), "adb-wrapper")
+        )
+        print(template.template_directory)
+        print(template.repository_url)
+
+        # test with both template_dir and repo_url
+        self.template_directory = self.get_template_directory()
+
+        template_args = self.get_template_args()
+        print(template_args)
+        template = Template(**template_args)
+
+        self.assertTrue(template.repository_url == self.repository_url)
+        self.assertTrue(
+            template.template_directory == os.path.join(os.getcwd(), "adb-wrapper")
         )
 
+    def test_get_repository_url_with_dir(self):
+        self.repository_url = None
+        self.template_directory = None
+        template_args = self.get_template_args()
+        template = Template(**template_args)
+
+        self.assertTrue(template.template_directory == None)
+        self.assertTrue(template.repository_url == None)
+
+        self.template_directory = self.get_template_directory()
+        template_args = self.get_template_args()
+        template = Template(**template_args)
+
+        self.assertTrue(template.template_directory == self.get_template_directory())
+        self.assertTrue(template.repository_url == None)
+
     def test_get_template_name(self):
-        template_directory = self.template.get_template_name()
-        print(template_directory)
+        template = Template(self.get_template_directory())
+        template_name = template.get_template_name()
+        self.assertTrue(os.path.basename(template.template_directory) == template_name)
+        print(template_name)
 
     def test_add_template(self):
         self.template_directory = self.get_template_directory()
@@ -65,7 +91,7 @@ class TestTemplates(TestBase):
 
         print(template.get_unique_object())
         return
-        template = self.template.add_template(copy_template=True)
+        template = template.add_template(copy_template=True)
         self.assertIsInstance(template, Template)
         self.assertTrue(len(Template().select_all()) > 0)
 
@@ -74,7 +100,8 @@ class TestTemplates(TestBase):
         self.assertTrue(len(templates) > 0)
 
     def test_delete_template(self):
-        print(self.template.filter_condition)
+        template = Template(self.get_template_directory())
+        print(template.filter_condition)
 
 
 if __name__ == "__main__":
