@@ -39,10 +39,6 @@ class TestBase(unittest.TestCase):
     def get_template_directory(self, template_directory="sample_template"):
         return os.path.join(parent_directory, "templates", template_directory)
 
-    def get_python_template_directory(self):
-        path = "/Users/p/Desktop/soIipsis/python_template"
-        return path
-
     def delete_git_ignore_files(self):
         # files = "tests/"
         from utils.file_utils import read_file

@@ -29,7 +29,7 @@ class Template(SQLiteItem):
         self.template_name = self.get_template_name(template_name)
         self.language = language
         self.repository_url = self.get_repository_url(repository_url)
-        self.filter_condition = f"template_name = {self.template_name}"
+        self.filter_condition = f"template_name = {self.template_name} OR template_directory = {self.template_directory} OR repository_url = {self.repository_url}"
 
     def get_template_name(self, template_name: str = None):
         if template_name:
@@ -43,24 +43,16 @@ class Template(SQLiteItem):
 
     def get_repository_url(self, repository_url: str = None):
 
-        original_dir = self.template_directory
+        repository_url = (
+            repository_url if repository_url is not None else self.template_directory
+        )
 
-        if self.template_directory and self.template_directory.startswith(
-            "https://github.com/"
-        ):
-            repository_url = self.template_directory
-            original_dir = None
+        if repository_url and repository_url.startswith("https://github.com/"):
+            parts = repository_url[len("https://github.com/") :].split("/")
 
-        parts = repository_url[len("https://github.com/") :].split("/")
-
-        if len(parts) >= 2 and parts[1]:
-            template_name = parts[1]
-            self.template_directory = (
-                os.path.join(os.getcwd(), template_name)
-                if original_dir is None
-                else original_dir
-            )
-
+            if len(parts) >= 2 and parts[1]:
+                template_name = parts[1]
+                self.template_directory = os.path.join(os.getcwd(), template_name)
         return repository_url
 
     def copy_template(self, template_directory: str, destination_directory=None):
@@ -136,17 +128,14 @@ class Template(SQLiteItem):
             if remove_dir:
                 templ.remove_template()
 
-    def list_templates(templates: list = []):
+    def list_templates(self, templates: list = []):
 
         for template in templates:
-            temp = Template(template_directory=template, template_name=template)
-
-            items = temp.select(
-                f"template_directory = {temp.template_directory} OR template_name = {temp.template_name}"
-            )
+            items = self.get_template(template)
 
             if len(items) == 1:
                 print(items[0])
+
         if not templates:
             print(Template().select_all())
         return templates
