@@ -8,6 +8,7 @@ template_values = [
     "template_directory TEXT NOT NULL UNIQUE",
     "template_name TEXT NOT NULL UNIQUE",
     "language TEXT",
+    "repository_url TEXT",
 ]
 
 language_table = "Language"
