@@ -43,10 +43,23 @@ class Template(SQLiteItem):
 
     def get_repository_url(self, repository_url: str = None):
 
+        original_dir = self.template_directory
+
         if self.template_directory and self.template_directory.startswith(
             "https://github.com/"
         ):
             repository_url = self.template_directory
+            original_dir = None
+
+        parts = repository_url[len("https://github.com/") :].split("/")
+
+        if len(parts) >= 2 and parts[1]:
+            template_name = parts[1]
+            self.template_directory = (
+                os.path.join(os.getcwd(), template_name)
+                if original_dir is None
+                else original_dir
+            )
 
         return repository_url
 
@@ -80,109 +93,69 @@ class Template(SQLiteItem):
     def get_template_description(self):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
 
+    @staticmethod
+    def get_template(template_path_or_name: str):
+
+        try:
+            if is_valid_dir(template_path_or_name, False):
+                templ = Template(template_directory=template_path_or_name)
+
+            else:
+                templ = Template(template_name=template_path_or_name)
+                items = templ.select()
+                return items[0] if len(items) > 0 else None
+
+            return templ
+        except Exception as e:
+            print("Exception: ", e)
+
     def add_template(
         self,
         copy_template: bool = True,
     ):
         from repository import clone_repository
 
-        if template_directory and template_directory.startswith("https://github.com/"):
-
-            parts = template_directory[len("https://github.com/") :].split("/")
-
-            if len(parts) >= 2 and parts[1]:
-                template_name = parts[1]
-                parent_templates_dir = os.path.join(parent_directory, "templates")
-                clone_repository(template_directory, cwd=parent_templates_dir)
-                template_directory = os.path.join(parent_templates_dir, template_name)
-                print(f"New cloned directory set to: {template_directory}.")
-                copy_template = False
+        if self.repository_url:
+            clone_repository(self.template_directory, cwd=self.template_directory)
+            print(f"New cloned directory set to: {template_directory}.")
+            copy_template = False
 
         if copy_template:
-            template_dir = template.copy_template(template_directory)
-            template.template_directory = template_dir
-        template.insert()
+            template_dir = self.copy_template(self.template_directory)
+            self.template_directory = template_dir
+        self.insert()
 
-        print("Template directory: ", template.template_directory)
-        return template
+        print("Template directory: ", self.template_directory)
+        return self
+
+    def delete_template(self, remove_dir: bool = True):
+        templ = self.get_template(template_path_or_name=self.template_directory)
+
+        if templ:
+            templ.delete()
+            if remove_dir:
+                templ.remove_template()
+
+    def list_templates(templates: list = []):
+
+        for template in templates:
+            temp = Template(template_directory=template, template_name=template)
+
+            items = temp.select(
+                f"template_directory = {temp.template_directory} OR template_name = {temp.template_name}"
+            )
+
+            if len(items) == 1:
+                print(items[0])
+        if not templates:
+            print(Template().select_all())
+        return templates
 
     def __str__(self) -> str:
         return self.get_template_description()
 
     def __repr__(self) -> str:
         return self.get_template_description()
-
-
-def get_template(template_path_or_name: str):
-
-    try:
-        if is_valid_dir(template_path_or_name, False):
-            templ = Template(template_directory=template_path_or_name)
-
-        else:
-            templ = Template(template_name=template_path_or_name)
-            items = templ.select()
-            return items[0] if len(items) > 0 else None
-
-        return templ
-    except Exception as e:
-        print("Exception: ", e)
-
-
-def add_template(
-    template_directory: str = template_directory,
-    template_name: str = None,
-    language: str = "python",
-    copy_template: bool = True,
-):
-    from repository import clone_repository
-
-    if template_directory and template_directory.startswith("https://github.com/"):
-
-        parts = template_directory[len("https://github.com/") :].split("/")
-
-        if len(parts) >= 2 and parts[1]:
-            template_name = parts[1]
-            parent_templates_dir = os.path.join(parent_directory, "templates")
-            clone_repository(template_directory, cwd=parent_templates_dir)
-            template_directory = os.path.join(parent_templates_dir, template_name)
-            print(f"New cloned directory set to: {template_directory}.")
-            copy_template = False
-
-    template = Template(template_directory, template_name, language)
-
-    if copy_template:
-        template_dir = template.copy_template(template_directory)
-        template.template_directory = template_dir
-    template.insert()
-
-    print("Template directory: ", template.template_directory)
-    return template
-
-
-def delete_template(template_directory: str, remove_dir: bool = True):
-    templ = get_template(template_path_or_name=template_directory)
-
-    if templ:
-        templ.delete()
-        if remove_dir:
-            templ.remove_template()
-
-
-def list_templates(templates: list = []):
-
-    for template in templates:
-        temp = Template(template_directory=template, template_name=template)
-
-        items = temp.select(
-            f"template_directory = {temp.template_directory} OR template_name = {temp.template_name}"
-        )
-
-        if len(items) == 1:
-            print(items[0])
-    if not templates:
-        print(Template().select_all())
-    return templates
 
 
 def main():
@@ -211,10 +184,6 @@ def main():
     args = parser.get_command_args()
     template_args = parser.get_callable_args(Template.__init__)
 
-    cmd_dict = {"add": add_template, "delete": delete_template}
-
-    func = parser.get_command_function(cmd_dict)
-
     template = Template(**template_args)
 
     temp = template.select()
@@ -223,7 +192,10 @@ def main():
         template = temp[0]
     else:
         pass
-    print(template)
+
+    cmd_dict = {"add": template.add_template, "delete": template.delete_template}
+    func = parser.get_command_function(cmd_dict)
+
     # if not func:
     #     template_names = args.get("template_names")
     #     for t in template_names:
