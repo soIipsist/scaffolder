@@ -12,5 +12,6 @@
     "license": "mit",
     "author": "soIipsist",
     "create_repository": false,
+    "store_template": true,
     "gh_check": false
 }

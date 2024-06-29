@@ -26,6 +26,7 @@ author = scaffolder_metadata.get("author")
 year = scaffolder_metadata.get("year", str(datetime.datetime.now().year))
 author = scaffolder_metadata.get("author")
 create_repository = scaffolder_metadata.get("create_repository")
+store_template = scaffolder_metadata.get("store_template")
 repository_visibility = scaffolder_metadata.get("repository_visibility")
 gh_check = scaffolder_metadata.get("gh_check")
 licenses_directory = f"{parent_directory}/data/licenses"

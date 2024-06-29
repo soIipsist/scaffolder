@@ -11,7 +11,7 @@ from src.repository import (
     update_git_repository,
 )
 from src.licenses import create_license
-from src.templates import Template, get_template
+from src.templates import Template
 from utils.file_utils import (
     find_and_replace_in_directory,
 )
@@ -28,18 +28,24 @@ def scaffold(
     author: str = author,
     year: str = year,
     create_repository: bool = create_repository,
+    store_template: bool = store_template,
     repository_visibility: str = repository_visibility,
 ):
-    templ = get_template(template_directory)
+    templ = Template.get_template(template_directory)
+    templ: Template
 
     if templ is None:
         raise ValueError(f"Template '{template_directory}' does not exist.")
 
-    if repository_name is None:
+    if not repository_name:
         repository_name = os.path.basename(destination_directory)
 
-    # copy template first
-    templ.copy_template(template_directory, destination_directory)
+    # add template to db only if true, else copy it
+    if not store_template:
+        templ.copy_template(template_directory, destination_directory)
+    else:
+        templ.add_template(destination_directory)
+
     create_license(license, destination_directory, author, year)
 
     # replace all instances of template name with new repository name
@@ -66,9 +72,6 @@ def scaffold(
             ).stdout.strip()
         )
 
-        cwd = os.getcwd()
-        os.chdir(destination_directory)
-
         # initialize project directory
         if not (git_repo_exists(destination_directory)):
             git_origin = create_git_repository(
@@ -76,12 +79,10 @@ def scaffold(
             )
             # remove and clone again
             shutil.rmtree(destination_directory, ignore_errors=True)
-            clone_repository(git_origin)
+            clone_repository(git_origin, cwd=os.getcwd())
         else:
             print("Repository already exists. Updating...")
             update_git_repository(repository_name, repository_visibility, author)
-
-        os.chdir(cwd)
 
 
 def main():
@@ -91,6 +92,7 @@ def main():
         DirectoryArgument(name=("-d", "--destination_directory")),
         Argument(name=("-n", "--repository_name")),
         BoolArgument(name=("-c", "--create_repository"), default=False),
+        BoolArgument(name=("-s", "--store_template"), default=True),
         Argument(name=("-l", "--license")),
         Argument(name=("-a", "--author")),
         Argument(name=("-y", "--year")),

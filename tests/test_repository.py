@@ -10,12 +10,6 @@ print(parent_directory)
 import requests
 from test_base import *
 
-from utils.file_utils import (
-    read_file,
-    read_and_parse_file,
-    dump_data_in_file,
-    overwrite_file,
-)
 
 from data.sqlite_data import *
 from src.repository import *
