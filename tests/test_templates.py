@@ -82,15 +82,9 @@ class TestTemplates(TestBase):
         print(template_name)
 
     def test_add_template(self):
-        self.template_directory = self.get_template_directory()
+        self.template_directory = None
         template_args = self.get_template_args()
-
-        print(template_args)
-        # return
         template = Template(**template_args)
-
-        print(template.get_unique_object())
-        return
         template = template.add_template(copy_template=True)
         self.assertIsInstance(template, Template)
         self.assertTrue(len(Template().select_all()) > 0)
@@ -100,8 +94,10 @@ class TestTemplates(TestBase):
         self.assertTrue(len(templates) > 0)
 
     def test_delete_template(self):
-        template = Template(self.get_template_directory())
-        print(template.filter_condition)
+        initial_length = len(Template().list_templates())
+        template = Template("/Users/p/Desktop/android_template")
+        template.delete_template(True)
+        self.assertTrue(initial_length > len(Template().list_templates()))
 
     def test_get_template(self):
         template = None
@@ -137,6 +133,6 @@ class TestTemplates(TestBase):
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestTemplates.test_get_template,
+            TestTemplates.test_delete_template,
         ]
     )

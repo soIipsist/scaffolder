@@ -10,6 +10,8 @@ import shutil
 from utils.sqlite_item import *
 from data.sqlite_data import *
 
+from src.repository import clone_repository
+
 
 class Template(SQLiteItem):
     template_directory: str
@@ -76,7 +78,7 @@ class Template(SQLiteItem):
 
     def remove_template(self):
         shutil.rmtree(self.template_directory, ignore_errors=True)
-        print(f"{self.template_directory} was deleted successfully!")
+        print(f"{self.template_name} was deleted successfully!")
 
     def get_template_description(self):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
@@ -94,7 +96,6 @@ class Template(SQLiteItem):
         destination_directory: str = None,
         copy_template: bool = True,
     ):
-        from repository import clone_repository
 
         destination_directory = (
             os.path.join(os.getcwd(), os.path.basename(self.template_directory))
@@ -135,7 +136,8 @@ class Template(SQLiteItem):
                 print(items[0])
 
         if not templates:
-            print(Template().select_all())
+            templates = Template().select_all()
+            print(templates)
         return templates
 
     def __str__(self) -> str:
