@@ -37,7 +37,7 @@ class TestBase(unittest.TestCase):
         return os.path.join(self.get_files_directory(sub_dir), file)
 
     def get_template_directory(self, template_directory="sample_template"):
-        return os.path.join(parent_directory, "templates", template_directory)
+        return os.path.join(self.get_files_directory(), "templates", template_directory)
 
     def delete_git_ignore_files(self):
         # files = "tests/"

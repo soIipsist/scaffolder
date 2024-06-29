@@ -28,7 +28,10 @@ class Language(SQLiteItem):
         self.filter_condition = f"language = {self.language}"
 
     def get_description(self):
-        return f"{self.language}"
+        return f"Language: {self.language}\n Extensions: {self.extensions}\nFunction patterns: {self.function_patterns}"
+
+    def add_language(self):
+        print()
 
     def __repr__(self) -> str:
         return self.get_description()
@@ -54,9 +57,8 @@ def detect_language(file_path: str):
     return "python"
 
 
-def add_languages(languages_json: str = None):
-    if not languages_json:
-        languages_json = os.path.join(parent_directory, "data", "languages.json")
+def add_languages():
+    languages_json = os.path.join(parent_directory, "data", "languages.json")
 
     languages = read_and_parse_file(languages_json)
     languages: dict

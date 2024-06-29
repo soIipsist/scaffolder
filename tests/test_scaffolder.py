@@ -66,19 +66,20 @@ class TestScaffolder(TestBase):
 
     def test_scaffold_no_repo(self):
         templ = Template(self.get_template_directory())
+        templ.delete_template()
         templ.add_template()
 
-        # without repository_name
+        # without creating repo
+        self.create_repository = False
         self.repository_name = None
         args = self.get_scaffold_args()
-        print(args)
+        scaffold(**args)
 
     def test_scaffold(self):
-
         args = self.get_scaffold_args()
         print(args)
         # scaffold(**args)
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_scaffold)
+    run_test_methods(TestScaffolder.test_scaffold_no_repo)

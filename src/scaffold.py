@@ -88,19 +88,21 @@ def scaffold(
 def main():
 
     parser_arguments = [
-        Argument(name=("-t", "--template_directory")),
-        DirectoryArgument(name=("-d", "--destination_directory")),
-        Argument(name=("-n", "--repository_name")),
-        BoolArgument(name=("-c", "--create_repository"), default=False),
-        BoolArgument(name=("-s", "--store_template"), default=True),
-        Argument(name=("-l", "--license")),
-        Argument(name=("-a", "--author")),
-        Argument(name=("-y", "--year")),
+        Argument(name=("-t", "--template_directory"), default=template_directory),
+        DirectoryArgument(
+            name=("-d", "--destination_directory"), default=destination_directory
+        ),
+        Argument(name=("-n", "--repository_name"), default=repository_name),
+        BoolArgument(name=("-c", "--create_repository"), default=create_repository),
+        BoolArgument(name=("-s", "--store_template"), default=store_template),
+        Argument(name=("-l", "--license"), default=license),
+        Argument(name=("-a", "--author"), default=author),
+        Argument(name=("-y", "--year"), default=year),
         Argument(
             name=("-v", "--repository_visibility"),
             type=int,
             choices=[0, 1, 2],
-            default=0,
+            default=repository_visibility,
         ),
     ]
     parser = Parser(parser_arguments)

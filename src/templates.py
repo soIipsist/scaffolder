@@ -110,7 +110,7 @@ class Template(SQLiteItem):
         if copy_template:
             template_dir = self.copy_template(destination_directory)
             self.template_directory = template_dir
-            print(f"New cloned directory set to: {self.template_directory}.")
+            print(f"New template directory set to: {self.template_directory}.")
 
         i = self.insert()
 
