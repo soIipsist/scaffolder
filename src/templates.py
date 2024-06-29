@@ -55,27 +55,23 @@ class Template(SQLiteItem):
                 self.template_directory = os.path.join(os.getcwd(), template_name)
             return repository_url
 
-    def copy_template(self, template_directory: str, destination_directory=None):
+    def copy_template(self, destination_directory: str):
         """
         Copies template_directory to specified destination directory.
         """
 
-        if not os.path.exists(template_directory):
+        if not os.path.exists(self.template_directory):
             raise FileNotFoundError(
-                f"Template directory {template_directory} does not exist."
+                f"Template directory {self.template_directory} does not exist."
             )
-
-        destination_directory = (
-            os.path.join(parent_directory, "templates", self.template_name)
-            if destination_directory is None
-            else destination_directory
-        )
 
         if not os.path.exists(destination_directory):
             os.makedirs(destination_directory)
 
-        print(f"Copying template {template_directory} to {destination_directory}.")
-        shutil.copytree(template_directory, destination_directory, dirs_exist_ok=True)
+        print(f"Copying template {self.template_directory} to {destination_directory}.")
+        shutil.copytree(
+            self.template_directory, destination_directory, dirs_exist_ok=True
+        )
         return destination_directory
 
     def remove_template(self):
@@ -95,21 +91,31 @@ class Template(SQLiteItem):
 
     def add_template(
         self,
+        destination_directory: str = None,
         copy_template: bool = True,
     ):
         from repository import clone_repository
 
+        destination_directory = (
+            os.path.join(os.getcwd(), os.path.basename(self.template_directory))
+            if not destination_directory
+            else destination_directory
+        )
+
         if self.repository_url:
             clone_repository(self.repository_url, cwd=os.getcwd())
-            print(f"New cloned directory set to: {template_directory}.")
             copy_template = False
 
         if copy_template:
-            template_dir = self.copy_template(self.template_directory)
+            template_dir = self.copy_template(destination_directory)
             self.template_directory = template_dir
-        self.insert()
+            print(f"New cloned directory set to: {self.template_directory}.")
 
-        print("Template directory: ", self.template_directory)
+        i = self.insert()
+
+        if i is None:
+            self.update()
+
         return self
 
     def delete_template(self, remove_dir: bool = True):
@@ -145,6 +151,7 @@ def main():
         Argument(name=("-n", "--template_name"), default=repository_name),
         Argument(name=("-l", "--language"), default="python"),
         Argument(name=("-c", "--copy_template"), type=bool, default=True),
+        Argument(name=("-d", "--destination_directory"), default=destination_directory),
     ]
 
     delete_arguments = [
@@ -164,10 +171,6 @@ def main():
     template_args = parser.get_callable_args(Template.__init__)
 
     template = Template(**template_args)
-    temp = template.select()
-
-    if len(temp) > 0:
-        template = temp[0]
 
     cmd_dict = {"add": template.add_template, "delete": template.delete_template}
     func = parser.get_command_function(cmd_dict)

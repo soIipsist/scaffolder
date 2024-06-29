@@ -1,6 +1,6 @@
 {
     "template_directory": "/Users/p/Desktop/soIipsis/android_template",
-    "destination_directory": "/Users/p/Desktop/soIipsis/tests/notflix",
+    "destination_directory": "/Users/p/Desktop/soIipsis/tests/android_template",
     "update_template_directory": "/Users/p/Desktop/soIipsist/python_template/utils",
     "update_destination_directory": "/Users/p/Desktop/soIipsist/superscraper/utils/",
     "update_files": [
