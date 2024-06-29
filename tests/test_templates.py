@@ -5,8 +5,6 @@ parent_directory = os.path.dirname(
 )
 os.sys.path.insert(0, parent_directory)
 
-print(parent_directory)
-
 import requests
 from test_base import *
 
@@ -14,6 +12,8 @@ from test_base import *
 from src.templates import *
 
 from utils.sqlite_connection import create_db
+
+from utils.sqlite import bad_inputs
 
 
 class TestTemplates(TestBase):
@@ -103,10 +103,40 @@ class TestTemplates(TestBase):
         template = Template(self.get_template_directory())
         print(template.filter_condition)
 
+    def test_get_template(self):
+        template = None
+        temp = Template.get_template(template)
+        self.assertTrue(temp == None)
+
+        # get by name
+        template = "chess_bot"
+        temp = Template.get_template(template)
+        print(temp)
+        self.assertTrue(isinstance(temp, Template))
+        self.assertTrue(temp is not None)
+
+        # get by dir
+        template = "/Users/p/Desktop/soIipsis/scaffolder/src/chess_bot"
+        temp = Template.get_template(template)
+        print(temp)
+        self.assertTrue(isinstance(temp, Template))
+        self.assertTrue(temp is not None)
+
+        # get by repo url
+        template = "https://github.com/soIipsist/chess_bot"
+        temp = Template.get_template(template)
+        print(temp)
+        self.assertTrue(isinstance(temp, Template))
+        self.assertTrue(temp is not None)
+        # bad input
+        template = "/Users/p/Desktop/soIipsis/scaffolder"
+        temp = Template.get_template(template)
+        self.assertTrue(temp == None)
+
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestTemplates.test_get_repository_url,
+            TestTemplates.test_get_template,
         ]
     )

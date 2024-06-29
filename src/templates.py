@@ -86,20 +86,12 @@ class Template(SQLiteItem):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"
 
     @staticmethod
-    def get_template(template_path_or_name: str):
-
-        try:
-            if is_valid_dir(template_path_or_name, False):
-                templ = Template(template_directory=template_path_or_name)
-
-            else:
-                templ = Template(template_name=template_path_or_name)
-                items = templ.select()
-                return items[0] if len(items) > 0 else None
-
-            return templ
-        except Exception as e:
-            print("Exception: ", e)
+    def get_template(template: str):
+        templ = Template(
+            template_directory=template, repository_url=template, template_name=template
+        )
+        items = templ.select()
+        return items[0] if len(items) > 0 else None
 
     def add_template(
         self,
@@ -108,7 +100,7 @@ class Template(SQLiteItem):
         from repository import clone_repository
 
         if self.repository_url:
-            clone_repository(self.template_directory, cwd=self.template_directory)
+            clone_repository(self.repository_url, cwd=os.getcwd())
             print(f"New cloned directory set to: {template_directory}.")
             copy_template = False
 
@@ -121,7 +113,7 @@ class Template(SQLiteItem):
         return self
 
     def delete_template(self, remove_dir: bool = True):
-        templ = self.get_template(template_path_or_name=self.template_directory)
+        templ = self.get_template(template=self.template_directory)
 
         if templ:
             templ.delete()
@@ -160,9 +152,7 @@ def main():
         BoolArgument(name=("-d", "--remove_dir"), default=True),
     ]
 
-    parser_arguments = [
-        Argument(name=("-t", "--template_names"), nargs="+", default=[])
-    ]
+    parser_arguments = [Argument(name=("-t", "--template"), default=None)]
 
     subcommands = [
         SubCommand("add", add_arguments),
@@ -174,26 +164,20 @@ def main():
     template_args = parser.get_callable_args(Template.__init__)
 
     template = Template(**template_args)
-
     temp = template.select()
 
     if len(temp) > 0:
         template = temp[0]
-    else:
-        pass
 
     cmd_dict = {"add": template.add_template, "delete": template.delete_template}
     func = parser.get_command_function(cmd_dict)
 
-    # if not func:
-    #     template_names = args.get("template_names")
-    #     for t in template_names:
-    #         t = Template(template_name=t).select()
-    #         if t:
-    #             print(t)
-    # else:
-    #     args = parser.get_callable_args(func)
-    #     func(**args)
+    if not func:
+        template = Template.get_template(args.get("template"))
+        print(template)
+    else:
+        args = parser.get_callable_args(func)
+        func(**args)
 
 
 if __name__ == "__main__":
