@@ -25,8 +25,11 @@ def get_repository_visibility(repository_visibility: int):
         return types.get(repository_visibility, "private")
 
 
-def git_repo_exists(repository: str):
-    return os.path.exists(os.path.join(repository, ".git"))
+def is_git_repo(repository: str):
+    results = execute_commands(
+        [["git", "rev-parse", "--show-toplevel"]], cwd=repository
+    )
+    return len(results) > 0 and results[0].stdout.strip() == repository
 
 
 def set_repository_visibility(git_origin: str, repository_visibility: str):
@@ -56,7 +59,10 @@ def rename_repo(git_origin: str, repository_name: str):
 
 
 def create_git_repository(
-    git_origin: str, repository_name: str, repository_visibility: str, cwd: str = None
+    git_origin: str,
+    repository_visibility: str,
+    repository_name: str = None,
+    cwd: str = None,
 ):
 
     print(f"Creating git repository: {git_origin}")
@@ -64,8 +70,19 @@ def create_git_repository(
     repository_visibility = get_repository_visibility(repository_visibility)
     repository_visibility = "--{0}".format(repository_visibility)
 
+    repository_name = (
+        repository_name
+        if repository_name is not None
+        else get_repository_name(git_origin)
+    )
     commands = [
-        ["gh", "repo", "create", repository_name, repository_visibility],
+        [
+            "gh",
+            "repo",
+            "create",
+            repository_name,
+            repository_visibility,
+        ],
         ["git", "init"],
         ["git", "add", "."],
         ["git", "commit", "-m", "published branch"],
@@ -84,8 +101,7 @@ def create_git_repository(
 
     if errors:
         for error in errors:
-            print(error.output)
-        return None
+            print("An error occured: ", error.stderr, error.output, error)
     return git_origin
 
 

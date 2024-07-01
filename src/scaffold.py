@@ -7,7 +7,7 @@ from src.repository import (
     clone_repository,
     get_repository_visibility,
     create_git_repository,
-    git_repo_exists,
+    is_git_repo,
     update_git_repository,
     get_git_origin,
 )
@@ -23,9 +23,9 @@ import shutil
 
 
 def scaffold_repository(
-    create_repository: bool,
-    destination_directory: str,
-    repository_name: str,
+    create_repository: bool = create_repository,
+    destination_directory: str = destination_directory,
+    repository_name: str = repository_name,
     repository_visibility: int = 0,
     author: str = None,
 ):
@@ -46,14 +46,14 @@ def scaffold_repository(
     git_origin = get_git_origin(author, repository_name)
 
     # initialize project directory
-    if not (git_repo_exists(destination_directory)):
-        create_git_repository(git_origin, repository_name, repository_visibility)
+    if not (is_git_repo(destination_directory)):
+        create_git_repository(git_origin, repository_visibility, repository_name)
         # remove and clone again
         shutil.rmtree(destination_directory, ignore_errors=True)
         clone_repository(git_origin, cwd=os.getcwd())
     else:
         print("Repository already exists. Updating...")
-        update_git_repository(repository_name, repository_visibility, author)
+        update_git_repository(git_origin, repository_visibility, author)
 
     return git_origin
 

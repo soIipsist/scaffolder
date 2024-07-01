@@ -33,12 +33,15 @@ class TestRepository(TestBase):
         self.assertTrue(get_repository_visibility("internal") == "internal")
         self.assertTrue(get_repository_visibility("nothing") == "private")
 
-    def test_git_repo_exists(self):
-        print(self.get_template_directory())
-        self.assertTrue(git_repo_exists(self.get_template_directory()))
+    def test_is_git_repo(self):
 
-        print(parent_directory)
-        self.assertTrue(git_repo_exists(parent_directory))
+        # print(parent_directory)
+        # self.assertTrue(is_git_repo(parent_directory))
+        # self.assertFalse(is_git_repo(self.get_template_directory("new_template")))
+
+        self.assertFalse(is_git_repo(os.getcwd()))
+        print(os.getcwd())
+        self.assertFalse(is_git_repo("/Users/p/Desktop/test"))
 
     def test_get_repository_name(self):
         print(self.git_origin, self.repository_name)
@@ -66,7 +69,6 @@ class TestRepository(TestBase):
 
         git_origin = create_git_repository(
             self.git_origin,
-            self.repository_name,
             repository_visibility="public",
             cwd=self.get_template_directory(),
         )
@@ -80,12 +82,12 @@ class TestRepository(TestBase):
 
     def test_delete_git_repository(self):
         git_origin = delete_git_repository(self.git_origin)
-        # self.assertIsNotNone(git_origin)
+        self.assertIsNotNone(git_origin)
 
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_git_diff,
+            TestRepository.test_is_git_repo,
         ]
     )
