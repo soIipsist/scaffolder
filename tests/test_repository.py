@@ -35,12 +35,10 @@ class TestRepository(TestBase):
 
     def test_is_git_repo(self):
 
-        # print(parent_directory)
-        # self.assertTrue(is_git_repo(parent_directory))
-        # self.assertFalse(is_git_repo(self.get_template_directory("new_template")))
+        self.assertTrue(is_git_repo(parent_directory))
+        self.assertFalse(is_git_repo(self.get_template_directory("new_template")))
 
-        self.assertFalse(is_git_repo(os.getcwd()))
-        print(os.getcwd())
+        self.assertTrue(is_git_repo(os.getcwd()))
         self.assertFalse(is_git_repo("/Users/p/Desktop/test"))
 
     def test_get_repository_name(self):
