@@ -44,6 +44,10 @@ class TestRepository(TestBase):
         print(self.git_origin, self.repository_name)
         self.assertTrue(get_repository_name(self.git_origin) == self.repository_name)
 
+    def test_git_diff(self):
+        diff = git_diff()
+        self.assertIsNotNone(diff)
+
     def test_set_repository_visibility(self):
         repo_visibility = set_repository_visibility(
             self.repository_name, get_repository_visibility(1), self.author
@@ -59,17 +63,15 @@ class TestRepository(TestBase):
         )
 
     def test_create_repository(self):
-        template_dir = self.get_template_directory()
 
-        original_dir = os.getcwd()
-        os.chdir(template_dir)
-        create_git_repository(
+        git_origin = create_git_repository(
             self.git_origin,
             self.repository_name,
             repository_visibility="public",
+            cwd=self.get_template_directory(),
         )
 
-        os.chdir(original_dir)
+        self.assertIsNotNone(git_origin)
 
     def test_update_repository(self):
         update_git_repository(
@@ -77,12 +79,13 @@ class TestRepository(TestBase):
         )
 
     def test_delete_git_repository(self):
-        delete_git_repository(self.git_origin)
+        git_origin = delete_git_repository(self.git_origin)
+        # self.assertIsNotNone(git_origin)
 
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_get_repository_name,
+            TestRepository.test_git_diff,
         ]
     )

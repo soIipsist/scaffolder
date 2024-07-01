@@ -56,9 +56,7 @@ def rename_repo(git_origin: str, repository_name: str):
 
 
 def create_git_repository(
-    git_origin: str,
-    repository_name: str,
-    repository_visibility: str,
+    git_origin: str, repository_name: str, repository_visibility: str, cwd: str = None
 ):
 
     print(f"Creating git repository: {git_origin}")
@@ -66,7 +64,6 @@ def create_git_repository(
     repository_visibility = get_repository_visibility(repository_visibility)
     repository_visibility = "--{0}".format(repository_visibility)
 
-    print(repository_visibility)
     commands = [
         ["gh", "repo", "create", repository_name, repository_visibility],
         ["git", "init"],
@@ -80,20 +77,30 @@ def create_git_repository(
         ["git", "push", "-u", "origin", "main"],
     ]
 
-    for args in commands:
+    results, errors = execute_commands(commands, return_errors=True, cwd=cwd)
 
-        try:
-            subprocess.run(args, check=True)
-        except Exception as e:
-            print(e)
+    if results:
+        print(f"{git_origin} was created successfully.")
 
+    if errors:
+        for error in errors:
+            print(error.output)
+        return None
     return git_origin
+
+
+def git_diff(cwd: str = None):
+    result = execute_commands(["git diff --name-status"], cwd=cwd)
+    if result:
+        result = result[0].stdout
+        return result
 
 
 def update_git_repository(
     git_origin: str,
     destination_directory: str,
     repository_visibility: int = 0,
+    cwd: str = None,
 ):
 
     commands = [
@@ -101,30 +108,29 @@ def update_git_repository(
         ["git", "commit", "-m", "commit"],
         ["git", "push", "-u", "origin", "main"],
     ]
-    # check if there were any changes
-    output = subprocess.run(
-        ["git", "diff", "--name-status"], capture_output=True, text=True
-    )
 
-    if output.stdout:
-        for command in commands:
-            try:
-                subprocess.run(command, cwd=destination_directory)
-            except Exception as e:
-                print(e)
+    diff = git_diff(cwd)
 
-    set_repository_visibility(git_origin, repository_visibility)
-    print("Update completed.")
+    if diff:
+        results = execute_commands(commands, cwd=cwd)
+        if results:
+            print(f"{git_origin} was updated successfully.")
+            set_repository_visibility(git_origin, repository_visibility)
+
+    return git_origin
 
 
-def delete_git_repository(git_origin: str):
-    try:
-        command = ["gh", "repo", "delete", f"{git_origin}", "--yes"]
-        result = subprocess.run(command, capture_output=True, text=True)
+def delete_git_repository(git_origin: str, cwd: str = None):
+    commands = [f"gh repo delete {get_repository_name(git_origin)} --yes"]
+    results, errors = execute_commands(commands, return_errors=True, cwd=cwd)
 
+    if results:
+        result = results[0]
         if result.returncode == 0:
             print(f"Successfully deleted the repository {git_origin} on GitHub.")
+            return git_origin
         else:
             print(f"Error deleting repository: {result.stderr}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    else:
+        for error in errors:
+            print(error.stderr)

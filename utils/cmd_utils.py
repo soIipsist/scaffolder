@@ -27,12 +27,6 @@ def execute_commands(
             e.stderr = e.stderr.strip()
             errors.append(e)
 
-    if len(results) == 1:
-        results = results[0]
-
-    if len(errors) == 1:
-        errors = errors[0]
-
     if return_errors:
         return results, errors
     return results
