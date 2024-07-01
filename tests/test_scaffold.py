@@ -80,6 +80,12 @@ class TestScaffold(TestBase):
         print(args)
         # scaffold(**args)
 
+    def test_scaffold_repository(self):
+        self.create_repository = False
+        args = self.get_scaffold_args()
+        print(args)
+        self.assertIsNone(scaffold_repository(**args))
+
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_scaffold_no_repo)
+    run_test_methods(TestScaffold.test_scaffold_repository)
