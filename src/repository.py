@@ -34,11 +34,14 @@ def is_git_repo(repository: str):
 
 def set_repository_visibility(git_origin: str, repository_visibility: str):
 
+    repository_visibility = get_repository_visibility(repository_visibility)
     command = f"gh repo edit {git_origin} --visibility {repository_visibility}"
     results = execute_commands([command], return_errors=False)
 
     if results:
-        print(results)
+        print(
+            f"Repository visibility for {git_origin} was set to {repository_visibility}."
+        )
 
     return repository_visibility
 
@@ -114,7 +117,6 @@ def git_diff(cwd: str = None):
 
 def update_git_repository(
     git_origin: str,
-    destination_directory: str,
     repository_visibility: int = 0,
     cwd: str = None,
 ):

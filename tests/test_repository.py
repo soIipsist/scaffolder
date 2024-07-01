@@ -5,9 +5,6 @@ parent_directory = os.path.dirname(
 )
 os.sys.path.insert(0, parent_directory)
 
-print(parent_directory)
-
-import requests
 from test_base import *
 from data.sqlite_data import *
 from src.repository import *
@@ -50,32 +47,28 @@ class TestRepository(TestBase):
         self.assertIsNotNone(diff)
 
     def test_set_repository_visibility(self):
-        repo_visibility = set_repository_visibility(
-            self.repository_name, get_repository_visibility(1), self.author
-        )
-
+        repo_visibility = set_repository_visibility(self.git_origin, "public")
         self.assertIsInstance(repo_visibility, str)
 
     def test_rename_repository(self):
-        template_dir = self.get_template_directory()
-        os.chdir(template_dir)
-        rename_repo(
-            os.path.basename("red"), os.path.basename(template_dir), self.author
-        )
+        # template_dir = self.get_template_directory()
+        rename_repo(self.git_origin, "hello")
 
-    def test_create_repository(self):
+    def test_create_git_repository(self):
 
         git_origin = create_git_repository(
             self.git_origin,
-            repository_visibility="public",
+            repository_visibility=0,
             cwd=self.get_template_directory(),
         )
 
         self.assertIsNotNone(git_origin)
 
-    def test_update_repository(self):
+    def test_update_git_repository(self):
         update_git_repository(
-            self.git_origin, self.get_template_directory(), self.repository_visibility
+            self.git_origin,
+            self.repository_visibility,
+            cwd=self.get_template_directory(),
         )
 
     def test_delete_git_repository(self):
@@ -86,6 +79,6 @@ class TestRepository(TestBase):
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_is_git_repo,
+            TestRepository.test_delete_git_repository,
         ]
     )
