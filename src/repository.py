@@ -1,6 +1,6 @@
 import os
 import subprocess
-from utils.dict_utils import invert_dict
+from utils.cmd_utils import execute_commands
 
 
 def get_git_origin(author: str, repository_name: str):
@@ -8,14 +8,21 @@ def get_git_origin(author: str, repository_name: str):
     return git_origin
 
 
+def get_repository_name(git_origin: str):
+    return os.path.basename(git_origin).split(".git")[0]
+
+
 def get_repository_visibility(repository_visibility: int):
     types = {0: "private", 1: "public", 2: "internal"}
 
     if isinstance(repository_visibility, str):
-        types = invert_dict(types)
-        return repository_visibility if repository_visibility in types else "private"
-
-    return types.get(repository_visibility, "private")
+        return (
+            repository_visibility
+            if repository_visibility in types.values()
+            else "private"
+        )
+    if isinstance(repository_visibility, int):
+        return types.get(repository_visibility, "private")
 
 
 def set_repository_visibility(
@@ -31,18 +38,18 @@ def set_repository_visibility(
 
 
 def create_git_repository(
+    git_origin: str,
     repository_name: str,
     repository_visibility: str,
-    author: str,
 ):
 
-    git_origin = "https://github.com/{0}/{1}.git".format(author, repository_name)
     print(f"Creating git repository: {git_origin}")
 
-    repo_visibility = "--{0}".format(repository_visibility)
+    repository_visibility = get_repository_visibility(repository_visibility)
+    repository_visibility = "--{0}".format(repository_visibility)
 
     commands = [
-        ["gh", "repo", "create", repository_name, repo_visibility],
+        ["gh", "repo", "create", repository_name, repository_visibility],
         ["git", "init"],
         ["git", "add", "."],
         ["git", "commit", "-m", "published branch"],

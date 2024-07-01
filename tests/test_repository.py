@@ -9,11 +9,8 @@ print(parent_directory)
 
 import requests
 from test_base import *
-
-
 from data.sqlite_data import *
 from src.repository import *
-
 from utils.sqlite_connection import create_db
 
 
@@ -24,6 +21,8 @@ class TestRepository(TestBase):
         self.author = "soIipsist"
         self.repository_name = "sample_template"
 
+        self.git_origin = get_git_origin(self.author, self.repository_name)
+
     def test_get_repository_visibility(self):
         self.assertTrue(get_repository_visibility("1") == "private")
         self.assertTrue(get_repository_visibility("public") == "public")
@@ -33,6 +32,17 @@ class TestRepository(TestBase):
         self.assertTrue(get_repository_visibility("private") == "private")
         self.assertTrue(get_repository_visibility("internal") == "internal")
         self.assertTrue(get_repository_visibility("nothing") == "private")
+
+    def test_git_repo_exists(self):
+        print(self.get_template_directory())
+        self.assertTrue(git_repo_exists(self.get_template_directory()))
+
+        print(parent_directory)
+        self.assertTrue(git_repo_exists(parent_directory))
+
+    def test_get_repository_name(self):
+        print(self.git_origin, self.repository_name)
+        self.assertTrue(get_repository_name(self.git_origin) == self.repository_name)
 
     def test_set_repository_visibility(self):
         repo_visibility = set_repository_visibility(
@@ -54,7 +64,9 @@ class TestRepository(TestBase):
         original_dir = os.getcwd()
         os.chdir(template_dir)
         create_git_repository(
-            self.repository_name, repository_visibility="public", author="soIipsist"
+            self.git_origin,
+            self.repository_name,
+            repository_visibility="public",
         )
 
         os.chdir(original_dir)
@@ -63,18 +75,10 @@ class TestRepository(TestBase):
         template_dir = self.get_template_directory()
         delete_git_repository(os.path.basename(template_dir), author="soIipsist")
 
-    def test_git_repo_exists(self):
-        print(self.get_template_directory())
-        self.assertTrue(git_repo_exists(self.get_template_directory()))
-
-        print(parent_directory)
-        self.assertTrue(git_repo_exists(parent_directory))
-
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_delete_repository,
-            # TestRepository.test_git_repo_exists,
+            TestRepository.test_get_repository_name,
         ]
     )

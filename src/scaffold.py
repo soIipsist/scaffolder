@@ -9,12 +9,14 @@ from src.repository import (
     create_git_repository,
     git_repo_exists,
     update_git_repository,
+    get_git_origin,
 )
 from src.licenses import create_license
 from src.templates import Template
 from utils.file_utils import (
     find_and_replace_in_directory,
 )
+from utils.str_utils import check_str_or_int
 from utils.parser import *
 from src.constants import *
 import shutil
@@ -22,10 +24,10 @@ import shutil
 
 def scaffold_repository(
     create_repository: bool,
-    repository_name: str,
-    repository_visibility: int,
-    author: str,
     destination_directory: str,
+    repository_name: str,
+    repository_visibility: int = 0,
+    author: str = None,
 ):
     if not create_repository:
         return
@@ -41,17 +43,19 @@ def scaffold_repository(
         ).stdout.strip()
     )
 
+    git_origin = get_git_origin(author, repository_name)
+
     # initialize project directory
     if not (git_repo_exists(destination_directory)):
-        git_origin = create_git_repository(
-            repository_name, repository_visibility, author
-        )
+        create_git_repository(git_origin, repository_name, repository_visibility)
         # remove and clone again
         shutil.rmtree(destination_directory, ignore_errors=True)
         clone_repository(git_origin, cwd=os.getcwd())
     else:
         print("Repository already exists. Updating...")
         update_git_repository(repository_name, repository_visibility, author)
+
+    return git_origin
 
 
 def scaffold(
@@ -84,10 +88,6 @@ def scaffold(
 
     # replace all instances of template name with new repository name
     template_name = templ.template_name
-
-    if not template_name:
-        template_name = os.path.basename(templ.template_directory)
-
     print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
 
     find_and_replace_in_directory(
@@ -96,10 +96,10 @@ def scaffold(
 
     scaffold_repository(
         create_repository,
+        destination_directory,
         repository_name,
         repository_visibility,
         author,
-        destination_directory,
     )
 
 
@@ -118,15 +118,15 @@ def main():
         Argument(name=("-y", "--year"), default=year),
         Argument(
             name=("-v", "--repository_visibility"),
-            type=int,
-            choices=[0, 1, 2],
+            type=check_str_or_int,
+            choices=[0, 1, 2, "private", "public", "internal"],
             default=repository_visibility,
         ),
     ]
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()
-    scaffold(**args)
+    # scaffold(**args)
 
 
 if __name__ == "__main__":

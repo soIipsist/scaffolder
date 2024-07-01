@@ -5,8 +5,6 @@ parent_directory = os.path.dirname(
 )
 os.sys.path.insert(0, parent_directory)
 
-print(parent_directory)
-
 import requests
 from test_base import *
 
