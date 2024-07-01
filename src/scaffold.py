@@ -20,6 +20,40 @@ from src.constants import *
 import shutil
 
 
+def scaffold_repository(
+    create_repository: bool,
+    repository_name: str,
+    repository_visibility: int,
+    author: str,
+    destination_directory: str,
+):
+    if not create_repository:
+        return
+
+    repository_visibility = get_repository_visibility(repository_visibility)
+    author = (
+        author
+        or subprocess.run(
+            ["git", "config", "user.name"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        ).stdout.strip()
+    )
+
+    # initialize project directory
+    if not (git_repo_exists(destination_directory)):
+        git_origin = create_git_repository(
+            repository_name, repository_visibility, author
+        )
+        # remove and clone again
+        shutil.rmtree(destination_directory, ignore_errors=True)
+        clone_repository(git_origin, cwd=os.getcwd())
+    else:
+        print("Repository already exists. Updating...")
+        update_git_repository(repository_name, repository_visibility, author)
+
+
 def scaffold(
     template_directory: str = template_directory,
     destination_directory: str = destination_directory,
@@ -60,29 +94,13 @@ def scaffold(
         destination_directory, template_name, repository_name, removed_dirs=[".git"]
     )
 
-    if create_repository:
-        repository_visibility = get_repository_visibility(repository_visibility)
-        author = (
-            author
-            or subprocess.run(
-                ["git", "config", "user.name"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            ).stdout.strip()
-        )
-
-        # initialize project directory
-        if not (git_repo_exists(destination_directory)):
-            git_origin = create_git_repository(
-                repository_name, repository_visibility, author
-            )
-            # remove and clone again
-            shutil.rmtree(destination_directory, ignore_errors=True)
-            clone_repository(git_origin, cwd=os.getcwd())
-        else:
-            print("Repository already exists. Updating...")
-            update_git_repository(repository_name, repository_visibility, author)
+    scaffold_repository(
+        create_repository,
+        repository_name,
+        repository_visibility,
+        author,
+        destination_directory,
+    )
 
 
 def main():
@@ -105,10 +123,9 @@ def main():
             default=repository_visibility,
         ),
     ]
+
     parser = Parser(parser_arguments)
-
     args = parser.get_command_args()
-
     scaffold(**args)
 
 

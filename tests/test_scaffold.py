@@ -19,7 +19,7 @@ target_directory = os.getcwd()
 author = "soIipsist"
 
 
-class TestScaffolder(TestBase):
+class TestScaffold(TestBase):
     def setUp(self) -> None:
         super().setUp()
         create_db(db_path, tables, values)
@@ -82,4 +82,4 @@ class TestScaffolder(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffolder.test_scaffold_no_repo)
+    run_test_methods(TestScaffold.test_scaffold_no_repo)

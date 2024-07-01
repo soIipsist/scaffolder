@@ -82,7 +82,7 @@ def import_languages(languages_json: str = None):
     languages = read_and_parse_file(languages_json)
     languages: dict
 
-    print("Adding languages...")
+    print(f"Adding languages from {languages_json}...")
 
     for key, value in languages.items():
         key: str
