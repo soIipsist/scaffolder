@@ -5,7 +5,7 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 from src.repository import (
     clone_repository,
-    get_repository_visibility,
+    get_author,
     create_git_repository,
     is_git_repo,
     update_git_repository,
@@ -26,23 +26,13 @@ def scaffold_repository(
     create_repository: bool = create_repository,
     destination_directory: str = destination_directory,
     repository_name: str = repository_name,
-    repository_visibility: int = 0,
-    author: str = None,
+    repository_visibility: int = repository_visibility,
+    author: str = author,
 ):
     if not create_repository:
         return
 
-    repository_visibility = get_repository_visibility(repository_visibility)
-    author = (
-        author
-        or subprocess.run(
-            ["git", "config", "user.name"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        ).stdout.strip()
-    )
-
+    author = get_author(author)
     git_origin = get_git_origin(author, repository_name)
 
     # initialize project directory

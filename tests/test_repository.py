@@ -75,10 +75,13 @@ class TestRepository(TestBase):
         git_origin = delete_git_repository(self.git_origin)
         self.assertIsNotNone(git_origin)
 
+    def test_get_author(self):
+        print(get_author(None))
+
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestRepository.test_delete_git_repository,
+            TestRepository.test_get_author,
         ]
     )

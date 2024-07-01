@@ -64,17 +64,6 @@ class TestScaffold(TestBase):
         with self.assertRaises(ValueError):
             scaffold(**args)
 
-    def test_scaffold_no_repo(self):
-        templ = Template(self.get_template_directory())
-        templ.delete_template()
-        templ.add_template()
-
-        # without creating repo
-        self.create_repository = False
-        self.repository_name = None
-        args = self.get_scaffold_args()
-        scaffold(**args)
-
     def test_scaffold(self):
         args = self.get_scaffold_args()
         print(args)
@@ -82,9 +71,26 @@ class TestScaffold(TestBase):
 
     def test_scaffold_repository(self):
         self.create_repository = False
-        args = self.get_scaffold_args()
-        print(args)
-        self.assertIsNone(scaffold_repository(**args))
+
+        self.assertIsNone(
+            scaffold_repository(
+                self.create_repository,
+                self.destination_directory,
+                self.repository_name,
+                self.repository_visibility,
+                self.author,
+            )
+        )
+
+        self.assertIsNotNone(
+            scaffold_repository(
+                self.create_repository,
+                self.destination_directory,
+                self.repository_name,
+                self.repository_visibility,
+                self.author,
+            )
+        )
 
 
 if __name__ == "__main__":

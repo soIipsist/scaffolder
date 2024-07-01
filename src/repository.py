@@ -8,6 +8,14 @@ def get_git_origin(author: str, repository_name: str):
     return git_origin
 
 
+def get_author(author: str = None):
+    if not author:
+        results = execute_commands([["git", "config", "user.name"]])
+        if len(results) > 0:
+            return results[0].stdout
+    return author
+
+
 def get_repository_name(git_origin: str):
     return os.path.basename(git_origin).split(".git")[0]
 
