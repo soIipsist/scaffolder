@@ -3,6 +3,7 @@ import os
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
+from utils.parser import Argument, Parser, SubCommand, PathArgument
 from utils.sqlite_connection import *
 from utils.sqlite_item import *
 from data.sqlite_data import *
@@ -28,10 +29,27 @@ class Language(SQLiteItem):
         self.filter_condition = f"language = {self.language}"
 
     def get_description(self):
-        return f"Language: {self.language}\n Extensions: {self.extensions}\nFunction patterns: {self.function_patterns}"
+        return f"Language: {self.language}\nExtensions: {self.extensions}\nFunction patterns: {self.function_patterns}"
 
     def add_language(self):
-        print()
+        insert_id = self.insert()
+
+        if not insert_id:
+            insert_id = self.update()
+
+        if insert_id:
+            print(f"Language {self.language} was inserted successfully.")
+
+    def delete_language(self):
+        self.delete()
+        print(f"Language {self.language} was deleted successfully.")
+
+    def get_language(self, extension: str):
+        filter_condition = (
+            f"language = {self.language} OR extensions LIKE %'{extension}'%"
+        )
+        items = self.select(filter_condition)
+        return items[0] if len(items) > 0 else None
 
     def __repr__(self) -> str:
         return self.get_description()
@@ -57,8 +75,9 @@ def detect_language(file_path: str):
     return "python"
 
 
-def add_languages():
-    languages_json = os.path.join(parent_directory, "data", "languages.json")
+def import_languages(languages_json: str = None):
+    if not languages_json:
+        languages_json = os.path.join(parent_directory, "data", "languages.json")
 
     languages = read_and_parse_file(languages_json)
     languages: dict
@@ -82,6 +101,49 @@ def add_languages():
         new_lang.insert()
 
 
+def main():
+    parser_arguments = [
+        Argument(name=("-l", "--language"), default=None),
+        Argument(name=("-e", "--extension"), default=None),
+    ]
+    add_arguments = [
+        Argument(name=("-l", "--language"), default=None),
+        Argument(name=("-e", "--extensions"), default=[], nargs="+"),
+        Argument(name=("-f", "--function_patterns"), default=[], nargs="+"),
+    ]
+
+    delete_arguments = [
+        Argument(name=("-l", "--language")),
+    ]
+
+    import_arguments = [PathArgument(name=("-l", "--languages_json"))]
+
+    subcommands = [
+        SubCommand("add", add_arguments),
+        SubCommand("delete", delete_arguments),
+        SubCommand("import", import_arguments),
+    ]
+
+    parser = Parser(parser_arguments, subcommands)
+    args = parser.get_command_args()
+    language_args = parser.get_callable_args(Language.__init__)
+    language = Language(**language_args)
+
+    cmd_dict = {
+        "add": language.add_language,
+        "delete": language.delete_language,
+        "import": import_languages,
+    }
+    func = parser.get_command_function(cmd_dict)
+
+    if not func:
+        language.language = args.get("language", None)
+        language = language.get_language(args.get("extension"))
+        print(language)
+    else:
+        args = parser.get_callable_args(func)
+        func(**args)
+
+
 if __name__ == "__main__":
-    create_db(db_path, tables, values)
-    add_languages()
+    main()

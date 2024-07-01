@@ -65,15 +65,7 @@ def get_filter_condition(filter_condition: str, default_params: list = None):
     pattern = r"(\s+AND\s+|\s+OR\s+|\s+NOT\s+)"
     parts = re.split(pattern, filter_condition)
 
-    comparison_operators = [
-        "!=",
-        "<>",
-        ">=",
-        "<=",
-        ">",
-        "<",
-        "=",
-    ]
+    comparison_operators = ["!=", "<>", ">=", "<=", ">", "<", "=", "LIKE"]
 
     # Check for SQL injection patterns
     sql_injection_patterns = [
@@ -106,6 +98,7 @@ def get_filter_condition(filter_condition: str, default_params: list = None):
                     value = value.strip().strip(
                         "'"
                     )  # Assuming values are enclosed in single quotes
+
                     filter_condition_keys.append(key)
                     sanitized_params.append(value)
                     conditions.append(f"{key} {operator} ?")

@@ -21,7 +21,7 @@ class TestLanguages(TestBase):
         create_db(db_path, tables)
 
     def test_add_languages(self):
-        add_languages()
+        import_languages()
 
     def test_detect_language(self):
         # C test
@@ -45,10 +45,15 @@ class TestLanguages(TestBase):
         self.assertTrue(lang == "python")
         print(lang)
 
+    def test_extension_exists(self):
+        extension = "py"
+        l = Language().select(f"extensions LIKE %'{extension}'%")
+        self.assertTrue(len(l) == 1)
+
 
 if __name__ == "__main__":
     run_test_methods(
         [
-            TestLanguages.test_detect_language,
+            TestLanguages.test_extension_exists,
         ]
     )
