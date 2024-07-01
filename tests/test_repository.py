@@ -20,7 +20,7 @@ class TestRepository(TestBase):
         create_db(db_path, tables)
         self.author = "soIipsist"
         self.repository_name = "sample_template"
-
+        self.repository_visibility = 0
         self.git_origin = get_git_origin(self.author, self.repository_name)
 
     def test_get_repository_visibility(self):
@@ -71,9 +71,13 @@ class TestRepository(TestBase):
 
         os.chdir(original_dir)
 
-    def test_delete_repository(self):
-        template_dir = self.get_template_directory()
-        delete_git_repository(os.path.basename(template_dir), author="soIipsist")
+    def test_update_repository(self):
+        update_git_repository(
+            self.git_origin, self.get_template_directory(), self.repository_visibility
+        )
+
+    def test_delete_git_repository(self):
+        delete_git_repository(self.git_origin)
 
 
 if __name__ == "__main__":
