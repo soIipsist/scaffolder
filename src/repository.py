@@ -54,7 +54,7 @@ def set_repository_visibility(git_origin: str, repository_visibility: str):
     return repository_visibility
 
 
-def clone_repository(git_origin: str, cwd: str = None):
+def clone_git_repository(git_origin: str, cwd: str = None):
     print(f"Cloning {git_origin}.")
     subprocess.run(["git", "clone", git_origin], cwd=cwd)
     return cwd if cwd is not None else os.getcwd()

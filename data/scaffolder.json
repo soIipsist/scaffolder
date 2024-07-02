@@ -13,5 +13,6 @@
     "author": "soIipsist",
     "create_repository": false,
     "store_template": true,
+    "clone_repository": false,
     "gh_check": false
 }

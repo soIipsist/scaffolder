@@ -10,7 +10,7 @@ import shutil
 from utils.sqlite_item import *
 from data.sqlite_data import *
 
-from src.repository import clone_repository
+from src.repository import clone_git_repository
 
 
 class Template(SQLiteItem):
@@ -104,7 +104,7 @@ class Template(SQLiteItem):
         )
 
         if self.repository_url:
-            clone_repository(self.repository_url, cwd=os.getcwd())
+            clone_git_repository(self.repository_url, cwd=os.getcwd())
             copy_template = False
 
         if copy_template:

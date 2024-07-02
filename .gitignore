@@ -162,3 +162,5 @@ scaffolder.code-workspace
 .DS_Store
 src/*.swp
 src/*.save
+tests/files/scaffold_tests/*
+tests/files/templates/*

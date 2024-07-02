@@ -4,7 +4,7 @@ parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
 from src.repository import (
-    clone_repository,
+    clone_git_repository,
     get_author,
     create_git_repository,
     is_git_repo,
@@ -48,16 +48,12 @@ def create_from_template(
 
 
 def scaffold_repository(
+    git_origin: str,
     create_repository: bool = create_repository,
-    repository_name: str = repository_name,
     repository_visibility: int = repository_visibility,
-    author: str = author,
 ):
     if not create_repository:
         return
-
-    author = get_author(author)
-    git_origin = get_git_origin(author, repository_name)
 
     # initialize project directory
     is_git_repo = is_git_repo(destination_directory)
@@ -66,7 +62,7 @@ def scaffold_repository(
     else:
         update_git_repository(git_origin, repository_visibility, destination_directory)
 
-    return git_origin, is_git_repo
+    return is_git_repo
 
 
 def scaffold(
@@ -77,6 +73,7 @@ def scaffold(
     author: str = author,
     year: str = year,
     create_repository: bool = create_repository,
+    clone_repository: bool = clone_git_repository,
     store_template: bool = store_template,
     repository_visibility: str = repository_visibility,
 ):
@@ -97,14 +94,17 @@ def scaffold(
 
     create_license(license, destination_directory, author, year)
 
-    git_origin, is_git_repo = scaffold_repository(
+    author = get_author(author)
+    git_origin = get_git_origin(author, repository_name)
+
+    scaffold_repository(
+        git_origin,
         create_repository,
-        repository_name,
         repository_visibility,
-        author,
     )
 
-    if not is_git_repo:
+    # clone repository
+    if clone_repository:
         shutil.rmtree(destination_directory, ignore_errors=True)
         clone_repository(git_origin, cwd=os.getcwd())
 
@@ -118,6 +118,7 @@ def main():
         ),
         Argument(name=("-n", "--repository_name"), default=repository_name),
         BoolArgument(name=("-c", "--create_repository"), default=create_repository),
+        BoolArgument(name=("-cl", "--clone_repository"), default=clone_repository),
         BoolArgument(name=("-s", "--store_template"), default=store_template),
         Argument(name=("-l", "--license"), default=license),
         Argument(name=("-a", "--author"), default=author),
