@@ -72,7 +72,6 @@ def rename_repo(git_origin: str, repository_name: str):
 def create_git_repository(
     git_origin: str,
     repository_visibility: str,
-    repository_name: str = None,
     cwd: str = None,
 ):
 
@@ -81,11 +80,8 @@ def create_git_repository(
     repository_visibility = get_repository_visibility(repository_visibility)
     repository_visibility = "--{0}".format(repository_visibility)
 
-    repository_name = (
-        repository_name
-        if repository_name is not None
-        else get_repository_name(git_origin)
-    )
+    repository_name = get_repository_name(git_origin)
+
     commands = [
         [
             "gh",
@@ -128,6 +124,7 @@ def update_git_repository(
     repository_visibility: int = 0,
     cwd: str = None,
 ):
+    print(f"Repository {git_origin} already exists. Updating...")
 
     commands = [
         ["git", "add", "."],

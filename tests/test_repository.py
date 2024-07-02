@@ -76,7 +76,8 @@ class TestRepository(TestBase):
         self.assertIsNotNone(git_origin)
 
     def test_get_author(self):
-        print(get_author(None))
+        self.assertIsNotNone(get_author(None))
+        self.assertTrue(get_author("red") == "red")
 
 
 if __name__ == "__main__":

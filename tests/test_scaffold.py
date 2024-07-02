@@ -14,6 +14,8 @@ from src.templates import *
 from src.constants import *
 from utils.sqlite_connection import db_path, create_db, tables, values
 
+from utils.func_utils import get_callable_args
+
 licenses = ["mit", "afl-3.0"]
 target_directory = os.getcwd()
 author = "soIipsist"
@@ -69,7 +71,7 @@ class TestScaffold(TestBase):
         print(args)
         # scaffold(**args)
 
-    def test_scaffold_repository(self):
+    def test_scaffold_repository_no_repo(self):
         self.create_repository = False
 
         self.assertIsNone(
@@ -82,6 +84,10 @@ class TestScaffold(TestBase):
             )
         )
 
+    def test_scaffold_repository(self):
+        self.create_repository = True
+
+        # args =
         self.assertIsNotNone(
             scaffold_repository(
                 self.create_repository,
@@ -92,6 +98,12 @@ class TestScaffold(TestBase):
             )
         )
 
+    def test_create_from_template(self):
+        args = self.get_scaffold_args()
+        args = get_callable_args(create_from_template, args)
+
+        print(args)
+
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_scaffold_repository)
+    run_test_methods(TestScaffold.test_create_from_template)
