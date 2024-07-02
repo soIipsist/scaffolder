@@ -17,7 +17,7 @@ scaffolder_metadata: dict
 languages = Language().select_all()
 
 # scaffolder metadata
-template_directory = scaffolder_metadata.get("template_directory")
+template_directory = scaffolder_metadata.get("template_directory", os.getcwd())
 destination_directory = scaffolder_metadata.get(
     "destination_directory",
     os.path.join(os.getcwd(), os.path.basename(template_directory)),

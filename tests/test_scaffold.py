@@ -48,6 +48,9 @@ class TestScaffold(TestBase):
             templ.insert()
         return destination_dir
 
+    def get_dest_dir(self, dest: str):
+        return os.path.join(self.get_files_directory("scaffold_tests"), dest)
+
     def get_scaffold_args(self):
         # get scaffold function args
         args = {
@@ -66,22 +69,6 @@ class TestScaffold(TestBase):
 
         return args
 
-    def test_scaffold_no_template(self):
-        self.template_directory = None
-        self.create_repository = False
-
-        args = self.get_scaffold_args()
-
-        with self.assertRaises(ValueError):
-            scaffold(**args)
-
-        # no template found test case
-
-        self.template_directory = self.get_template_directory("red")
-        args = self.get_scaffold_args()
-        with self.assertRaises(ValueError):
-            scaffold(**args)
-
     def test_scaffold_repository(self):
         self.create_repository = False
         # self.create_repository = True
@@ -90,15 +77,7 @@ class TestScaffold(TestBase):
 
         # delete_git_repository(self.git_origin, self.destination_directory)
         # return
-        self.assertIsNone(
-            scaffold_repository(
-                self.git_origin,
-                self.create_repository,
-                self.repository_visibility,
-                self.destination_directory,
-            )
-        )
-        # self.assertIsNotNone(
+        # self.assertIsNone(
         #     scaffold_repository(
         #         self.git_origin,
         #         self.create_repository,
@@ -106,15 +85,21 @@ class TestScaffold(TestBase):
         #         self.destination_directory,
         #     )
         # )
+        self.assertIsNotNone(
+            scaffold_repository(
+                self.git_origin,
+                self.create_repository,
+                self.repository_visibility,
+                self.destination_directory,
+            )
+        )
 
     def test_create_from_template(self):
         args = self.get_scaffold_args()
         args = get_callable_args(create_from_template, args)
         print(args)
 
-        destination_directory = os.path.join(
-            self.get_files_directory("scaffold_tests"), "android_template"
-        )
+        destination_directory = self.get_dest_dir("android_template")
         template_directory = self.get_templ_dir("android_template")
 
         print(template_directory)
@@ -134,7 +119,11 @@ class TestScaffold(TestBase):
         self.template_directory = "/Users/p/Desktop/soIipsis/python_template"
         self.destination_directory = self.get_template_directory()
         update_destination_files(
-            self.files, self.template_directory, self.destination_directory
+            self.files,
+            self.template_directory,
+            self.destination_directory,
+            self.language,
+            self.function_patterns,
         )
 
 
