@@ -32,7 +32,7 @@ def list_settings(parameters: list = []):
     return settings
 
 
-def update_settings(args: dict):
+def update_settings(**args: dict):
     settings = {}
 
     for key, val in args.items():
@@ -58,7 +58,7 @@ def view_settings_in_editor(default_editor: str = "vscode"):
 def main():
 
     update_arguments = [
-        Argument(name=("-t", "--template_directory")),
+        Argument(name=("-t", "--template_directory"), default=template_directory),
         Argument(name=("-d", "--destination_directory")),
         Argument(name=("-n", "--repository_name")),
         Argument(name=("-l", "--license")),
@@ -94,7 +94,10 @@ def main():
         "edit": view_settings_in_editor,
     }
 
-    parser.run_command(cmd_dict)
+    args = parser.get_command_args()
+    func = parser.get_command_function(cmd_dict)
+
+    func(**args)
 
 
 if __name__ == "__main__":

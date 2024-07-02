@@ -27,10 +27,6 @@ def create_from_template(
     destination_directory: str = destination_directory,
     store_template: bool = store_template,
 ):
-    if not destination_directory:
-        destination_directory = os.path.join(
-            os.getcwd(), os.path.basename(template_directory)
-        )
 
     templ = Template.get_template(template_directory)
     templ: Template
@@ -55,14 +51,10 @@ def scaffold_repository(
     if not create_repository:
         return
 
-    # initialize project directory
-    is_git_repo = is_git_repo(destination_directory)
-    if not is_git_repo:
+    if not is_git_repo(destination_directory):
         create_git_repository(git_origin, repository_visibility)
     else:
         update_git_repository(git_origin, repository_visibility, destination_directory)
-
-    return is_git_repo
 
 
 def scaffold(
@@ -78,9 +70,6 @@ def scaffold(
     repository_visibility: str = repository_visibility,
 ):
 
-    if not repository_name:
-        repository_name = os.path.basename(destination_directory)
-
     destination_directory, template_name = create_from_template(
         template_directory,
         destination_directory,
@@ -93,8 +82,6 @@ def scaffold(
     )
 
     create_license(license, destination_directory, author, year)
-
-    author = get_author(author)
     git_origin = get_git_origin(author, repository_name)
 
     scaffold_repository(
@@ -113,9 +100,7 @@ def main():
 
     parser_arguments = [
         Argument(name=("-t", "--template_directory"), default=template_directory),
-        DirectoryArgument(
-            name=("-d", "--destination_directory"), default=destination_directory
-        ),
+        Argument(name=("-d", "--destination_directory"), default=destination_directory),
         Argument(name=("-n", "--repository_name"), default=repository_name),
         BoolArgument(name=("-c", "--create_repository"), default=create_repository),
         BoolArgument(name=("-cl", "--clone_repository"), default=clone_repository),
@@ -133,6 +118,8 @@ def main():
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()
+
+    print(args)
     # scaffold(**args)
 
 

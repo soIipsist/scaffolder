@@ -1,6 +1,5 @@
 {
     "template_directory": "/Users/p/Desktop/soIipsis/android_template",
-    "destination_directory": "/Users/p/Desktop",
     "update_template_directory": "/Users/p/Desktop/soIipsist/python_template/utils",
     "update_destination_directory": "/Users/p/Desktop/soIipsist/superscraper/utils/",
     "update_files": [
@@ -9,10 +8,6 @@
         "sqlite_connection.py",
         "parser.py"
     ],
-    "license": "0bsd",
-    "author": "soIipsist",
-    "create_repository": false,
-    "store_template": true,
-    "clone_repository": false,
-    "gh_check": false
+    "gh_check": false,
+    "create_repository": 0
 }
