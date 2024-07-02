@@ -5,7 +5,6 @@ os.sys.path.insert(0, parent_directory)
 
 from src.repository import (
     clone_git_repository,
-    get_author,
     create_git_repository,
     is_git_repo,
     update_git_repository,
@@ -55,6 +54,8 @@ def scaffold_repository(
         create_git_repository(git_origin, repository_visibility)
     else:
         update_git_repository(git_origin, repository_visibility, destination_directory)
+
+    return git_origin
 
 
 def scaffold(
@@ -113,6 +114,11 @@ def main():
             type=check_str_or_int,
             choices=[0, 1, 2, "private", "public", "internal"],
             default=repository_visibility,
+        ),
+        Argument(name=("-f", "--files"), nargs="+", default=files),
+        Argument(name=("-l", "--language"), default=language),
+        Argument(
+            name=("-p", "--function_patterns"), nargs="+", default=function_patterns
         ),
     ]
 

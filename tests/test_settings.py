@@ -7,7 +7,6 @@ os.sys.path.insert(0, parent_directory)
 from tests.test_base import TestBase, run_test_methods
 
 from src.scaffold import *
-from src.update import *
 from src.settings import *
 from src.licenses import *
 from src.templates import *

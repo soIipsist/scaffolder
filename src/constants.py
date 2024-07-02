@@ -25,9 +25,12 @@ destination_directory = scaffolder_metadata.get(
 repository_name = scaffolder_metadata.get(
     "repository_name", os.path.basename(destination_directory)
 )
-update_template_directory = scaffolder_metadata.get("update_template_directory")
-update_destination_directory = scaffolder_metadata.get("update_destination_directory")
-update_files = scaffolder_metadata.get("update_files")
+
+# update vars
+files = scaffolder_metadata.get("files", [])
+language = scaffolder_metadata.get("language", None)
+function_patterns = scaffolder_metadata.get("function_patterns", [])
+
 license = scaffolder_metadata.get("license", "mit")
 year = scaffolder_metadata.get("year", str(datetime.datetime.now().year))
 author = scaffolder_metadata.get("author", get_author())

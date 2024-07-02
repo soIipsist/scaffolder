@@ -1,6 +1,29 @@
 import os
+from pprint import pp
 import re
+import subprocess
 from utils.file_utils import read_file
+from utils.path_utils import is_valid_path
+
+
+def get_function_patterns(
+    file_path: str, language: str = None, function_patterns: list = None
+):
+    from src.languages import detect_language, Language
+
+    if function_patterns:
+        return function_patterns
+
+    if not language:
+        language = detect_language(file_path)
+
+    default_patterns = ["\\s*def\\s+[\\w_]+\\s*\\([^)]*\\)\\s*:\\s*.*?(?=\\s*def|\\Z)"]
+
+    lang = Language(language=language).select()
+
+    if len(lang) > 0:
+        function_patterns = getattr(lang[0], "function_patterns")
+        return function_patterns if function_patterns else default_patterns
 
 
 def find_files(directory: str, file_names: list):
@@ -126,3 +149,63 @@ def get_updated_file_content(functions: dict, update_path: str):
 
 
 #     return updated_content
+
+
+def update(
+    files: list = [],
+    update_template_directory: str = None,
+    update_destination_directory: str = None,
+    language: str = None,
+    function_patterns: list = None,
+):
+
+    if not files:
+        files = [file for file in os.listdir(update_template_directory)]
+
+    print(
+        f'Updating changed files from "{update_template_directory}" to "{update_destination_directory}"...'
+    )
+
+    # find specified files in source directory
+
+    source_files = find_files(update_template_directory, files)
+    update_template_directory = os.path.normpath(update_template_directory)
+    update_destination_directory = os.path.normpath(update_destination_directory)
+
+    funcs = []
+    updated_content = ""
+
+    for source_path in source_files:
+
+        source_file_name = os.path.basename(source_path)
+        dir_name = os.path.dirname(source_path)
+
+        if dir_name != update_template_directory:
+            base_dir = os.path.basename(os.path.dirname(source_path))
+            update_path = os.path.normpath(
+                f"{update_destination_directory}/{base_dir}/{source_file_name}"
+            )
+        else:
+            update_path = os.path.normpath(
+                f"{update_destination_directory}/{source_file_name}"
+            )
+
+        if not is_valid_path(update_path, False):  # file does not exist, copy it
+            print(
+                f"File '{source_file_name}' not found in '{update_destination_directory}'. \n Copying to '{update_path}'..."
+            )
+            subprocess.run(["cp", source_path, update_path])
+        else:
+            # get updated content and write it to file
+            function_patterns = get_function_patterns(
+                source_path, language, function_patterns
+            )
+            funcs = get_updated_functions(source_path, update_path, function_patterns)
+            content = get_updated_file_content(funcs, update_path)
+
+            with open(update_path, "w", encoding="utf-8") as file:
+                file.write(content)
+
+        pp.pprint([f"Source path: {source_path}", f"Update path: {update_path}"])
+
+    return source_files, funcs, updated_content

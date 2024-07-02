@@ -1,8 +1,6 @@
 {
-    "template_directory": "/Users/p/Desktop/soIipsis/android_template",
-    "update_template_directory": "/Users/p/Desktop/soIipsist/python_template/utils",
-    "update_destination_directory": "/Users/p/Desktop/soIipsist/superscraper/utils/",
-    "update_files": [
+    "template_directory": "/Users/p/Desktop/soIipsis/sample_template",
+    "files": [
         "sqlite.py",
         "sqlite_item.py",
         "sqlite_connection.py",

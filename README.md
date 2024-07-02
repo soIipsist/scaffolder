@@ -76,16 +76,6 @@ options:
 
 ```
 
-#### update
-
-Updates files in an `update_destination_directory` with those from a `update_template_directory`. The extraction of updated functions is governed by `function_patterns`, specified in the `languages.json` file. By default, Python pattern matching is employed.
-
-```bash
-scaffolder > update -h
-usage: scaffolder update [-h] [--update_template_directory SOURCE_DIRECTORY] [--update_destination_directory UPDATE_DESTINATION_DIRECTORY] [-f FUNCTION_PATTERNS [FUNCTION_PATTERNS ...]]
-                         files [files ...]
-```
-
 #### licenses
 
 The `licenses` command can be used to list all supported software license files. If a valid `license` is specified, its content and/or path will be printed out.

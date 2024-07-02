@@ -1,4 +1,3 @@
-import unittest
 import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -7,7 +6,6 @@ os.sys.path.insert(0, parent_directory)
 from tests.test_base import TestBase, run_test_methods
 
 from src.scaffold import *
-from src.update import *
 from src.settings import *
 from src.licenses import *
 from src.templates import *
@@ -34,6 +32,7 @@ class TestScaffold(TestBase):
         self.repository_visibility = repository_visibility
         self.store_template = store_template
         self.repository_name = repository_name
+        self.git_origin = get_git_origin(self.author, self.repository_name)
 
     def get_templ_dir(self, dest: str, insert_template=True):
         destination_dir = os.path.join(self.get_template_directory(""), dest)
@@ -78,19 +77,13 @@ class TestScaffold(TestBase):
             scaffold(**args)
 
     def test_scaffold_repository(self):
-        # no repository
-        self.create_repository = False
-        args = self.get_scaffold_args()
-        args = get_callable_args(scaffold_repository, args)
-        print(args)
+        self.create_repository = True
 
-        # self.assertIsNone(scaffold_repository(**args))
-        # self.create_repository = True
-        # self.destination_directory = self.get_templ_dir("android_template")
-
-        # args = self.get_scaffold_args()
-        # args = get_callable_args(scaffold_repository, args)
-        # self.assertIsNotNone(scaffold_repository(**args))
+        self.assertIsNotNone(
+            scaffold_repository(
+                self.git_origin, self.create_repository, self.repository_visibility
+            )
+        )
 
     def test_create_from_template(self):
         args = self.get_scaffold_args()
@@ -116,4 +109,4 @@ class TestScaffold(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_scaffold_repository_no_repo)
+    run_test_methods(TestScaffold.test_scaffold_repository)

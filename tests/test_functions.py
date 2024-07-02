@@ -7,12 +7,11 @@ os.sys.path.insert(0, parent_directory)
 from tests.test_base import TestBase, run_test_methods
 
 from src.scaffold import *
-from src.update import *
 from src.settings import *
 from src.licenses import *
 from src.templates import *
 from src.constants import *
-from src.functions import find_functions_in_file
+from src.functions import find_functions_in_file, get_function_patterns
 
 from utils.file_utils import overwrite_file
 

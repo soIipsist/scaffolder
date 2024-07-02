@@ -65,11 +65,13 @@ def main():
         Argument(name=("-a", "--author")),
         Argument(name=("-y", "--year")),
         Argument(name=("-v", "--repository_visibility"), type=int, choices=[0, 1, 2]),
-        Argument(name=("-s", "--update_template_directory")),
-        Argument(name=("-ud", "--update_destination_directory")),
-        Argument(name=("-f", "--update_files"), nargs="+"),
+        Argument(name=("-f", "--files"), nargs="+"),
         BoolArgument(name=("-r", "--create_repository"), default=create_repository),
         BoolArgument(name=("-g", "--gh_check"), default=gh_check),
+        Argument(name=("-l", "--language"), default=language),
+        Argument(
+            name=("-p", "--function_patterns"), nargs="+", default=function_patterns
+        ),
     ]
     parser_arguments = [Argument(name="parameters", nargs="?", default=None)]
 
