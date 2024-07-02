@@ -35,6 +35,10 @@ class TestScaffold(TestBase):
         self.store_template = store_template
         self.repository_name = repository_name
 
+    def get_destination_dir(self, dest: str):
+        destination_dir = os.path.join(self.get_template_directory(), dest)
+        Template()
+
     def get_scaffold_args(self):
         # get scaffold function args
         args = {
@@ -86,24 +90,27 @@ class TestScaffold(TestBase):
 
     def test_scaffold_repository(self):
         self.create_repository = True
+        self.destination_directory = self.get_destination_dir("android_template")
 
-        # args =
-        self.assertIsNotNone(
-            scaffold_repository(
-                self.create_repository,
-                self.destination_directory,
-                self.repository_name,
-                self.repository_visibility,
-                self.author,
-            )
-        )
+        args = self.get_scaffold_args()
+        args = get_callable_args(scaffold_repository, args)
+        self.assertIsNotNone(scaffold_repository(**args))
 
     def test_create_from_template(self):
         args = self.get_scaffold_args()
         args = get_callable_args(create_from_template, args)
-
         print(args)
+
+        # add sample template
+        d = self.get_template_directory("sample_template")
+        template = Template(d)
+        template.insert()
+
+        destination_directory = os.path.join(
+            self.get_files_directory("scaffold_tests"), "sample_template"
+        )
+        create_from_template(template.template_directory, destination_directory)
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_create_from_template)
+    run_test_methods(TestScaffold.test_scaffold_repository)

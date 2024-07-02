@@ -78,7 +78,7 @@ class Template(SQLiteItem):
 
     def remove_template(self):
         shutil.rmtree(self.template_directory, ignore_errors=True)
-        print(f"{self.template_name} was deleted successfully!")
+        print(f"{self.template_name} was deleted successfully.")
 
     def get_template_description(self):
         return f"Template name: {self.template_name} \nDirectory: {self.template_directory}\nLanguage: {self.language}\n"

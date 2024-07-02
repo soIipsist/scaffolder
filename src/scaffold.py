@@ -25,11 +25,13 @@ import shutil
 def create_from_template(
     template_directory: str = template_directory,
     destination_directory: str = destination_directory,
-    license: str = license,
-    author: str = author,
-    year: str = year,
     store_template: bool = store_template,
 ):
+    if not destination_directory:
+        destination_directory = os.path.join(
+            os.getcwd(), os.path.basename(template_directory)
+        )
+
     templ = Template.get_template(template_directory)
     templ: Template
 
@@ -40,14 +42,12 @@ def create_from_template(
     if store_template:
         templ.add_template(destination_directory)
     else:
-        templ.copy_template(template_directory, destination_directory)
+        templ.copy_template(destination_directory)
 
-    create_license(license, destination_directory, author, year)
-    return templ.template_name
+    return destination_directory, templ.template_name
 
 
 def scaffold_repository(
-    destination_directory: str = destination_directory,
     create_repository: bool = create_repository,
     repository_name: str = repository_name,
     repository_visibility: int = repository_visibility,
@@ -60,12 +60,13 @@ def scaffold_repository(
     git_origin = get_git_origin(author, repository_name)
 
     # initialize project directory
-    if not (is_git_repo(destination_directory)):
+    is_git_repo = is_git_repo(destination_directory)
+    if not is_git_repo:
         create_git_repository(git_origin, repository_visibility)
     else:
         update_git_repository(git_origin, repository_visibility, destination_directory)
 
-    return git_origin
+    return git_origin, is_git_repo
 
 
 def scaffold(
@@ -80,30 +81,32 @@ def scaffold(
     repository_visibility: str = repository_visibility,
 ):
 
-    template_name = create_from_template(
-        template_directory,
-        destination_directory,
-        license,
-        author,
-        year,
-        store_template,
-    )
-
     if not repository_name:
         repository_name = os.path.basename(destination_directory)
 
-    print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
+    destination_directory, template_name = create_from_template(
+        template_directory,
+        destination_directory,
+        store_template,
+    )
 
+    print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
     find_and_replace_in_directory(
         destination_directory, template_name, repository_name, removed_dirs=[".git"]
     )
 
-    scaffold_repository(
+    create_license(license, destination_directory, author, year)
+
+    git_origin, is_git_repo = scaffold_repository(
         create_repository,
         repository_name,
         repository_visibility,
         author,
     )
+
+    if not is_git_repo:
+        shutil.rmtree(destination_directory, ignore_errors=True)
+        clone_repository(git_origin, cwd=os.getcwd())
 
 
 def main():
