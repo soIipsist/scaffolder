@@ -52,7 +52,7 @@ def get_function_prefixes(functions: list):
     return [func.strip().split("\n")[0] for func in functions]
 
 
-def get_updated_functions(source_path: str, update_path: str, patterns: list):
+def get_updated_functions(source_path: str, dest_path: str, patterns: list):
     """
     Return functions dictionary based on type (modified, added or removed).
     """
@@ -61,7 +61,7 @@ def get_updated_functions(source_path: str, update_path: str, patterns: list):
     replaced_functions = []
 
     funcs1 = find_functions_in_file(source_path, patterns)
-    funcs2 = find_functions_in_file(update_path, patterns)
+    funcs2 = find_functions_in_file(dest_path, patterns)
 
     diff_functions = list(set(funcs1).difference(funcs2))
 

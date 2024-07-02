@@ -109,14 +109,18 @@ class TestScaffold(TestBase):
         self.assertTrue(template_name == "android_template")
 
     def test_scaffold(self):
-        self.files = ["sqlite.py", "green", "sqlite_item.py", "bro.py"]
-        self.template_directory = "/Users/p/Desktop/soIipsis/python_template"
+
         args = self.get_scaffold_args()
         scaffold(**args)
 
-    def test_update(self):
-        pass
+    def test_update_destination_files(self):
+        self.files = ["sqlite.py", "green", "sqlite_item.py", "bro.py", "parser.py"]
+        self.template_directory = "/Users/p/Desktop/soIipsis/python_template"
+        self.destination_directory = self.get_template_directory()
+        update_destination_files(
+            self.files, self.template_directory, self.destination_directory
+        )
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_scaffold)
+    run_test_methods(TestScaffold.test_update_destination_files)

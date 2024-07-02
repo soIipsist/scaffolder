@@ -248,14 +248,24 @@ def download_file(
         print(e)
 
 
-def find_files(directory: str, file_names: list):
+def find_files(directory: str, file_names: list, ignore_dirs: list = []):
     """
     Given an array of file names, return a list of valid file paths.
+    Ignore directories specified in ignore_dirs.
     """
 
     files = []
 
+    ignore_dirs_set = set(ignore_dirs)
+
     for root, dirs, directory_files in os.walk(directory):
+        # Filter out the directories to be ignored
+        dirs[:] = [
+            d
+            for d in dirs
+            if os.path.relpath(os.path.join(root, d), directory) not in ignore_dirs_set
+        ]
+
         for file in directory_files:
             file_path = os.path.join(root, file)
             normalized_path = os.path.normpath(file_path)

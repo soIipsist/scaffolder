@@ -35,47 +35,29 @@ def update_destination_files(
     if not files:
         return
 
-    print(
-        f'Updating changed files from "{template_directory}" to "{destination_directory}"...'
-    )
-
     # find specified files in source directory
 
-    files = find_files(template_directory, files)
-
+    files = find_files(template_directory, files, ["venv"])
     funcs = []
     updated_content = ""
 
     for file in files:
 
-        source_file_name = os.path.basename(file)
-        dir_name = os.path.dirname(file)
+        rel_path = os.path.relpath(file, template_directory)
+        dest_file = os.path.join(destination_directory, rel_path)
 
-        if dir_name != template_directory:
-            base_dir = os.path.basename(os.path.dirname(file))
-            update_path = os.path.normpath(
-                f"{destination_directory}/{base_dir}/{source_file_name}"
-            )
+        if not os.path.exists(dest_file):
+            print(f"Copying from {file} to {dest_file}")
+            # shutil.copyfile(file, dest_file)
         else:
-            update_path = os.path.normpath(
-                f"{destination_directory}/{source_file_name}"
-            )
-
-        if not is_valid_path(update_path, False):  # file does not exist, copy it
-            print(
-                f"File '{source_file_name}' not found in '{destination_directory}'. \n Copying to '{update_path}'..."
-            )
-            subprocess.run(["cp", file, update_path])
-        else:
-            # get updated content and write it to file
             function_patterns = get_function_patterns(file, language, function_patterns)
-            funcs = get_updated_functions(file, update_path, function_patterns)
-            content = get_updated_file_content(funcs, update_path)
+            funcs = get_updated_functions(file, dest_file, function_patterns)
+            content = get_updated_file_content(funcs, dest_file)
 
-            with open(update_path, "w", encoding="utf-8") as file:
-                file.write(content)
+        # with open(update_path, "w", encoding="utf-8") as file:
+        #     file.write(content)
 
-        pp.pprint([f"Source path: {file}", f"Update path: {update_path}"])
+        # pp.pprint([f"Source path: {file}", f"Update path: {update_path}"])
 
     return files, funcs, updated_content
 
