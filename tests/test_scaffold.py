@@ -11,7 +11,7 @@ from src.licenses import *
 from src.templates import *
 from src.constants import *
 from utils.sqlite_connection import db_path, create_db, tables, values
-
+from src.repository import delete_git_repository
 from utils.func_utils import get_callable_args
 
 licenses = ["mit", "afl-3.0"]
@@ -83,13 +83,29 @@ class TestScaffold(TestBase):
             scaffold(**args)
 
     def test_scaffold_repository(self):
-        self.create_repository = True
+        self.create_repository = False
+        # self.create_repository = True
+        self.git_origin = "https://github.com/soIipsist/sample_template"
+        self.destination_directory = self.get_template_directory()
 
-        self.assertIsNotNone(
+        # delete_git_repository(self.git_origin, self.destination_directory)
+        # return
+        self.assertIsNone(
             scaffold_repository(
-                self.git_origin, self.create_repository, self.repository_visibility
+                self.git_origin,
+                self.create_repository,
+                self.repository_visibility,
+                self.destination_directory,
             )
         )
+        # self.assertIsNotNone(
+        #     scaffold_repository(
+        #         self.git_origin,
+        #         self.create_repository,
+        #         self.repository_visibility,
+        #         self.destination_directory,
+        #     )
+        # )
 
     def test_create_from_template(self):
         args = self.get_scaffold_args()
@@ -123,4 +139,4 @@ class TestScaffold(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_update_destination_files)
+    run_test_methods(TestScaffold.test_scaffold_repository)

@@ -34,9 +34,7 @@ def get_repository_visibility(repository_visibility: int):
 
 
 def is_git_repo(repository: str):
-    results = execute_commands(
-        [["git", "rev-parse", "--show-toplevel"]], cwd=repository
-    )
+    results = execute_commands([["git", "status"]], cwd=repository)
     return len(results) > 0 and results[0].stdout.strip() == repository
 
 

@@ -17,7 +17,7 @@ from src.repository import (
 )
 from src.licenses import create_license
 from src.templates import Template
-from utils.file_utils import find_and_replace_in_directory, find_files
+from utils.file_utils import find_and_replace_in_directory, find_files, overwrite_file
 from utils.str_utils import check_str_or_int
 from utils.parser import *
 from src.constants import *
@@ -35,11 +35,11 @@ def update_destination_files(
     if not files:
         return
 
-    # find specified files in source directory
-
     files = find_files(template_directory, files, ["venv"])
     funcs = []
     updated_content = ""
+
+    # if files param is specified, make sure to copy or update those files
 
     for file in files:
 
@@ -48,16 +48,18 @@ def update_destination_files(
 
         if not os.path.exists(dest_file):
             print(f"Copying from {file} to {dest_file}")
-            # shutil.copyfile(file, dest_file)
+            shutil.copyfile(file, dest_file)
         else:
-            function_patterns = get_function_patterns(file, language, function_patterns)
-            funcs = get_updated_functions(file, dest_file, function_patterns)
-            content = get_updated_file_content(funcs, dest_file)
+            function_patterns = get_function_patterns(
+                dest_file, language, function_patterns
+            )
 
-        # with open(update_path, "w", encoding="utf-8") as file:
-        #     file.write(content)
+            if function_patterns:
+                funcs = get_updated_functions(file, dest_file, function_patterns)
+                content = get_updated_file_content(funcs, dest_file)
+                overwrite_file(content)
 
-        # pp.pprint([f"Source path: {file}", f"Update path: {update_path}"])
+        pp.pprint([f"Source path: {file}", f"Update path: {dest_file}"])
 
     return files, funcs, updated_content
 
@@ -87,12 +89,13 @@ def scaffold_repository(
     git_origin: str,
     create_repository: bool = create_repository,
     repository_visibility: int = repository_visibility,
+    destination_directory: str = destination_directory,
 ):
     if not create_repository:
         return
 
     if not is_git_repo(destination_directory):
-        create_git_repository(git_origin, repository_visibility)
+        create_git_repository(git_origin, repository_visibility, destination_directory)
     else:
         update_git_repository(git_origin, repository_visibility, destination_directory)
 
@@ -116,28 +119,27 @@ def scaffold(
 ):
 
     git_origin = get_git_origin(author, repository_name)
+
+    # create all template files
     destination_directory, template_name = create_from_template(
         template_directory,
         destination_directory,
         store_template,
     )
 
+    update_destination_files(
+        files, template_directory, destination_directory, language, function_patterns
+    )
+    create_license(license, destination_directory, author, year)
+
+    # replace name with new name
     print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
     find_and_replace_in_directory(
         destination_directory, template_name, repository_name, removed_dirs=[".git"]
     )
 
-    create_license(license, destination_directory, author, year)
-
-    # if files param is specified, make sure to only copy those files
-    update_destination_files(
-        files, template_directory, destination_directory, language, function_patterns
-    )
-    return
     scaffold_repository(
-        git_origin,
-        create_repository,
-        repository_visibility,
+        git_origin, create_repository, repository_visibility, destination_directory
     )
 
     # clone repository
