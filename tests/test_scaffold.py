@@ -33,6 +33,9 @@ class TestScaffold(TestBase):
         self.store_template = store_template
         self.repository_name = repository_name
         self.git_origin = get_git_origin(self.author, self.repository_name)
+        self.files = []
+        self.function_patterns = []
+        self.language = None
 
     def get_templ_dir(self, dest: str, insert_template=True):
         destination_dir = os.path.join(self.get_template_directory(""), dest)
@@ -56,6 +59,9 @@ class TestScaffold(TestBase):
             "create_repository": self.create_repository,
             "repository_visibility": self.repository_visibility,
             "store_template": self.store_template,
+            "files": self.files,
+            "function_patterns": self.function_patterns,
+            "language": self.language,
         }
 
         return args
@@ -103,10 +109,14 @@ class TestScaffold(TestBase):
         self.assertTrue(template_name == "android_template")
 
     def test_scaffold(self):
+        self.files = ["sqlite.py", "green", "sqlite_item.py", "bro.py"]
+        self.template_directory = "/Users/p/Desktop/soIipsis/python_template"
         args = self.get_scaffold_args()
-        print(args)
-        # scaffold(**args)
+        scaffold(**args)
+
+    def test_update(self):
+        pass
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_scaffold_repository)
+    run_test_methods(TestScaffold.test_scaffold)

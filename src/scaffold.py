@@ -3,6 +3,11 @@ import os
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
+from src.functions import (
+    get_function_patterns,
+    get_updated_file_content,
+    get_updated_functions,
+)
 from src.repository import (
     clone_git_repository,
     create_git_repository,
@@ -12,13 +17,67 @@ from src.repository import (
 )
 from src.licenses import create_license
 from src.templates import Template
-from utils.file_utils import (
-    find_and_replace_in_directory,
-)
+from utils.file_utils import find_and_replace_in_directory, find_files
 from utils.str_utils import check_str_or_int
 from utils.parser import *
 from src.constants import *
 import shutil
+
+
+def update_destination_files(
+    files: list = [],
+    template_directory: str = None,
+    destination_directory: str = None,
+    language: str = None,
+    function_patterns: list = None,
+):
+
+    if not files:
+        return
+
+    print(
+        f'Updating changed files from "{template_directory}" to "{destination_directory}"...'
+    )
+
+    # find specified files in source directory
+
+    files = find_files(template_directory, files)
+
+    funcs = []
+    updated_content = ""
+
+    for file in files:
+
+        source_file_name = os.path.basename(file)
+        dir_name = os.path.dirname(file)
+
+        if dir_name != template_directory:
+            base_dir = os.path.basename(os.path.dirname(file))
+            update_path = os.path.normpath(
+                f"{destination_directory}/{base_dir}/{source_file_name}"
+            )
+        else:
+            update_path = os.path.normpath(
+                f"{destination_directory}/{source_file_name}"
+            )
+
+        if not is_valid_path(update_path, False):  # file does not exist, copy it
+            print(
+                f"File '{source_file_name}' not found in '{destination_directory}'. \n Copying to '{update_path}'..."
+            )
+            subprocess.run(["cp", file, update_path])
+        else:
+            # get updated content and write it to file
+            function_patterns = get_function_patterns(file, language, function_patterns)
+            funcs = get_updated_functions(file, update_path, function_patterns)
+            content = get_updated_file_content(funcs, update_path)
+
+            with open(update_path, "w", encoding="utf-8") as file:
+                file.write(content)
+
+        pp.pprint([f"Source path: {file}", f"Update path: {update_path}"])
+
+    return files, funcs, updated_content
 
 
 def create_from_template(
@@ -69,8 +128,12 @@ def scaffold(
     clone_repository: bool = clone_git_repository,
     store_template: bool = store_template,
     repository_visibility: str = repository_visibility,
+    files: list = files,
+    language: str = language,
+    function_patterns: list = function_patterns,
 ):
 
+    git_origin = get_git_origin(author, repository_name)
     destination_directory, template_name = create_from_template(
         template_directory,
         destination_directory,
@@ -83,8 +146,12 @@ def scaffold(
     )
 
     create_license(license, destination_directory, author, year)
-    git_origin = get_git_origin(author, repository_name)
 
+    # if files param is specified, make sure to only copy those files
+    update_destination_files(
+        files, template_directory, destination_directory, language, function_patterns
+    )
+    return
     scaffold_repository(
         git_origin,
         create_repository,

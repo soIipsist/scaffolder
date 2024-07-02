@@ -246,3 +246,23 @@ def download_file(
 
     except Exception as e:
         print(e)
+
+
+def find_files(directory: str, file_names: list):
+    """
+    Given an array of file names, return a list of valid file paths.
+    """
+
+    files = []
+
+    for root, dirs, directory_files in os.walk(directory):
+        for file in directory_files:
+            file_path = os.path.join(root, file)
+            normalized_path = os.path.normpath(file_path)
+            base_name = os.path.basename(file_path)
+
+            # Check if the file path or base name matches any in the array
+            if file_path in file_names or base_name in file_names:
+                files.append(normalized_path)
+
+    return set(files)

@@ -2,7 +2,7 @@ import os
 from pprint import pp
 import re
 import subprocess
-from utils.file_utils import read_file
+from utils.file_utils import find_files, read_file
 from utils.path_utils import is_valid_path
 
 
@@ -24,26 +24,6 @@ def get_function_patterns(
     if len(lang) > 0:
         function_patterns = getattr(lang[0], "function_patterns")
         return function_patterns if function_patterns else default_patterns
-
-
-def find_files(directory: str, file_names: list):
-    """
-    Given an array of file names, return a list of valid file paths.
-    """
-
-    files = []
-
-    for root, dirs, directory_files in os.walk(directory):
-        for file in directory_files:
-            file_path = os.path.join(root, file)
-            normalized_path = os.path.normpath(file_path)
-            base_name = os.path.basename(file_path)
-
-            # Check if the file path or base name matches any in the array
-            if file_path in file_names or base_name in file_names:
-                files.append(normalized_path)
-
-    return set(files)
 
 
 def find_functions_in_file(file_path: str, patterns: list):
@@ -135,77 +115,8 @@ def get_updated_file_content(functions: dict, update_path: str):
     return updated_content
 
 
-# def get_function_names(updated_content, patterns):
-#     """ Return function names from updated content. """
+def get_function_names(funcs: list, names: list = []):
+    """Return functions that contain the strings specified."""
 
-#     function_names = []
-
-#     for u in updated_content.splitlines():
-#         for pattern in patterns:
-#             match = re.match(pattern, u)
-
-#             if match:
-#                 function_names.append(match.group(0))
-
-
-#     return updated_content
-
-
-def update(
-    files: list = [],
-    update_template_directory: str = None,
-    update_destination_directory: str = None,
-    language: str = None,
-    function_patterns: list = None,
-):
-
-    if not files:
-        files = [file for file in os.listdir(update_template_directory)]
-
-    print(
-        f'Updating changed files from "{update_template_directory}" to "{update_destination_directory}"...'
-    )
-
-    # find specified files in source directory
-
-    source_files = find_files(update_template_directory, files)
-    update_template_directory = os.path.normpath(update_template_directory)
-    update_destination_directory = os.path.normpath(update_destination_directory)
-
-    funcs = []
-    updated_content = ""
-
-    for source_path in source_files:
-
-        source_file_name = os.path.basename(source_path)
-        dir_name = os.path.dirname(source_path)
-
-        if dir_name != update_template_directory:
-            base_dir = os.path.basename(os.path.dirname(source_path))
-            update_path = os.path.normpath(
-                f"{update_destination_directory}/{base_dir}/{source_file_name}"
-            )
-        else:
-            update_path = os.path.normpath(
-                f"{update_destination_directory}/{source_file_name}"
-            )
-
-        if not is_valid_path(update_path, False):  # file does not exist, copy it
-            print(
-                f"File '{source_file_name}' not found in '{update_destination_directory}'. \n Copying to '{update_path}'..."
-            )
-            subprocess.run(["cp", source_path, update_path])
-        else:
-            # get updated content and write it to file
-            function_patterns = get_function_patterns(
-                source_path, language, function_patterns
-            )
-            funcs = get_updated_functions(source_path, update_path, function_patterns)
-            content = get_updated_file_content(funcs, update_path)
-
-            with open(update_path, "w", encoding="utf-8") as file:
-                file.write(content)
-
-        pp.pprint([f"Source path: {source_path}", f"Update path: {update_path}"])
-
-    return source_files, funcs, updated_content
+    functions = [func for func in funcs if any(name in func for name in names)]
+    return functions
