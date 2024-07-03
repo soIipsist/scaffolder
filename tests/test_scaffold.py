@@ -112,15 +112,24 @@ class TestScaffold(TestBase):
         self.assertTrue(template_name == "android_template")
 
     def test_scaffold(self):
-
-        args = self.get_scaffold_args()
-
         # 1) new template without creating repo
         # 2) new template without creating repo with files
         # 3) new template without creating repo with files and function names
         # 4) new template creating repo
         # 5) new template creating repo with files
         # 6) new template creating repo with files and function names
+
+        self.create_repository = False
+        self.template_directory = self.get_template_directory()
+        self.destination_directory = self.get_destination_directory("sample_template_2")
+        # self.repository_name = None
+
+        self.files = ["hello.py", "update.py"]
+
+        self.function_names = ["hello"]
+        # self.create_repository = True
+
+        args = self.get_scaffold_args()
         scaffold(**args)
 
     def test_update_destination_files(self):
@@ -132,7 +141,7 @@ class TestScaffold(TestBase):
         # template_directory of a predefined template
         self.template_directory = self.get_template_directory()
         self.destination_directory = self.get_destination_directory()
-        self.function_names = ["hello"]
+        self.function_names = ["hello2"]
 
         args = get_callable_args(update_destination_files, self.get_scaffold_args())
         print(args)
@@ -144,4 +153,4 @@ class TestScaffold(TestBase):
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_update_destination_files)
+    run_test_methods(TestScaffold.test_scaffold)
