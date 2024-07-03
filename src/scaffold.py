@@ -49,18 +49,17 @@ def update_destination_files(
         dest_file = os.path.join(destination_directory, rel_path)
 
         if not os.path.exists(dest_file):
-            print(f"Copying from {file} to {dest_file}")
+            print(f"Copying from '{file}' to '{dest_file}'")
             shutil.copyfile(file, dest_file)
         else:
-            function_patterns = get_function_patterns(
-                dest_file, language, function_patterns
-            )
+            # file exists in template and in dest
+            function_patterns = get_function_patterns(file, language, function_patterns)
 
             if function_patterns:
                 funcs = get_updated_functions(file, dest_file, function_patterns)
                 funcs = get_function_names(funcs, function_names)
                 content = get_updated_file_content(funcs, dest_file)
-                overwrite_file(content)
+                overwrite_file(dest_file, content)
 
         pp.pprint([f"Source path: {file}", f"Update path: {dest_file}"])
 

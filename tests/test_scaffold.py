@@ -49,7 +49,7 @@ class TestScaffold(TestBase):
             templ.insert()
         return destination_dir
 
-    def get_destination_directory(self, dest: str):
+    def get_destination_directory(self, dest: str = "sample_template"):
         return os.path.join(self.get_files_directory("scaffold_tests"), dest)
 
     def get_scaffold_args(self):
@@ -114,26 +114,33 @@ class TestScaffold(TestBase):
     def test_scaffold(self):
 
         args = self.get_scaffold_args()
+
+        # 1) new template without creating repo
+        # 2) new template without creating repo with files
+        # 3) new template without creating repo with files and function names
+        # 4) new template creating repo
+        # 5) new template creating repo with files
+        # 6) new template creating repo with files and function names
         scaffold(**args)
 
     def test_update_destination_files(self):
         # files are defined
-        self.files = ["sqlite.py", "green", "sqlite_item.py", "bro.py", "parser.py"]
+        self.files = ["hello.py"]
         # files are not defined
-        self.files = []
+        # self.files = []
 
         # template_directory of a predefined template
         self.template_directory = self.get_template_directory()
         self.destination_directory = self.get_destination_directory()
 
-        update_destination_files(
-            self.template_directory,
-            self.destination_directory,
-            self.language,
-            self.files,
-            self.function_patterns,
-        )
+        args = get_callable_args(update_destination_files, self.get_scaffold_args())
+        print(args)
+
+        if not self.files:
+            self.assertIsNone(update_destination_files(**args))
+        else:
+            self.assertIsNotNone(update_destination_files(**args))
 
 
 if __name__ == "__main__":
-    run_test_methods(TestScaffold.test_scaffold_repository)
+    run_test_methods(TestScaffold.test_update_destination_files)
