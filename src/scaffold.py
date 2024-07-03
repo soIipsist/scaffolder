@@ -74,6 +74,7 @@ def create_from_template(
 
     templ = Template.get_template(template_directory)
     templ: Template
+    new_templ: Template = None
 
     if templ is None:
         response = input(
@@ -81,12 +82,16 @@ def create_from_template(
         )
         if response in ["yes", "y"]:
             new_templ = Template(template_directory=template_directory)
-            new_templ.add_template(template_directory)
+            new_templ = new_templ.add_template(template_directory, True)
         else:
             return None, None
 
-        # add newly created template to db if store_template is true
-    templ.add_template(destination_directory)
+        templ = Template(
+            template_directory=template_directory,
+            template_name=os.path.basename(destination_directory),
+        )
+        print("hi", templ.template_directory)
+    templ = templ.add_template(destination_directory, store_template)
     return destination_directory, templ.template_name
 
 

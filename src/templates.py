@@ -107,9 +107,14 @@ class Template(SQLiteItem):
             clone_git_repository(self.repository_url, cwd=os.getcwd())
 
         # copy template
-        template_dir = self.copy_template(destination_directory)
-        self.template_directory = template_dir
-        print(f"New template directory set to: {self.template_directory}.")
+        if self.template_directory != destination_directory:
+            try:
+                self.copy_template(destination_directory)
+                print(f"New template directory set to: {destination_directory}.")
+            except Exception as e:
+                print("Template already exists.")
+
+        self.template_directory = destination_directory
 
         if store_template:
             i = self.insert()
