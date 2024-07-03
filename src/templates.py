@@ -53,8 +53,8 @@ class Template(SQLiteItem):
             parts = repository_url[len("https://github.com/") :].split("/")
 
             if len(parts) >= 2 and parts[1]:
-                template_name = os.path.basename(repository_url).split(".git")[0]
-                self.template_directory = os.path.join(os.getcwd(), template_name)
+                self.template_name = os.path.basename(repository_url).split(".git")[0]
+                self.template_directory = os.path.join(os.getcwd(), self.template_name)
             return repository_url
 
     def copy_template(self, destination_directory: str):
@@ -95,6 +95,7 @@ class Template(SQLiteItem):
         self,
         destination_directory: str = None,
         store_template: bool = True,
+        copy_template: bool = True,
     ):
 
         destination_directory = (
@@ -106,8 +107,7 @@ class Template(SQLiteItem):
         if self.repository_url:
             clone_git_repository(self.repository_url, cwd=os.getcwd())
 
-        # copy template
-        if self.template_directory != destination_directory:
+        if copy_template:
             try:
                 self.copy_template(destination_directory)
                 print(f"New template directory set to: {destination_directory}.")
@@ -157,7 +157,8 @@ def main():
         Argument(name=("-t", "--template_directory"), default=template_directory),
         Argument(name=("-n", "--template_name"), default=repository_name),
         Argument(name=("-l", "--language"), default="python"),
-        Argument(name=("-s", "--store_template"), type=bool, default=True),
+        BoolArgument(name=("-s", "--store_template"), type=bool, default=True),
+        BoolArgument(name=("-c", "--copy_template"), type=bool, default=True),
         Argument(name=("-d", "--destination_directory"), default=destination_directory),
     ]
 

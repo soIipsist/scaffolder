@@ -70,6 +70,7 @@ def create_from_template(
     template_directory: str = template_directory,
     destination_directory: str = destination_directory,
     store_template: bool = store_template,
+    copy_template: bool = True,
 ):
 
     templ = Template.get_template(template_directory)
@@ -82,7 +83,7 @@ def create_from_template(
         )
         if response in ["yes", "y"]:
             new_templ = Template(template_directory=template_directory)
-            new_templ = new_templ.add_template(template_directory, True)
+            new_templ = new_templ.add_template(template_directory, True, False)
         else:
             return None, None
 
@@ -90,8 +91,8 @@ def create_from_template(
             template_directory=template_directory,
             template_name=os.path.basename(destination_directory),
         )
-        print("hi", templ.template_directory)
-    templ = templ.add_template(destination_directory, store_template)
+
+    templ = templ.add_template(destination_directory, store_template, copy_template)
     return destination_directory, templ.template_name
 
 
@@ -131,13 +132,13 @@ def scaffold(
 
     git_origin = get_git_origin(author, repository_name)
 
-    # create all template files
+    # copy template itself if files are not defined
+    copy_template = len(files) == 0
     destination_directory, template_name = create_from_template(
-        template_directory,
-        destination_directory,
-        store_template,
+        template_directory, destination_directory, store_template, copy_template
     )
 
+    print("DEST", destination_directory, template_name)
     # if destination_directory and template_name:
     #     update_destination_files(
     #         template_directory,
