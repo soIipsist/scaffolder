@@ -105,7 +105,7 @@ def scaffold(
     author: str = author,
     year: str = year,
     create_repository: bool = create_repository,
-    clone_repository: bool = clone_git_repository,
+    clone_repository: bool = clone_repository,
     store_template: bool = store_template,
     repository_visibility: str = repository_visibility,
     files: list = files,
@@ -114,7 +114,6 @@ def scaffold(
     function_names: list = function_names,
 ):
 
-    git_origin = get_git_origin(author, repository_name)
     files = find_files(template_directory, files, ["venv"])
 
     # copy template if files are not defined
@@ -125,13 +124,18 @@ def scaffold(
     if not original_template:
         return
 
-    new_template = original_template.add_template(
-        destination_directory, store_template, copy_template
+    repository_name = (
+        repository_name if repository_name else os.path.basename(destination_directory)
     )
 
-    return
+    new_template = Template(
+        template_directory=template_directory,
+        template_name=repository_name,
+    ).add_template(destination_directory, store_template, copy_template)
 
-    if destination_directory:
+    new_template: Template
+
+    if new_template:
         update_destination_files(
             template_directory,
             destination_directory,
@@ -141,27 +145,29 @@ def scaffold(
             function_names,
         )
 
-        print(license)
         create_license(license, destination_directory, author, year)
 
-        print(f"Replacing all instances of '{repository_name}' with '{template_name}'.")
+        print(
+            f"Replacing all instances of '{original_template.template_name}' with '{new_template.template_name}'."
+        )
 
         find_and_replace_in_directory(
             destination_directory,
-            repository_name,
-            template_name,
+            original_template.template_name,
+            new_template.template_name,
             removed_dirs=[".git"],
         )
+
+        git_origin = get_git_origin(author, repository_name)
 
         scaffold_repository(
             git_origin, create_repository, repository_visibility, destination_directory
         )
 
-        return
         # clone repository
         if clone_repository:
             shutil.rmtree(destination_directory, ignore_errors=True)
-            clone_repository(git_origin, cwd=os.getcwd())
+            clone_repository(git_origin, cwd=destination_directory)
 
 
 def main():
@@ -170,8 +176,8 @@ def main():
         Argument(name=("-t", "--template_directory"), default=template_directory),
         Argument(name=("-d", "--destination_directory"), default=destination_directory),
         Argument(name=("-n", "--repository_name"), default=repository_name),
-        BoolArgument(name=("-c", "--create_repository"), default=create_repository),
-        BoolArgument(name=("-cl", "--clone_repository"), default=clone_repository),
+        BoolArgument(name=("-r", "--create_repository"), default=create_repository),
+        BoolArgument(name=("-c", "--clone_repository"), default=clone_repository),
         BoolArgument(name=("-s", "--store_template"), default=store_template),
         Argument(name=("-l", "--license"), default=license),
         Argument(name=("-a", "--author"), default=author),
@@ -183,7 +189,7 @@ def main():
             default=repository_visibility,
         ),
         Argument(name=("-f", "--files"), nargs="+", default=files),
-        Argument(name=("-l", "--language"), default=language),
+        Argument(name=("-la", "--language"), default=language),
         Argument(
             name=("-p", "--function_patterns"), nargs="+", default=function_patterns
         ),
@@ -199,9 +205,7 @@ def main():
 
     parser = Parser(parser_arguments)
     args = parser.get_command_args()
-
-    print(args)
-    # scaffold(**args)
+    scaffold(**args)
 
 
 if __name__ == "__main__":

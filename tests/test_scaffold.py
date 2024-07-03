@@ -97,7 +97,7 @@ class TestScaffold(TestBase):
         )
 
     def test_scaffold(self):
-        Template().delete("all")
+        # Template().delete("all")
         # templ = Template(self.get_template_directory())
         # templ = Template(self.git_origin)
         # print(templ.template_directory, templ.repository_url, templ.template_name)
@@ -113,13 +113,13 @@ class TestScaffold(TestBase):
         self.destination_directory = self.get_destination_directory("sample_template_2")
         # self.repository_name = None
 
-        self.files = ["hello.py"]
+        self.files = []
         self.function_names = []
-        self.license = None
-        # self.create_repository = True
+        self.license = "mit-0"
+        self.store_template = True
+        self.create_repository = True
 
         args = self.get_scaffold_args()
-        # print(args)
         scaffold(**args)
 
     def test_update_destination_files(self):

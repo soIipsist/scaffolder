@@ -58,6 +58,10 @@ def clone_git_repository(git_origin: str, cwd: str = None):
     return cwd if cwd is not None else os.getcwd()
 
 
+def ignore_git_files(directory, files):
+    return [f for f in files if f == ".git"]
+
+
 def rename_repo(git_origin: str, repository_name: str):
     command = f"gh repo rename {repository_name} -R {git_origin} --yes"
     subprocess.run(command, shell=True)

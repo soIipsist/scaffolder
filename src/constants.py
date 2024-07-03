@@ -19,11 +19,12 @@ languages = Language().select_all()
 # scaffolder metadata
 template_directory = scaffolder_metadata.get("template_directory", os.getcwd())
 destination_directory = scaffolder_metadata.get(
-    "destination_directory",
-    os.path.join(os.getcwd(), os.path.basename(template_directory)),
-)
-repository_name = scaffolder_metadata.get(
-    "repository_name", os.path.basename(destination_directory)
+    "destination_directory"
+) or os.path.join(os.getcwd(), os.path.basename(template_directory))
+
+
+repository_name = scaffolder_metadata.get("repository_name") or os.path.basename(
+    destination_directory
 )
 
 # update vars

@@ -10,7 +10,7 @@ import shutil
 from utils.sqlite_item import *
 from data.sqlite_data import *
 
-from src.repository import clone_git_repository
+from src.repository import clone_git_repository, ignore_git_files
 
 
 class Template(SQLiteItem):
@@ -34,10 +34,10 @@ class Template(SQLiteItem):
         self.filter_condition = f"template_name = {self.template_name} OR template_directory = {self.template_directory} OR repository_url = {self.repository_url}"
 
     def get_template_directory(self, template_directory: str = None):
-        if template_directory is not None and not os.path.exists(template_directory):
-            raise FileNotFoundError(
-                f"Template directory {self.template_directory} does not exist."
-            )
+        # if template_directory is not None and not os.path.exists(template_directory):
+        #     raise FileNotFoundError(
+        #         f"Template directory {template_directory} does not exist."
+        #     )
         return template_directory
 
     def get_template_name(self, template_name: str = None):
@@ -74,7 +74,10 @@ class Template(SQLiteItem):
 
         print(f"Copying template {self.template_directory} to {destination_directory}.")
         shutil.copytree(
-            self.template_directory, destination_directory, dirs_exist_ok=True
+            self.template_directory,
+            destination_directory,
+            dirs_exist_ok=True,
+            ignore=ignore_git_files,
         )
         return destination_directory
 

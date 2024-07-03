@@ -1,11 +1,7 @@
 {
-    "template_directory": "/Users/p/Desktop/soIipsis/sample_template",
-    "files": [
-        "sqlite.py",
-        "sqlite_item.py",
-        "sqlite_connection.py",
-        "parser.py"
-    ],
+    "template_directory": "/Users/p/Desktop/soIipsis/android_template",
+    "destination_directory": "/Users/p/Desktop/soIipsis/notflix",
+    "files": [],
     "gh_check": false,
     "create_repository": 0
 }
