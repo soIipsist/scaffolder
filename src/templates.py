@@ -189,8 +189,13 @@ def main():
     func = parser.get_command_function(cmd_dict)
 
     if not func:
-        template = Template.get_template(args.get("template"))
-        print(template)
+        arg = args.get("template")
+        if not arg:
+            templates = Template().select_all()
+            print(templates)
+        else:
+            template = Template.get_template(arg)
+            print(template)
     else:
         args = parser.get_callable_args(func)
         func(**args)

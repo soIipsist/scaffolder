@@ -1,10 +1,6 @@
 #!/bin/bash
 
-RED='\033[1;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[1;34m'
-NC='\033[0m'
 
 install_dependency() {
 
@@ -44,9 +40,7 @@ gh_authenticate() {
 }
 
 main() {
-    printf "${BLUE}scaffolder > ${BLUE}"
-    read -e -p "" OPTION
-
+    read -rep "$(echo -e "${GREEN}scaffolder > ${GREEN}")" OPTION
     OPTIONS=($OPTION)
     history -s "$OPTION"
 
@@ -78,17 +72,16 @@ main() {
 loop=1
 OPTIONS=""
 
+install_dependency "gh"
+install_dependency "jq"
+
+gh_check=$(jq -r '.gh_check' 'data/scaffolder.json')
 cwd=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 cd "$cwd/src"
 HISTSIZE=100
 
 history -r script_history
-
-install_dependency "gh"
-install_dependency "jq"
-
-gh_check=$(jq -r '.gh_check' scaffolder.json)
 
 if [ $gh_check == 'true' ]; then
     gh_authenticate

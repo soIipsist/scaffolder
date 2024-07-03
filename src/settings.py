@@ -68,7 +68,7 @@ def main():
         Argument(name=("-f", "--files"), nargs="+"),
         BoolArgument(name=("-r", "--create_repository"), default=create_repository),
         BoolArgument(name=("-g", "--gh_check"), default=gh_check),
-        Argument(name=("-l", "--language"), default=language),
+        Argument(name=("-la", "--language"), default=language),
         Argument(
             name=("-p", "--function_patterns"), nargs="+", default=function_patterns
         ),
