@@ -125,13 +125,14 @@ class TestScaffold(TestBase):
 
     def test_update_destination_files(self):
         # files are defined
-        self.files = ["hello.py"]
+        self.files = ["hello.py", "update.py"]
         # files are not defined
         # self.files = []
 
         # template_directory of a predefined template
         self.template_directory = self.get_template_directory()
         self.destination_directory = self.get_destination_directory()
+        self.function_names = ["hello"]
 
         args = get_callable_args(update_destination_files, self.get_scaffold_args())
         print(args)

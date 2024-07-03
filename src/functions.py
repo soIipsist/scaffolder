@@ -115,9 +115,20 @@ def get_updated_file_content(functions: dict, update_path: str):
     return updated_content
 
 
-def get_function_names(funcs: list, names: list = []):
+def get_function_names(funcs: dict, names: list = []):
     """Return functions that contain the strings specified."""
     if not names:
         return funcs
-    functions = [func for func in funcs if any(name in func for name in names)]
-    return functions
+
+    for key, val in funcs.items():
+        new_val = []
+
+        for name in names:
+            for v in val:
+                match = re.match(f"(.*?){name}\\((.*?)\\)", v)
+                if match:
+                    new_val.append(v)
+
+        funcs[key] = new_val
+    # functions = [func for func in funcs if any(name in func for name in names)]
+    return funcs
