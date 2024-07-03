@@ -45,10 +45,13 @@ def update_destination_files(
     for file in files:
 
         rel_path = os.path.relpath(file, template_directory)
+
+        # check if directory of rel_path exists in dest
         dest_file = os.path.join(destination_directory, rel_path)
 
         if not os.path.exists(dest_file):
             print(f"Copying from '{file}' to '{dest_file}'")
+            os.makedirs(os.path.dirname(dest_file), exist_ok=True)
             shutil.copyfile(file, dest_file)
         else:
             # file exists in template and in dest

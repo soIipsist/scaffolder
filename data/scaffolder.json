@@ -1,7 +1,11 @@
 {
-    "template_directory": "/Users/p/Desktop/soIipsis/android_template",
+    "template_directory": "/Users/p/Desktop/soIipsis/python_template",
     "destination_directory": "/Users/p/Desktop/soIipsis/notflix",
-    "files": [],
+    "files": [
+        "sqlite.py",
+        "sqlite_item.py",
+        "parser.py"
+    ],
     "gh_check": false,
     "create_repository": 0
 }
