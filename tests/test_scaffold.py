@@ -31,7 +31,7 @@ class TestScaffold(TestBase):
         self.create_repository = create_repository
         self.repository_visibility = repository_visibility
         self.store_template = store_template
-        self.repository_name = repository_name
+        self.repository_name = None
         self.git_origin = get_git_origin(self.author, self.repository_name)
         self.files = []
         self.function_patterns = function_patterns
@@ -96,21 +96,6 @@ class TestScaffold(TestBase):
             )
         )
 
-    def test_create_from_template(self):
-        args = self.get_scaffold_args()
-        args = get_callable_args(create_from_template, args)
-        print(args)
-
-        destination_directory = self.get_destination_directory("android_template")
-        template_directory = self.get_templ_dir("android_template")
-
-        print(template_directory)
-        self.assertTrue(os.path.exists(template_directory))
-        destination_directory, template_name = create_from_template(
-            template_directory, destination_directory
-        )
-        self.assertTrue(template_name == "android_template")
-
     def test_scaffold(self):
         Template().delete("all")
         # templ = Template(self.get_template_directory())
@@ -134,6 +119,7 @@ class TestScaffold(TestBase):
         # self.create_repository = True
 
         args = self.get_scaffold_args()
+        # print(args)
         scaffold(**args)
 
     def test_update_destination_files(self):

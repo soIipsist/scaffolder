@@ -34,7 +34,7 @@ class Template(SQLiteItem):
         self.filter_condition = f"template_name = {self.template_name} OR template_directory = {self.template_directory} OR repository_url = {self.repository_url}"
 
     def get_template_directory(self, template_directory: str = None):
-        if not os.path.exists(template_directory):
+        if template_directory is not None and not os.path.exists(template_directory):
             raise FileNotFoundError(
                 f"Template directory {self.template_directory} does not exist."
             )
@@ -107,7 +107,7 @@ class Template(SQLiteItem):
         )
 
         if self.repository_url:
-            clone_git_repository(self.repository_url, cwd=os.getcwd())
+            clone_git_repository(self.repository_url, cwd=destination_directory)
 
         if copy_template:
             try:
@@ -124,7 +124,7 @@ class Template(SQLiteItem):
             if i is None:
                 self.update()
 
-        return self
+        return self.get_template(self.template_directory)
 
     def delete_template(self, remove_dir: bool = True):
         templ = self.get_template(template=self.template_directory)

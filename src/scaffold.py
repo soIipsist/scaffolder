@@ -65,34 +65,19 @@ def update_destination_files(
     return files, funcs, updated_content
 
 
-def create_from_template(
-    template_directory: str = template_directory,
-    destination_directory: str = destination_directory,
-    store_template: bool = store_template,
-    copy_template: bool = True,
-):
-
+def check_if_template_exists(template_directory: str = template_directory):
     templ = Template.get_template(template_directory)
     templ: Template
-    new_templ: Template = None
 
     if templ is None:
         response = input(
             f"Template '{template_directory}' does not exist.\nWould you like to add it as a template? (y/n)"
         )
         if response in ["yes", "y"]:
-            new_templ = Template(template_directory=template_directory)
-            new_templ = new_templ.add_template(template_directory, True, False)
-        else:
-            return None, None
+            templ = Template(template_directory=template_directory)
+            templ = templ.add_template(template_directory, True, False)
 
-        templ = Template(
-            template_directory=template_directory,
-            template_name=os.path.basename(destination_directory),
-        )
-
-    templ = templ.add_template(destination_directory, store_template, copy_template)
-    return destination_directory, templ.template_name
+    return templ
 
 
 def scaffold_repository(
@@ -134,12 +119,19 @@ def scaffold(
 
     # copy template if files are not defined
     copy_template = len(files) == 0 or not os.path.exists(destination_directory)
-    destination_directory, template_name = create_from_template(
-        template_directory, destination_directory, store_template, copy_template
+
+    original_template = check_if_template_exists(template_directory)
+
+    if not original_template:
+        return
+
+    new_template = original_template.add_template(
+        destination_directory, store_template, copy_template
     )
 
-    # return
-    if destination_directory and template_name:
+    return
+
+    if destination_directory:
         update_destination_files(
             template_directory,
             destination_directory,
@@ -154,15 +146,18 @@ def scaffold(
 
         print(f"Replacing all instances of '{repository_name}' with '{template_name}'.")
 
-        return
         find_and_replace_in_directory(
-            destination_directory, template_name, repository_name, removed_dirs=[".git"]
+            destination_directory,
+            repository_name,
+            template_name,
+            removed_dirs=[".git"],
         )
 
         scaffold_repository(
             git_origin, create_repository, repository_visibility, destination_directory
         )
 
+        return
         # clone repository
         if clone_repository:
             shutil.rmtree(destination_directory, ignore_errors=True)
