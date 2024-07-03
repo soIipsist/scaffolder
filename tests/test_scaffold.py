@@ -34,8 +34,9 @@ class TestScaffold(TestBase):
         self.repository_name = repository_name
         self.git_origin = get_git_origin(self.author, self.repository_name)
         self.files = []
-        self.function_patterns = []
-        self.language = None
+        self.function_patterns = function_patterns
+        self.function_names = function_names
+        self.language = language
 
     def get_templ_dir(self, dest: str, insert_template=True):
         destination_dir = os.path.join(self.get_template_directory(""), dest)
@@ -48,7 +49,7 @@ class TestScaffold(TestBase):
             templ.insert()
         return destination_dir
 
-    def get_dest_dir(self, dest: str):
+    def get_destination_directory(self, dest: str):
         return os.path.join(self.get_files_directory("scaffold_tests"), dest)
 
     def get_scaffold_args(self):
@@ -64,6 +65,7 @@ class TestScaffold(TestBase):
             "store_template": self.store_template,
             "files": self.files,
             "function_patterns": self.function_patterns,
+            "function_names": self.function_names,
             "language": self.language,
         }
 
@@ -99,7 +101,7 @@ class TestScaffold(TestBase):
         args = get_callable_args(create_from_template, args)
         print(args)
 
-        destination_directory = self.get_dest_dir("android_template")
+        destination_directory = self.get_destination_directory("android_template")
         template_directory = self.get_templ_dir("android_template")
 
         print(template_directory)
@@ -115,14 +117,20 @@ class TestScaffold(TestBase):
         scaffold(**args)
 
     def test_update_destination_files(self):
+        # files are defined
         self.files = ["sqlite.py", "green", "sqlite_item.py", "bro.py", "parser.py"]
-        self.template_directory = "/Users/p/Desktop/soIipsis/python_template"
-        self.destination_directory = self.get_template_directory()
+        # files are not defined
+        self.files = []
+
+        # template_directory of a predefined template
+        self.template_directory = self.get_template_directory()
+        self.destination_directory = self.get_destination_directory()
+
         update_destination_files(
-            self.files,
             self.template_directory,
             self.destination_directory,
             self.language,
+            self.files,
             self.function_patterns,
         )
 

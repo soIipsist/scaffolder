@@ -117,6 +117,7 @@ def get_updated_file_content(functions: dict, update_path: str):
 
 def get_function_names(funcs: list, names: list = []):
     """Return functions that contain the strings specified."""
-
+    if not names:
+        return funcs
     functions = [func for func in funcs if any(name in func for name in names)]
     return functions

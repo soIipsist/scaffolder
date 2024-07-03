@@ -7,6 +7,7 @@ from src.functions import (
     get_function_patterns,
     get_updated_file_content,
     get_updated_functions,
+    get_function_names,
 )
 from src.repository import (
     clone_git_repository,
@@ -25,11 +26,12 @@ import shutil
 
 
 def update_destination_files(
-    files: list = [],
-    template_directory: str = None,
-    destination_directory: str = None,
+    template_directory: str,
+    destination_directory: str,
     language: str = None,
-    function_patterns: list = None,
+    files: list = [],
+    function_patterns: list = [],
+    function_names: list = [],
 ):
 
     if not files:
@@ -56,6 +58,7 @@ def update_destination_files(
 
             if function_patterns:
                 funcs = get_updated_functions(file, dest_file, function_patterns)
+                funcs = get_function_names(funcs, function_names)
                 content = get_updated_file_content(funcs, dest_file)
                 overwrite_file(content)
 
@@ -116,6 +119,7 @@ def scaffold(
     files: list = files,
     language: str = language,
     function_patterns: list = function_patterns,
+    function_names: list = function_names,
 ):
 
     git_origin = get_git_origin(author, repository_name)
@@ -128,7 +132,12 @@ def scaffold(
     )
 
     update_destination_files(
-        files, template_directory, destination_directory, language, function_patterns
+        template_directory,
+        destination_directory,
+        language,
+        files,
+        function_patterns,
+        function_names,
     )
     create_license(license, destination_directory, author, year)
 
@@ -170,6 +179,14 @@ def main():
         Argument(name=("-l", "--language"), default=language),
         Argument(
             name=("-p", "--function_patterns"), nargs="+", default=function_patterns
+        ),
+        Argument(
+            name=(
+                "-fn",
+                "--function_names",
+            ),
+            nargs="+",
+            default=function_names,
         ),
     ]
 

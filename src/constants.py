@@ -30,6 +30,7 @@ repository_name = scaffolder_metadata.get(
 files = scaffolder_metadata.get("files", [])
 language = scaffolder_metadata.get("language", None)
 function_patterns = scaffolder_metadata.get("function_patterns", [])
+function_names = scaffolder_metadata.get("function_names", [])
 
 license = scaffolder_metadata.get("license", "mit")
 year = scaffolder_metadata.get("year", str(datetime.datetime.now().year))
