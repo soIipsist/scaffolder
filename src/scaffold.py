@@ -80,19 +80,13 @@ def create_from_template(
             f"Template '{template_directory}' does not exist.\nWould you like to add it as a template? (y/n)"
         )
         if response in ["yes", "y"]:
-            templ = Template(template_directory=template_directory)
-            templ.add_template(template_directory, copy_template=False)
-            print("TEMPL", templ.template_name)
+            new_templ = Template(template_directory=template_directory)
+            new_templ.add_template(template_directory)
         else:
             return None, None
 
-    # add newly created template to db if store_template is true
-    if store_template:
-        templ = templ.add_template(destination_directory)
-        destination_directory = templ.template_directory
-    else:
-        destination_directory = templ.copy_template(destination_directory)
-
+        # add newly created template to db if store_template is true
+    templ.add_template(destination_directory)
     return destination_directory, templ.template_name
 
 

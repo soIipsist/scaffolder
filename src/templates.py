@@ -94,7 +94,7 @@ class Template(SQLiteItem):
     def add_template(
         self,
         destination_directory: str = None,
-        copy_template: bool = True,
+        store_template: bool = True,
     ):
 
         destination_directory = (
@@ -105,17 +105,17 @@ class Template(SQLiteItem):
 
         if self.repository_url:
             clone_git_repository(self.repository_url, cwd=os.getcwd())
-            copy_template = False
 
-        if copy_template:
-            template_dir = self.copy_template(destination_directory)
-            self.template_directory = template_dir
-            print(f"New template directory set to: {self.template_directory}.")
+        # copy template
+        template_dir = self.copy_template(destination_directory)
+        self.template_directory = template_dir
+        print(f"New template directory set to: {self.template_directory}.")
 
-        i = self.insert()
+        if store_template:
+            i = self.insert()
 
-        if i is None:
-            self.update()
+            if i is None:
+                self.update()
 
         return self
 
@@ -152,7 +152,7 @@ def main():
         Argument(name=("-t", "--template_directory"), default=template_directory),
         Argument(name=("-n", "--template_name"), default=repository_name),
         Argument(name=("-l", "--language"), default="python"),
-        Argument(name=("-c", "--copy_template"), type=bool, default=True),
+        Argument(name=("-s", "--store_template"), type=bool, default=True),
         Argument(name=("-d", "--destination_directory"), default=destination_directory),
     ]
 

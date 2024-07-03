@@ -85,7 +85,7 @@ class TestTemplates(TestBase):
         self.template_directory = None
         template_args = self.get_template_args()
         template = Template(**template_args)
-        template = template.add_template(copy_template=True)
+        template = template.add_template()
         self.assertIsInstance(template, Template)
         self.assertTrue(len(Template().select_all()) > 0)
 

@@ -112,6 +112,7 @@ class TestScaffold(TestBase):
         self.assertTrue(template_name == "android_template")
 
     def test_scaffold(self):
+        # Template().delete("all")
         # 1) new template without creating repo
         # 2) new template without creating repo with files
         # 3) new template without creating repo with files and function names
