@@ -53,7 +53,7 @@ class Template(SQLiteItem):
             parts = repository_url[len("https://github.com/") :].split("/")
 
             if len(parts) >= 2 and parts[1]:
-                template_name = parts[1]
+                template_name = os.path.basename(repository_url).split(".git")[0]
                 self.template_directory = os.path.join(os.getcwd(), template_name)
             return repository_url
 

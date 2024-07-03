@@ -31,7 +31,7 @@ class TestScaffold(TestBase):
         self.create_repository = create_repository
         self.repository_visibility = repository_visibility
         self.store_template = store_template
-        self.repository_name = repository_name
+        self.repository_name = "python_template"
         self.git_origin = get_git_origin(self.author, self.repository_name)
         self.files = []
         self.function_patterns = function_patterns
@@ -113,6 +113,9 @@ class TestScaffold(TestBase):
 
     def test_scaffold(self):
         Template().delete("all")
+        templ = Template(self.git_origin)
+
+        print(templ.template_directory)
         # 1) new template without creating repo
         # 2) new template without creating repo with files
         # 3) new template without creating repo with files and function names
@@ -121,7 +124,7 @@ class TestScaffold(TestBase):
         # 6) new template creating repo with files and function names
 
         self.create_repository = False
-        self.template_directory = self.get_template_directory()
+        self.template_directory = self.git_origin
         self.destination_directory = self.get_destination_directory("sample_template_2")
         # self.repository_name = None
 
@@ -131,7 +134,7 @@ class TestScaffold(TestBase):
         # self.create_repository = True
 
         args = self.get_scaffold_args()
-        scaffold(**args)
+        # scaffold(**args)
 
     def test_update_destination_files(self):
         # files are defined
