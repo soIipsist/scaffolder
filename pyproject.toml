@@ -1,31 +1,16 @@
 [project]
-dependencies = [
-    "certifi==2024.6.2",
-    "charset-normalizer==3.3.2",
-    "idna==3.7",
-    "numpy==1.26.4",
-    "pandas==2.2.2",
-    "python-dateutil==2.9.0.post0",
-    "pytz==2024.1",
-    "PyYAML==6.0.1",
-    "requests==2.32.3",
-    "six==1.16.0",
-    "toml==0.10.2",
-    "tzdata==2024.1",
-    "urllib3==2.2.1",
-    "xmltodict==0.13.0",
-]
-description = "CLI scaffolding tool designed to automatically generate projects using personalized templates."
+dependencies = [ "build==1.2.1", "certifi==2024.6.2", "charset-normalizer==3.3.2", "idna==3.7", "numpy==1.26.4", "packaging==24.1", "pandas==2.2.2", "pyproject_hooks==1.1.0", "python-dateutil==2.9.0.post0", "pytz==2024.1", "PyYAML==6.0.1", "requests==2.32.3", "six==1.16.0", "toml==0.10.2", "tzdata==2024.1", "urllib3==2.2.1", "xmltodict==0.13.0",]
+description = "CLI scaffolding tool designed to generate projects from personalized templates"
 name = "scaffolder"
 readme = "README.md"
 requires-python = ">=3.11"
-version = "1.0.0"
+version = "v1.0.0"
 [[project.authors]]
 name = "soIipsist"
 
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools", "wheel"]
+requires = [ "setuptools", "wheel",]
 
 [project.license]
 text = "MIT License"
