@@ -130,5 +130,4 @@ def get_function_names(funcs: dict, names: list = []):
                     new_val.append(v)
 
         funcs[key] = new_val
-    # functions = [func for func in funcs if any(name in func for name in names)]
     return funcs

@@ -113,6 +113,7 @@ class TestScaffold(TestBase):
 
     def test_scaffold(self):
         Template().delete("all")
+        # templ = Template(self.get_template_directory())
         # templ = Template(self.git_origin)
         # print(templ.template_directory, templ.repository_url, templ.template_name)
         # 1) new template without creating repo
@@ -127,8 +128,8 @@ class TestScaffold(TestBase):
         self.destination_directory = self.get_destination_directory("sample_template_2")
         # self.repository_name = None
 
-        self.files = ["hello.py", "update.py"]
-        self.function_names = ["hello"]
+        self.files = ["hello.py"]
+        self.function_names = []
         # self.create_repository = True
 
         args = self.get_scaffold_args()

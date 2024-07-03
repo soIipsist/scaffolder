@@ -37,7 +37,6 @@ def update_destination_files(
     if not files:
         return
 
-    files = find_files(template_directory, files, ["venv"])
     funcs = []
     updated_content = ""
 
@@ -131,39 +130,43 @@ def scaffold(
 ):
 
     git_origin = get_git_origin(author, repository_name)
+    files = find_files(template_directory, files, ["venv"])
 
-    # copy template itself if files are not defined
+    # copy template if files are not defined
     copy_template = len(files) == 0
     destination_directory, template_name = create_from_template(
         template_directory, destination_directory, store_template, copy_template
     )
 
-    print("DEST", destination_directory, template_name)
-    # if destination_directory and template_name:
-    #     update_destination_files(
-    #         template_directory,
-    #         destination_directory,
-    #         language,
-    #         files,
-    #         function_patterns,
-    #         function_names,
-    #     )
-    #     create_license(license, destination_directory, author, year)
+    print("DEST", destination_directory, template_name, files)
+    # return
+    if destination_directory and template_name:
+        update_destination_files(
+            template_directory,
+            destination_directory,
+            language,
+            files,
+            function_patterns,
+            function_names,
+        )
+        return
 
-    #     # replace name with new name
-    #     print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
-    #     find_and_replace_in_directory(
-    #         destination_directory, template_name, repository_name, removed_dirs=[".git"]
-    #     )
+        create_license(license, destination_directory, author, year)
 
-    #     scaffold_repository(
-    #         git_origin, create_repository, repository_visibility, destination_directory
-    #     )
+        # replace name with new name
+        print(f"Replacing all instances of '{template_name}' with '{repository_name}'.")
+        find_and_replace_in_directory(
+            destination_directory, template_name, repository_name, removed_dirs=[".git"]
+        )
 
-    #     # clone repository
-    #     if clone_repository:
-    #         shutil.rmtree(destination_directory, ignore_errors=True)
-    #         clone_repository(git_origin, cwd=os.getcwd())
+        scaffold_repository(
+            git_origin, create_repository, repository_visibility, destination_directory
+        )
+
+        # clone repository
+        if clone_repository:
+            shutil.rmtree(destination_directory, ignore_errors=True)
+            clone_repository(git_origin, cwd=os.getcwd())
 
 
 def main():
