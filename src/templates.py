@@ -27,11 +27,18 @@ class Template(SQLiteItem):
         repository_url: str = None,
     ) -> None:
         super().__init__(table_values=template_values)
-        self.template_directory = template_directory
+        self.template_directory = self.get_template_directory(template_directory)
         self.template_name = self.get_template_name(template_name)
         self.language = language
         self.repository_url = self.get_repository_url(repository_url)
         self.filter_condition = f"template_name = {self.template_name} OR template_directory = {self.template_directory} OR repository_url = {self.repository_url}"
+
+    def get_template_directory(self, template_directory: str = None):
+        if not os.path.exists(template_directory):
+            raise FileNotFoundError(
+                f"Template directory {self.template_directory} does not exist."
+            )
+        return template_directory
 
     def get_template_name(self, template_name: str = None):
         if template_name:
@@ -61,11 +68,6 @@ class Template(SQLiteItem):
         """
         Copies template_directory to specified destination directory.
         """
-
-        if not os.path.exists(self.template_directory):
-            raise FileNotFoundError(
-                f"Template directory {self.template_directory} does not exist."
-            )
 
         if not os.path.exists(destination_directory):
             os.makedirs(destination_directory)

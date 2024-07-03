@@ -35,6 +35,8 @@ def create_license(
     author: str,
     year: str = year,
 ):
+    if license is None:
+        return
     if year is None:
         year = datetime.datetime.now().year
 

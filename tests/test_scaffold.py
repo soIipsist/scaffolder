@@ -31,7 +31,7 @@ class TestScaffold(TestBase):
         self.create_repository = create_repository
         self.repository_visibility = repository_visibility
         self.store_template = store_template
-        self.repository_name = "python_template"
+        self.repository_name = repository_name
         self.git_origin = get_git_origin(self.author, self.repository_name)
         self.files = []
         self.function_patterns = function_patterns
@@ -130,6 +130,7 @@ class TestScaffold(TestBase):
 
         self.files = ["hello.py"]
         self.function_names = []
+        self.license = None
         # self.create_repository = True
 
         args = self.get_scaffold_args()
