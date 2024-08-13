@@ -13,6 +13,8 @@ The following dependecies will be installed:
 
 ## Installation
 
+### Git
+
 1. Clone the git repository:
 
     ```bash
@@ -34,6 +36,25 @@ The following dependecies will be installed:
       alias scaffolder="bash /path-to-release/scaffolder/scaffolder.sh"
 
       ```
+
+### Pip
+
+Alternatively, you can use `pip`:
+
+```bash
+python -m pip install https://github.com/soIipsist/scaffolder
+```
+
+Installing with `pip` allows you to access all scaffolder commands (listed in `pyproject.toml`):
+
+```python
+[project.scripts]
+scaffold = "src.scaffold:main"
+sc-settings = "src.settings:main"
+licenses = "src.licenses:main"
+templates = "src.templates:main"
+languages = "src.languages:main"
+```
 
 ## Usage
 
