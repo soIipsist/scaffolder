@@ -4,7 +4,7 @@ import os
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
 
-from utils.sqlite_connection import db_path
+from data.sqlite_data import db_path
 from utils.file_utils import read_file, overwrite_file
 from utils.sqlite import (
     select_items,

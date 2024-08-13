@@ -10,7 +10,8 @@ from src.settings import *
 from src.licenses import *
 from src.templates import *
 from src.constants import *
-from utils.sqlite_connection import db_path, create_db, tables, values
+from data.sqlite_data import db_path
+from utils.sqlite_connection import create_db, tables, values
 from src.repository import delete_git_repository
 from utils.func_utils import get_callable_args
 
