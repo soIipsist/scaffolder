@@ -140,6 +140,11 @@ def main():
         language.language = args.get("language", None)
         language = language.get_language(args.get("extension"))
         print(language)
+        language: SQLiteItem
+
+        if language is None:
+            languages = Language().select_all()
+            print(languages)
     else:
         args = parser.get_callable_args(func)
         func(**args)

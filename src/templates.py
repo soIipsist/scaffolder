@@ -1,4 +1,5 @@
 import os
+import sys
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
@@ -199,6 +200,11 @@ def main():
     else:
         args = parser.get_callable_args(func)
         func(**args)
+
+    print("CWD:", os.getcwd())
+    print("sys.path:", sys.path)
+    print("Python executable:", sys.executable)
+    print("Environment Variables:", os.environ)
 
 
 if __name__ == "__main__":

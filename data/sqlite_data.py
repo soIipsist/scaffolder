@@ -20,6 +20,3 @@ language_values = [
 
 tables = [template_table, language_table]
 values = [template_values, language_values]
-
-
-print("DB PATH", db_path)
