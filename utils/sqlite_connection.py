@@ -7,7 +7,7 @@ from utils.sqlite import create_connection, create_table, close_connection, dele
 
 
 def create_db(db_path: str = db_path, tables: list = tables, values: list = values):
-
+    print("DB PATH", db_path)
     print("Creating database...")
 
     conn = create_connection(db_path)
