@@ -11,6 +11,8 @@ def get_git_origin(author: str, repository_name: str):
 def get_author(author: str = None):
     if not author:
         results = execute_commands([["git", "config", "user.name"]])
+
+        print(results)
         if results:
             return results[0].stdout
     return author
