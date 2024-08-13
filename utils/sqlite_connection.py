@@ -2,12 +2,12 @@ import os
 
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0, parent_directory)
-from data.sqlite_data import *
+from data.sqlite_data import db_path, tables, values
+
 from utils.sqlite import create_connection, create_table, close_connection, delete_items
 
 
 def create_db(db_path: str = db_path, tables: list = tables, values: list = values):
-    print("DB PATH", db_path)
     print("Creating database...")
 
     conn = create_connection(db_path)
