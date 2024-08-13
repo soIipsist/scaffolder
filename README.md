@@ -21,22 +21,31 @@ The following dependecies will be installed:
     git clone https://github.com/soIipsist/scaffolder.git
     ```
 
-2. Install all package dependencies:
+2. Create a virtual environment:
+
+    ```bash
+    python -m venv venv
+    ```
+
+3. Install all package dependencies:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-3. Run `scaffolder.sh`
+4. Run `scaffolder.sh`:
 
-4. If you're on **Linux** or **Mac**, Create an alias in your .bashrc :
+    ```bash
+    ./scaffolder.sh
+    ```
 
-      ```bash
+5. If you're on **Linux** or **Mac**, Create an alias in your `.bashrc`:
+
+   ```bash
       chmod +x /path-to-release/scaffolder/scaffolder.sh
       export SCAFFOLDER_PATH="/path-to-release/scaffolder"
       alias scaffolder="bash $SCAFFOLDER_PATH/scaffolder.sh"
-
-      ```
+    ```
 
 ### Pip
 
