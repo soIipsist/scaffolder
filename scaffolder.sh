@@ -75,8 +75,9 @@ OPTIONS=""
 install_dependency "gh"
 install_dependency "jq"
 
-gh_check=$(jq -r '.gh_check' 'data/scaffolder.json')
 cwd=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+path="$cwd/data/scaffolder.json"
+gh_check=$(jq -r '.gh_check' $path)
 
 cd "$cwd/src"
 HISTSIZE=100

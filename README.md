@@ -33,7 +33,8 @@ The following dependecies will be installed:
 
       ```bash
       chmod +x /path-to-release/scaffolder/scaffolder.sh
-      alias scaffolder="bash /path-to-release/scaffolder/scaffolder.sh"
+      export SCAFFOLDER_PATH="/path-to-release/scaffolder"
+      alias scaffolder="bash $SCAFFOLDER_PATH/scaffolder.sh"
 
       ```
 
