@@ -12,9 +12,10 @@ def get_author(author: str = None):
     if not author:
         results = execute_commands([["git", "config", "user.name"]])
 
-        print(results)
+        if not isinstance(results, list):
+            raise ValueError("not a list")
         if results:
-            return results[0].stdout
+            return results[0].stdout if isinstance(results, list) else results.stdout
     return author
 
 
