@@ -11,7 +11,7 @@ def get_git_origin(author: str, repository_name: str):
 def get_author(author: str = None):
     if not author:
         results = execute_commands([["git", "config", "user.name"]])
-        if len(results) > 0:
+        if results:
             return results[0].stdout
     return author
 
@@ -35,7 +35,7 @@ def get_repository_visibility(repository_visibility: int):
 
 def is_git_repo(repository: str):
     results = execute_commands([["git", "status"]], cwd=repository)
-    return len(results) > 0 and results[0].stdout.strip() == repository
+    return results and results[0].stdout.strip() == repository
 
 
 def set_repository_visibility(git_origin: str, repository_visibility: str):
