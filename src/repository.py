@@ -12,6 +12,7 @@ def get_author(author: str = None):
     if not author:
         results = execute_commands([["git", "config", "user.name"]])
 
+        print(results, type(results))
         if len(results) > 0:
             return results[0].stdout
     return author
