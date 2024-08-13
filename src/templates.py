@@ -201,11 +201,6 @@ def main():
         args = parser.get_callable_args(func)
         func(**args)
 
-    print("CWD:", os.getcwd())
-    print("sys.path:", sys.path)
-    print("Python executable:", sys.executable)
-    print("Environment Variables:", os.environ)
-
 
 if __name__ == "__main__":
     main()
