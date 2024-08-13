@@ -27,6 +27,10 @@ def execute_commands(
             e.stderr = e.stderr.strip()
             errors.append(e)
 
+    if not isinstance(results, list):
+        results = [results]
+
     if return_errors:
         return results, errors
+
     return results

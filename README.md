@@ -111,10 +111,5 @@ scaffolder > licenses [-h] [-l LICENSE] [-c show_content] [-p --show_paths]
 View `scaffolder.json` metadata, or manually update a specified parameter.
 
 ```bash
-
-scaffolder > settings update [-h] [-t TEMPLATE] [-p PROJECT_DIRECTORY] [-l LICENSE] [-a AUTHOR] [-u AUTHOR] [-r CREATE_REPOSITORY] [-v REPOSITORY_VISIBILITY] 
-```
-
-```bash
 scaffolder > settings view [-h] [-p PARAMETERS]
 ```
