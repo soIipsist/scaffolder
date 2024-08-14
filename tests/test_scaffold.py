@@ -38,6 +38,7 @@ class TestScaffold(TestBase):
         self.function_patterns = function_patterns
         self.function_names = function_names
         self.language = language
+        self.replace_name = replace_name
 
     def get_templ_dir(self, dest: str, insert_template=True):
         destination_dir = os.path.join(self.get_template_directory(""), dest)
@@ -68,6 +69,7 @@ class TestScaffold(TestBase):
             "function_patterns": self.function_patterns,
             "function_names": self.function_names,
             "language": self.language,
+            "replace_name": self.replace_name,
         }
 
         return args

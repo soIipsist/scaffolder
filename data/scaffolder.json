@@ -6,9 +6,8 @@
         "sqlite_item.py",
         "parser.py"
     ],
-    "function_names": [
-        "create_connection"
-    ],
+    "function_names": [],
     "gh_check": false,
-    "create_repository": 0
+    "create_repository": 0,
+    "replace_name": false
 }

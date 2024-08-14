@@ -115,6 +115,7 @@ def scaffold(
     language: str = language,
     function_patterns: list = function_patterns,
     function_names: list = function_names,
+    replace_name: bool = replace_name,
 ):
 
     files = find_files(template_directory, files, ["venv"])
@@ -150,16 +151,16 @@ def scaffold(
 
         create_license(license, destination_directory, author, year)
 
-        print(
-            f"Replacing all instances of '{original_template.template_name}' with '{new_template.template_name}'."
-        )
-
-        find_and_replace_in_directory(
-            destination_directory,
-            original_template.template_name,
-            new_template.template_name,
-            removed_dirs=[".git"],
-        )
+        if replace_name:
+            print(
+                f"Replacing all instances of '{original_template.template_name}' with '{new_template.template_name}'."
+            )
+            find_and_replace_in_directory(
+                destination_directory,
+                original_template.template_name,
+                new_template.template_name,
+                removed_dirs=[".git"],
+            )
 
         git_origin = get_git_origin(author, repository_name)
 
@@ -204,6 +205,7 @@ def main():
             nargs="+",
             default=function_names,
         ),
+        BoolArgument(name=("-rn", "--replace_name"), default=replace_name),
     ]
 
     parser = Parser(parser_arguments)
