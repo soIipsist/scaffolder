@@ -42,7 +42,7 @@ gh_authenticate() {
 }
 
 main() {
-    read -rep "$(echo -e "${GREEN}scaffolder > ${GREEN}")" OPTION
+    read -p "$(echo -e "${GREEN}scaffolder > ${GREEN}")" OPTION
     OPTIONS=($OPTION)
     history -s "$OPTION"
 
@@ -80,6 +80,19 @@ install_dependency "jq"
 cwd=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 path="$cwd/data/scaffolder.json"
 gh_check=$(jq -r '.gh_check' $path)
+venv_dir="$cwd/venv"
+
+if [ -d "$venv_dir" ]; then
+    echo "Activating existing virtual environment..."
+    source "$venv_dir/bin/activate"
+else
+    read -p "Virtual environment not found. Would you like to create one and install all dependencies? (y/n)" v
+    if [[ $v == 'y' ]]; then
+        python3 -m venv "$venv_dir"
+        source "$venv_dir/bin/activate"
+        pip install -r "$cwd/requirements.txt"
+    fi
+fi
 
 cd "$cwd/src"
 HISTSIZE=100
@@ -94,3 +107,5 @@ while :; do
     main
     [[ loop -eq 1 ]] || break
 done
+
+deactivate

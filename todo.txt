@@ -57,5 +57,7 @@
    + javascript
   - create repo without using gh
   + languages argparse
-  - fix scaffold
-  - fix update
+  + fix scaffold
+  + fix update
+  + add venv from bash script 
+  + make script multiline
